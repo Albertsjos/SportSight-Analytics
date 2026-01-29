@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+  <title>SportSight – Insights Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background: radial-gradient(circle at top, #0b1220, #050816);
+      color:white;
+    }
+
+    .top{
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    a{color:#4f86ff;text-decoration:none}
+
+    .insights{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:16px;
+      padding:0 22px 22px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    .card h3{
+      margin:0 0 6px;
+      font-size:16px;
+      opacity:0.9;
+    }
+    .card b{
+      font-size:20px;
+      display:block;
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:18px;
+      padding:0 22px 22px;
+    }
+
+    .box{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    canvas{
+      max-height:260px;
+      width:100% !important;
+    }
+
+    .actions a{
+      display:block;
+      margin-bottom:10px;
+      padding:12px;
+      background:#4f86ff;
+      color:white;
+      text-align:center;
+      border-radius:10px;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Top Bar -->
+<div class="top">
+  <b>SportSight – Player Analytics</b>
+  <div>
+    {% if request.user.is_staff %}
+      <a href="/admin/">Admin Panel</a> |
+    {% endif %}
+    <a href="/logout/">Logout</a>
+  </div>
+</div>
+
+
+<!-- 🔥 INSIGHTS SECTION -->
+<div class="insights">
+  <div class="card">
+    <h3>🥇 Top Scorer</h3>
+    <b>{{ top_scorer.player__player_name|default:"-" }}</b>
+    Goals: {{ top_scorer.goals|default:0 }}
+  </div>
+
+  <div class="card">
+    <h3>🧠 Most Creative</h3>
+    <b>{{ top_assist.player__player_name|default:"-" }}</b>
+    Assists: {{ top_assist.assists|default:0 }}
+  </div>
+
+  <div class="card">
+    <h3>🛡 Best Defender</h3>
+    <b>{{ top_defender.player__player_name|default:"-" }}</b>
+    Tackles: {{ top_defender.tackles|default:0 }}
+  </div>
+
+  <div class="card">
+    <h3>📊 System Summary</h3>
+    Players: {{ total_players }} <br>
+    Matches: {{ total_matches }} <br>
+    Goals: {{ total_goals }}
+  </div>
+</div>
+
+<!-- VISUAL + ACTIONS -->
+<div class="content">
+
+  <!-- Chart -->
+  <div class="box">
+    <h3>Top 5 Players by Goals</h3>
+    <canvas id="goalsChart"></canvas>
+
+    {{ top_players|json_script:"top-data" }}
+
+    <script>
+      const data = JSON.parse(
+        document.getElementById("top-data").textContent
+      );
+
+      new Chart(document.getElementById("goalsChart"), {
+        type: "bar",
+        data: {
+          labels: data.map(x => x.player__player_name),
+          datasets: [{
+            data: data.map(x => x.goals),
+            backgroundColor: "#4f86ff"
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{ legend:{display:false} },
+          scales:{ y:{beginAtZero:true} }
+        }
+      });
+    </script>
+  </div>
+
+  <!-- Actions -->
+<div class="box actions">
+  <h3>Quick Actions</h3>
+
+  <!-- visible to all -->
+  <a href="/compare/">Compare Players</a>
+  <a href="/analytics/">View Analytics</a>
+
+  <!-- admin only -->
+  {% if request.user.is_staff %}
+    <a href="/admin/core/playerperformance/add/">Add Performance</a>
+    <a href="/admin/">Go to Admin Panel</a>
+  {% endif %}
+
+  <a href="/logout/">Logout</a>
+</div>
+</div>
+
+</body>
+</html>

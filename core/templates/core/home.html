@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <title>SportSight Analytics</title>
+  <meta charset="utf-8">
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0b1220, #050816);
+      color:white;
+    }
+    .hero{
+      text-align:center;
+      padding:80px 20px;
+    }
+    .hero h1{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+    .hero p{
+      font-size:18px;
+      opacity:0.85;
+      max-width:700px;
+      margin:0 auto 30px;
+    }
+    .btn{
+      padding:14px 28px;
+      border-radius:30px;
+      background:#4f86ff;
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+      display:inline-block;
+    }
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:20px;
+      padding:40px 60px;
+    }
+    .card{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+    }
+    .card h3{
+      margin-bottom:10px;
+    }
+    .card p{
+      font-size:14px;
+      opacity:0.8;
+    }
+    .footer{
+      text-align:center;
+      padding:30px;
+      font-size:13px;
+      opacity:0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>SportSight Analytics</h1>
+    <p>
+      A football player performance analysis platform that transforms match data
+      into meaningful insights using visual analytics.
+    </p>
+    <a href="{% url 'login' %}">Go to Dashboard</a>
+  </div>
+
+  <div class="features">
+    <div class="card">
+      <h3>📊 Player Analytics</h3>
+      <p>Track goals, assists, tackles and performance trends visually.</p>
+    </div>
+
+    <div class="card">
+      <h3>⚔ Player Comparison</h3>
+      <p>Compare two players using charts to support data-driven decisions.</p>
+    </div>
+
+    <div class="card">
+      <h3>📈 Smart Insights</h3>
+      <p>Understand performance beyond visual observation.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    MCA Final Project • SportSight Analytics
+  </div>
+
+</body>
+</html>
