@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+  <title>Season Analytics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{
+      font-family:Arial;
+      background: radial-gradient(circle at top, #0b1220, #050816);
+      color:white;
+      padding:20px;
+    }
+    .box{
+      background:rgba(255,255,255,0.06);
+      border-radius:16px;
+      padding:20px;
+      margin-bottom:20px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+    th,td{
+      padding:10px;
+      text-align:center;
+      border-bottom:1px solid rgba(255,255,255,0.15);
+    }
+    canvas{
+      max-height:280px;
+    }
+    .insight{
+      background:rgba(79,134,255,0.15);
+      padding:14px;
+      border-radius:12px;
+      margin-bottom:20px;
+    }
+    a{color:#4f86ff;text-decoration:none}
+  </style>
+</head>
+
+<body>
+
+<h2>Season Performance Analytics</h2>
+<a href="/dashboard/">← Back to Dashboard</a>
+
+<div class="insight">
+  <b>Top Scorer:</b> {{ top_scorer }} <br>
+  <b>Team Average Goals:</b> {{ team_avg_goals }}
+</div>
+
+<div class="box">
+  <h3>Goals per Player (Season)</h3>
+  <canvas id="goalsChart"></canvas>
+
+  {{ labels|json_script:"labels-data" }}
+  {{ goals|json_script:"goals-data" }}
+
+  <script>
+    const labels = JSON.parse(document.getElementById("labels-data").textContent);
+    const goals = JSON.parse(document.getElementById("goals-data").textContent);
+
+    new Chart(document.getElementById("goalsChart"), {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Total Goals",
+          data: goals,
+          backgroundColor: "#4f86ff"
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false
+      }
+    });
+  </script>
+</div>
+
+<div class="box">
+  <h3>Season Summary Table</h3>
+  <table>
+    <tr>
+      <th>Player</th>
+      <th>Matches</th>
+      <th>Goals</th>
+      <th>Assists</th>
+      <th>Tackles</th>
+      <th>Avg Goals</th>
+    </tr>
+    {% for row in season_data %}
+    <tr>
+      <td>{{ row.player__player_name }}</td>
+      <td>{{ row.matches_played }}</td>
+      <td>{{ row.total_goals }}</td>
+      <td>{{ row.total_assists }}</td>
+      <td>{{ row.total_tackles }}</td>
+      <td>{{ row.avg_goals|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>User Dashboard</title>
+  <title>User Dashboard | SportSight</title>
 
   <style>
     body{
@@ -16,196 +16,211 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
+      border-bottom:1px solid rgba(255,255,255,0.08);
     }
 
     .top b{
-      font-size:20px;
+      font-size:22px;
     }
 
     .top a{
-      color:#4f86ff;
+      color:#ff6b6b;
       text-decoration:none;
       font-size:14px;
     }
 
     .welcome{
-      padding:0 28px 18px;
+      padding:26px 28px;
       font-size:15px;
       opacity:.85;
+      max-width:900px;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:20px;
-      padding:0 28px 28px;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:22px;
+      padding:0 28px 40px;
     }
 
     .card{
       background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
-      border-radius:18px;
-      padding:22px;
-      transition:.25s;
+      border-radius:20px;
+      padding:26px;
+      transition:.3s;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
 
     .card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 12px 40px rgba(0,0,0,.35);
+      transform:translateY(-6px);
+      box-shadow:0 18px 45px rgba(0,0,0,.4);
     }
 
     .card h3{
-      margin:0 0 8px;
+      margin:0 0 10px;
+      font-size:18px;
     }
 
     .card p{
       font-size:14px;
       opacity:.8;
-      margin-bottom:16px;
+      margin-bottom:20px;
+      line-height:1.5;
     }
 
     .card a{
       display:block;
       text-align:center;
-      padding:12px;
+      padding:14px;
       background:#4f86ff;
       color:white;
       text-decoration:none;
-      border-radius:12px;
+      border-radius:14px;
       font-weight:bold;
+    }
+
+    .section{
+      padding:0 28px 40px;
+    }
+
+    .section-title{
+      font-size:22px;
+      margin-bottom:6px;
+    }
+
+    .section-subtitle{
+      opacity:.7;
+      margin-bottom:22px;
+      font-size:14px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .mini-card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+    }
+
+    .mini-card h3{
+      margin:10px 0 0;
+      font-size:26px;
+    }
+
+    .activity-list{
+      list-style:none;
+      padding:0;
+      margin-top:10px;
+      max-width:600px;
+    }
+
+    .activity-list li{
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,0.12);
+      font-size:14px;
+      opacity:.85;
     }
 
     .footer-note{
       text-align:center;
       font-size:12px;
       opacity:.4;
-      padding-bottom:20px;
+      padding:20px 0 26px;
     }
-
-    .section {
-  margin-top: 50px;
-}
-
-.section-title {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.section-subtitle {
-  opacity: 0.7;
-  margin-bottom: 20px;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.mini-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  padding: 22px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mini-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-}
-
-.activity-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 16px;
-}
-
-.activity-list li {
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-  font-size: 14px;
-}
-
   </style>
 </head>
 
 <body>
 
-  <!-- Top Bar -->
+  <!-- TOP BAR -->
   <div class="top">
     <b>User Dashboard</b>
     <a href="/logout/">Logout</a>
   </div>
 
-  <!-- Welcome -->
+  <!-- WELCOME -->
   <div class="welcome">
-    Welcome to <b>SportSight Analytics</b>. Explore performance insights and compare players using data-driven visuals.
+    Welcome to <b>SportSight Analytics</b>.  
+    Track player performance, explore season-level insights, and make data-driven decisions.
   </div>
 
-  <!-- Cards -->
+  <!-- MAIN ACTION CARDS -->
   <div class="grid">
 
     <div class="card">
-      <h3>📊 Player Analytics</h3>
-      <p>Visualize player performance trends such as goals across matches.</p>
-      <a href="/analytics/">View Analytics</a>
+      <div>
+        <h3>📊 Match Analytics</h3>
+        <p>
+          Analyze match-wise performance trends such as goals scored across different matches.
+        </p>
+      </div>
+      <a href="/analytics/">View Match Analytics</a>
     </div>
 
     <div class="card">
-      <h3>⚖️ Compare Players</h3>
-      <p>Compare two players based on goals, assists, tackles and shots.</p>
+      <div>
+        <h3>⚖️ Player Comparison</h3>
+        <p>
+          Compare two players based on goals, assists, tackles, and shots on target.
+        </p>
+      </div>
       <a href="/compare/">Compare Players</a>
     </div>
 
     <div class="card">
-      <h3>📈 Insights</h3>
-      <p>Use data insights to support tactical and selection decisions.</p>
-      <a href="/analytics/">Explore Insights</a>
+      <div>
+        <h3>📈 Season Analytics</h3>
+        <p>
+          View overall season performance, consistency trends, and improvement areas.
+        </p>
+      </div>
+      <a href="/season-analytics/">View Season Analytics</a>
     </div>
 
   </div>
 
-  <!-- QUICK INSIGHTS SECTION -->
-<div class="section">
-  <h2 class="section-title">Quick Insights</h2>
-  <p class="section-subtitle">
-    Snapshot of recent performance data
-  </p>
+  <!-- QUICK INSIGHTS -->
+  <div class="section">
+    <h2 class="section-title">Quick Insights</h2>
+    <p class="section-subtitle">Overall snapshot from recorded performance data</p>
 
-  <div class="grid-3">
-    <div class="mini-card">
-      ⚽ <br>
-      <b>Total Goals</b>
-      <h3>24</h3>
-    </div>
+    <div class="grid-3">
+      <div class="mini-card">
+        ⚽ Total Goals
+        <h3>24</h3>
+      </div>
 
-    <div class="mini-card">
-      📊 <br>
-      <b>Matches Analyzed</b>
-      <h3>8</h3>
-    </div>
+      <div class="mini-card">
+        📊 Matches Analyzed
+        <h3>8</h3>
+      </div>
 
-    <div class="mini-card">
-      🏆 <br>
-      <b>Top Performer</b>
-      <h3>R. Lewandowski</h3>
+      <div class="mini-card">
+        🏆 Top Performer
+        <h3>Lewandowski</h3>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- RECENT ACTIVITY SECTION -->
-<div class="section">
-  <h2 class="section-title">Recent Activity</h2>
+  <!-- RECENT ACTIVITY -->
+  <div class="section">
+    <h2 class="section-title">Recent Activity</h2>
 
-  <ul class="activity-list">
-    <li>⚽ Lewandowski scored 2 goals</li>
-    <li>🎯 Raphinha assisted once</li>
-    <li>📈 Player comparison completed</li>
-  </ul>
-</div>
-
+    <ul class="activity-list">
+      <li>⚽ Lewandowski scored 2 goals</li>
+      <li>🎯 Raphinha assisted once</li>
+      <li>📈 Player comparison performed</li>
+    </ul>
+  </div>
 
   <div class="footer-note">
     SportSight Analytics · MCA Final Project

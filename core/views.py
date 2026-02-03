@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.db.models import Sum
+from django.db.models import Sum, Count, Avg
 from .models import Player, Match, PlayerPerformance
 
 
@@ -82,6 +82,42 @@ def analytics_page(request):
     }
 
     return render(request, "core/analytics.html", context)
+
+@login_required
+def season_analytics(request):
+    # Aggregate season data per player
+    season_data = (
+        PlayerPerformance.objects
+        .values("player__player_name")
+        .annotate(
+            matches_played=Count("id"),
+            total_goals=Sum("goals"),
+            total_assists=Sum("assists"),
+            total_tackles=Sum("tackles"),
+            avg_goals=Avg("goals"),
+        )
+        .order_by("-total_goals")
+    )
+
+    # Insights
+    top_scorer = season_data[0]["player__player_name"] if season_data else "N/A"
+    team_avg_goals = round(
+        sum(d["total_goals"] or 0 for d in season_data) / len(season_data), 2
+    ) if season_data else 0
+
+    # Data for chart
+    labels = [d["player__player_name"] for d in season_data]
+    goals = [d["total_goals"] or 0 for d in season_data]
+
+    context = {
+        "season_data": season_data,
+        "top_scorer": top_scorer,
+        "team_avg_goals": team_avg_goals,
+        "labels": labels,
+        "goals": goals,
+    }
+
+    return render(request, "core/season_analytics.html", context)
 
 
 # ---------------- COMPARE ----------------
