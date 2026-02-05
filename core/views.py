@@ -207,13 +207,13 @@ def season_analytics(request):
 
 @login_required
 def compare_xi(request):
-    teams = Player.objects.values_list("team_name", flat=True).distinct()
+    teams = Player.objects.values_list("team__name", flat=True).distinct()
 
     team1 = request.GET.get("team1")
     team2 = request.GET.get("team2")
 
     def team_stats(team):
-        players = Player.objects.filter(team_name=team)[:11]
+        players = Player.objects.filter(team__name=team)[:11]
         performances = PlayerPerformance.objects.filter(player__in=players)
 
         goals = sum(p.goals for p in performances)
