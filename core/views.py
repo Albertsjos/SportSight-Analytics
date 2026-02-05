@@ -153,6 +153,58 @@ def compare_page(request):
 
     return render(request, "core/compare.html", context)
 
+@login_required
+def season_analytics(request):
+    players = Player.objects.all()
+
+    analytics_data = []
+
+    for player in players:
+        performances = PlayerPerformance.objects.filter(player=player)
+
+        matches = performances.count()
+        total_goals = sum(p.goals for p in performances)
+        total_assists = sum(p.assists for p in performances)
+        total_tackles = sum(p.tackles for p in performances)
+        total_shots = sum(p.shots_on_target for p in performances)
+
+        avg_goals = round(total_goals / matches, 2) if matches > 0 else 0
+
+        # ---------- ANALYTICS LOGIC ----------
+        suggestions = []
+
+        if avg_goals < 0.5:
+            suggestions.append("Needs improvement in finishing and shooting accuracy.")
+        else:
+            suggestions.append("Good goal scoring consistency.")
+
+        if total_assists < matches:
+            suggestions.append("Should improve passing and chance creation.")
+        else:
+            suggestions.append("Strong playmaking ability.")
+
+        if total_tackles > matches * 2:
+            suggestions.append("Excellent defensive contribution.")
+        else:
+            suggestions.append("Needs to improve defensive work rate.")
+
+        analytics_data.append({
+            "player": player.player_name,
+            "matches": matches,
+            "goals": total_goals,
+            "assists": total_assists,
+            "tackles": total_tackles,
+            "shots": total_shots,
+            "avg_goals": avg_goals,
+            "suggestions": suggestions
+        })
+
+    return render(
+        request,
+        "core/season_analytics.html",
+        {"analytics_data": analytics_data}
+    )
+
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):

@@ -2,104 +2,101 @@
 <html>
 <head>
   <title>Season Analytics</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     body{
+      margin:0;
       font-family:Arial;
       background: radial-gradient(circle at top, #0b1220, #050816);
       color:white;
-      padding:20px;
     }
-    .box{
+
+    .top{
+      padding:22px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .top a{
+      color:#4f86ff;
+      text-decoration:none;
+    }
+
+    .container{
+      padding:0 28px 28px;
+    }
+
+    .player-card{
       background:rgba(255,255,255,0.06);
-      border-radius:16px;
-      padding:20px;
-      margin-bottom:20px;
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:22px;
     }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:12px;
+      margin-top:14px;
     }
-    th,td{
-      padding:10px;
-      text-align:center;
-      border-bottom:1px solid rgba(255,255,255,0.15);
-    }
-    canvas{
-      max-height:280px;
-    }
-    .insight{
-      background:rgba(79,134,255,0.15);
-      padding:14px;
+
+    .stat{
+      background:rgba(255,255,255,0.08);
       border-radius:12px;
-      margin-bottom:20px;
+      padding:12px;
+      text-align:center;
+      font-size:14px;
     }
-    a{color:#4f86ff;text-decoration:none}
+
+    .suggestions{
+      margin-top:16px;
+      padding:14px;
+      background:rgba(79,134,255,0.15);
+      border-radius:12px;
+      font-size:14px;
+    }
+
+    ul{
+      padding-left:18px;
+    }
   </style>
 </head>
 
 <body>
 
-<h2>Season Performance Analytics</h2>
-<a href="/dashboard/">← Back to Dashboard</a>
-
-<div class="insight">
-  <b>Top Scorer:</b> {{ top_scorer }} <br>
-  <b>Team Average Goals:</b> {{ team_avg_goals }}
+<div class="top">
+  <b>Season Performance Analytics</b>
+  <a href="/dashboard/">← Back to Dashboard</a>
 </div>
 
-<div class="box">
-  <h3>Goals per Player (Season)</h3>
-  <canvas id="goalsChart"></canvas>
+<div class="container">
 
-  {{ labels|json_script:"labels-data" }}
-  {{ goals|json_script:"goals-data" }}
+{% for p in analytics_data %}
+  <div class="player-card">
+    <h2>{{ p.player }}</h2>
 
-  <script>
-    const labels = JSON.parse(document.getElementById("labels-data").textContent);
-    const goals = JSON.parse(document.getElementById("goals-data").textContent);
+    <div class="stats">
+      <div class="stat">Matches<br><b>{{ p.matches }}</b></div>
+      <div class="stat">Goals<br><b>{{ p.goals }}</b></div>
+      <div class="stat">Assists<br><b>{{ p.assists }}</b></div>
+      <div class="stat">Tackles<br><b>{{ p.tackles }}</b></div>
+      <div class="stat">Shots<br><b>{{ p.shots }}</b></div>
+      <div class="stat">Avg Goals<br><b>{{ p.avg_goals }}</b></div>
+    </div>
 
-    new Chart(document.getElementById("goalsChart"), {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [{
-          label: "Total Goals",
-          data: goals,
-          backgroundColor: "#4f86ff"
-        }]
-      },
-      options:{
-        responsive:true,
-        maintainAspectRatio:false
-      }
-    });
-  </script>
-</div>
+    <div class="suggestions">
+      <b>Performance Insights & Suggestions:</b>
+      <ul>
+        {% for s in p.suggestions %}
+          <li>{{ s }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}
 
-<div class="box">
-  <h3>Season Summary Table</h3>
-  <table>
-    <tr>
-      <th>Player</th>
-      <th>Matches</th>
-      <th>Goals</th>
-      <th>Assists</th>
-      <th>Tackles</th>
-      <th>Avg Goals</th>
-    </tr>
-    {% for row in season_data %}
-    <tr>
-      <td>{{ row.player__player_name }}</td>
-      <td>{{ row.matches_played }}</td>
-      <td>{{ row.total_goals }}</td>
-      <td>{{ row.total_assists }}</td>
-      <td>{{ row.total_tackles }}</td>
-      <td>{{ row.avg_goals|floatformat:2 }}</td>
-    </tr>
-    {% endfor %}
-  </table>
 </div>
 
 </body>
