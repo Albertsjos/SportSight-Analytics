@@ -3,6 +3,7 @@
 <head>
   <title>Playing XI Player Comparison</title>
 
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -17,12 +18,14 @@
       padding:20px 28px;
       display:flex;
       justify-content:space-between;
+      align-items:center;
       border-bottom:1px solid rgba(255,255,255,0.1);
     }
 
     .top a{
       color:#4f86ff;
       text-decoration:none;
+      font-size:14px;
     }
 
     .container{
@@ -33,10 +36,10 @@
 
     select{
       width:100%;
-      height:240px;
+      height:260px;
       background:#0b1220;
       color:white;
-      border:1px solid rgba(255,255,255,0.2);
+      border:1px solid rgba(255,255,255,0.25);
       border-radius:14px;
       padding:12px;
       font-size:14px;
@@ -44,31 +47,37 @@
 
     button{
       margin-top:16px;
-      padding:14px 24px;
+      padding:14px 26px;
       background:#4f86ff;
       border:none;
       border-radius:14px;
       color:white;
       font-weight:bold;
       cursor:pointer;
+      font-size:15px;
+    }
+
+    button:hover{
+      opacity:0.9;
     }
 
     .chart-box{
       margin-top:40px;
-      background:rgba(255,255,255,0.05);
+      background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
       border-radius:18px;
       padding:24px;
     }
 
     h3{
-      margin-bottom:14px;
+      margin-bottom:20px;
     }
   </style>
 </head>
 
 <body>
 
+<!-- TOP BAR -->
 <div class="top">
   <b>👥 Playing XI Player Comparison</b>
   <a href="/dashboard/">← Back to Dashboard</a>
@@ -76,18 +85,25 @@
 
 <div class="container">
 
-  <p>Select <b>2–11 players</b> to compare their individual performance together.</p>
+  <p>
+    Select <b>2–11 players</b> to compare their
+    <b>individual performance together</b>.
+  </p>
 
+  <!-- PLAYER SELECT -->
   <form method="get">
     <select name="players" multiple required>
       {% for p in players %}
-        <option value="{{ p.id }}">{{ p.player_name }} ({{ p.position }})</option>
+        <option value="{{ p.id }}">
+          {{ p.player_name }} ({{ p.position }})
+        </option>
       {% endfor %}
     </select>
 
     <button type="submit">Compare Players</button>
   </form>
 
+  <!-- CHART -->
   {% if chart_data %}
   <div class="chart-box">
     <h3>📊 Player Performance Comparison ({{ selected_count }} players)</h3>
@@ -97,51 +113,55 @@
 
 </div>
 
+<!-- SAFELY PASS DATA TO JS -->
 {{ chart_data|json_script:"chart-data" }}
 
 <script>
-const data = JSON.parse(
-  document.getElementById("chart-data").textContent
-);
+  const chartElement = document.getElementById("chart-data");
 
-const labels = data.map(p => p.name);
+  if (chartElement) {
+    const data = JSON.parse(chartElement.textContent);
 
-new Chart(document.getElementById('playerChart'), {
-  type: 'bar',
-  data: {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Goals',
-        data: data.map(p => p.goals),
-        backgroundColor: '#4f86ff'
+    const labels = data.map(p => p.name);
+
+    new Chart(document.getElementById('playerChart'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Goals',
+            data: data.map(p => p.goals),
+            backgroundColor: '#4f86ff'
+          },
+          {
+            label: 'Assists',
+            data: data.map(p => p.assists),
+            backgroundColor: '#ff6b6b'
+          },
+          {
+            label: 'Tackles',
+            data: data.map(p => p.tackles),
+            backgroundColor: '#f4c430'
+          },
+          {
+            label: 'Shots on Target',
+            data: data.map(p => p.shots),
+            backgroundColor: '#2ecc71'
+          }
+        ]
       },
-      {
-        label: 'Assists',
-        data: data.map(p => p.assists),
-        backgroundColor: '#ff6b6b'
-      },
-      {
-        label: 'Tackles',
-        data: data.map(p => p.tackles),
-        backgroundColor: '#f4c430'
-      },
-      {
-        label: 'Shots on Target',
-        data: data.map(p => p.shots),
-        backgroundColor: '#2ecc71'
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
       }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      y: { beginAtZero: true }
-    }
+    });
   }
-});
 </script>
-{% endif %}
 
 </body>
 </html>
