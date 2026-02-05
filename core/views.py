@@ -210,38 +210,25 @@ def compare_xi(request):
     players = Player.objects.all().order_by("player_name")
 
     selected_ids = request.GET.getlist("players")
-
     selected_players = Player.objects.filter(id__in=selected_ids)
 
-    performances = PlayerPerformance.objects.filter(
+    stats = PlayerPerformance.objects.filter(
         player__in=selected_players
+    ).aggregate(
+        goals=Sum("goals"),
+        assists=Sum("assists"),
+        tackles=Sum("tackles"),
+        shots=Sum("shots_on_target"),
     )
-
-    summary = {
-        "goals": sum(p.goals for p in performances),
-        "assists": sum(p.assists for p in performances),
-        "tackles": sum(p.tackles for p in performances),
-        "shots": sum(p.shots_on_target for p in performances),
-    }
-
-    avg = {}
-    count = selected_players.count()
-    if count > 0:
-        avg = {
-            "goals": round(summary["goals"] / count, 2),
-            "shots": round(summary["shots"] / count, 2),
-        }
 
     context = {
         "players": players,
         "selected_players": selected_players,
-        "summary": summary,
-        "avg": avg,
-        "count": count,
+        "stats": stats,
+        "count": selected_players.count(),
     }
 
     return render(request, "core/compare_xi.html", context)
-
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):

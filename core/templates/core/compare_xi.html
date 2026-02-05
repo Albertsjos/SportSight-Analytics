@@ -5,89 +5,121 @@
 
   <style>
     body{
+      margin:0;
+      font-family: Arial, sans-serif;
       background: radial-gradient(circle at top, #0b1220, #050816);
       color:white;
-      font-family: Arial;
-      padding:30px;
     }
 
-    select, button{
-      padding:12px;
-      border-radius:10px;
+    .top{
+      padding:20px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .top a{
+      color:#4f86ff;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .container{
+      padding:30px 28px;
+      max-width:900px;
+      margin:auto;
+    }
+
+    h2{
+      margin-bottom:10px;
+    }
+
+    select{
+      width:100%;
+      height:220px;
+      padding:10px;
+      border-radius:12px;
       border:none;
-      margin-right:10px;
+      font-size:14px;
     }
 
     button{
+      margin-top:16px;
+      padding:14px 22px;
       background:#4f86ff;
       color:white;
-      font-weight:bold;
+      border:none;
+      border-radius:14px;
+      font-size:15px;
       cursor:pointer;
+      font-weight:bold;
     }
 
-    .card{
+    .box{
+      margin-top:30px;
       background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      padding:20px;
-      margin-top:20px;
+      border-radius:18px;
+      padding:22px;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:15px;
+    .stat{
+      margin:8px 0;
+      font-size:15px;
     }
 
-    th, td{
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,0.15);
-      text-align:left;
+    .note{
+      margin-top:18px;
+      padding:14px;
+      background:rgba(79,134,255,0.15);
+      border-radius:12px;
+      font-size:14px;
     }
   </style>
 </head>
 
 <body>
 
-<h2>Playing XI Player Comparison</h2>
-
-<form method="get">
-  <select name="players" multiple size="8">
-    {% for p in players %}
-      <option value="{{ p.id }}">{{ p.player_name }}</option>
-    {% endfor %}
-  </select>
-
-  <button type="submit">Compare Players</button>
-</form>
-
-{% if count >= 2 %}
-<div class="card">
-  <h3>Team Analytics Summary ({{ count }} Players)</h3>
-  Goals: {{ summary.goals }} <br>
-  Assists: {{ summary.assists }} <br>
-  Tackles: {{ summary.tackles }} <br>
-  Shots: {{ summary.shots }} <br>
-  Avg Goals / Player: {{ avg.goals }} <br>
+<div class="top">
+  <b>👥 Playing XI Comparison</b>
+  <a href="/dashboard/">← Back to Dashboard</a>
 </div>
 
-<div class="card">
-  <h3>Individual Contributions</h3>
-  <table>
-    <tr>
-      <th>Player</th>
-      <th>Position</th>
-    </tr>
+<div class="container">
 
-    {% for p in selected_players %}
-    <tr>
-      <td>{{ p.player_name }}</td>
-      <td>{{ p.position }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+  <p>Select up to <b>11 players</b> to compare combined team performance.</p>
+
+  <form method="get">
+    <select name="players" multiple>
+      {% for p in players %}
+        <option value="{{ p.id }}"
+          {% if p in selected_players %}selected{% endif %}>
+          {{ p.player_name }} ({{ p.position }})
+        </option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Compare Playing XI</button>
+  </form>
+
+  {% if count > 0 %}
+  <div class="box">
+    <h3>Team Performance Summary ({{ count }} players)</h3>
+
+    <div class="stat">⚽ Goals: {{ stats.goals|default:0 }}</div>
+    <div class="stat">🎯 Assists: {{ stats.assists|default:0 }}</div>
+    <div class="stat">🛡 Tackles: {{ stats.tackles|default:0 }}</div>
+    <div class="stat">🥅 Shots on Target: {{ stats.shots|default:0 }}</div>
+
+    <div class="note">
+      📊 <b>Analytics Insight:</b>
+      This Playing XI shows overall team contribution based on aggregated match data.
+    </div>
+  </div>
+  {% endif %}
+
 </div>
-{% endif %}
 
 </body>
 </html>

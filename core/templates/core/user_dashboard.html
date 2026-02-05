@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>User Dashboard | SportSight</title>
+  <title>User Dashboard | SportSight Analytics</title>
 
   <style>
     body{
@@ -141,97 +141,100 @@
 
 <body>
 
-  <!-- TOP BAR -->
-  <div class="top">
-    <b>User Dashboard</b>
-    <a href="/logout/">Logout</a>
-  </div>
+<!-- TOP BAR -->
+<div class="top">
+  <b>User Dashboard</b>
+  <a href="/logout/">Logout</a>
+</div>
 
-  <!-- WELCOME -->
-  <div class="welcome">
-    Welcome to <b>SportSight Analytics</b>.  
-    Track player performance, explore season-level insights, and make data-driven decisions.
-  </div>
+<!-- WELCOME -->
+<div class="welcome">
+  Welcome to <b>SportSight Analytics</b>.  
+  Track individual player performance, compare squad members, and analyze season-level trends using data-driven analytics.
+</div>
 
-  <!-- MAIN ACTION CARDS -->
-  <div class="grid">
+<!-- MAIN FEATURES -->
+<div class="grid">
 
-    <div class="card">
-      <div>
-        <h3>📊 Match Analytics</h3>
-        <p>
-          Analyze match-wise performance trends such as goals scored across different matches.
-        </p>
-      </div>
-      <a href="/analytics/">View Match Analytics</a>
+  <div class="card">
+    <div>
+      <h3>📊 Match Analytics</h3>
+      <p>
+        Analyze match-wise performance such as goals scored, assists, and tackles across different games.
+      </p>
     </div>
-
-    <div class="card">
-      <div>
-        <h3>⚖️ Player Comparison</h3>
-        <p>
-          Compare two players based on goals, assists, tackles, and shots on target.
-        </p>
-      </div>
-      <a href="/compare/">Compare Players</a>
-    </div>
-
-    <div class="card">
-      <div>
-        <h3>📈 Season Analytics</h3>
-        <p>
-          View overall season performance, consistency trends, and improvement areas.
-        </p>
-      </div>
-      <a href="/season-analytics/">View Season Analytics</a>
-    </div>
-
+    <a href="/analytics/">View Match Analytics</a>
   </div>
 
   <div class="card">
-  <h3>👥 Compare Playing XI</h3>
-  <p>Compare full team performance instead of individual players.</p>
-    <a href="/compare/" class="btn">Compare Players (2)</a>
-    <a href="/compare-xi/" class="btn">Compare Playing XI</a>
+    <div>
+      <h3>⚖️ Player Comparison (2 Players)</h3>
+      <p>
+        Compare two players based on goals, assists, tackles, and shots on target.
+      </p>
+    </div>
+    <a href="/compare/">Compare Players</a>
+  </div>
+
+  <div class="card">
+    <div>
+      <h3>👥 Playing XI Comparison</h3>
+      <p>
+        Compare up to 11 players together to evaluate full squad performance using aggregated analytics.
+      </p>
+    </div>
+    <a href="/compare-xi/">Compare Playing XI</a>
+  </div>
+
+  <div class="card">
+    <div>
+      <h3>📈 Season Analytics</h3>
+      <p>
+        View season-level performance trends and identify areas for improvement.
+      </p>
+    </div>
+    <a href="/season-analytics/">View Season Analytics</a>
+  </div>
+
 </div>
 
-  <!-- QUICK INSIGHTS -->
-  <div class="section">
-    <h2 class="section-title">Quick Insights</h2>
-    <p class="section-subtitle">Overall snapshot from recorded performance data</p>
+<!-- QUICK INSIGHTS -->
+<div class="section">
+  <h2 class="section-title">Quick Insights</h2>
+  <p class="section-subtitle">Snapshot of overall performance data</p>
 
-    <div class="grid-3">
-      <div class="mini-card">
-        ⚽ Total Goals
-        <h3>24</h3>
-      </div>
+  <div class="grid-3">
+    <div class="mini-card">
+      ⚽ Total Goals
+      <h3>24</h3>
+    </div>
 
-      <div class="mini-card">
-        📊 Matches Analyzed
-        <h3>8</h3>
-      </div>
+    <div class="mini-card">
+      📊 Matches Analyzed
+      <h3>8</h3>
+    </div>
 
-      <div class="mini-card">
-        🏆 Top Performer
-        <h3>Lewandowski</h3>
-      </div>
+    <div class="mini-card">
+      🏆 Top Performer
+      <h3>Lewandowski</h3>
     </div>
   </div>
+</div>
 
-  <!-- RECENT ACTIVITY -->
-  <div class="section">
-    <h2 class="section-title">Recent Activity</h2>
+<!-- RECENT ACTIVITY -->
+<div class="section">
+  <h2 class="section-title">Recent Activity</h2>
 
-    <ul class="activity-list">
-      <li>⚽ Lewandowski scored 2 goals</li>
-      <li>🎯 Raphinha assisted once</li>
-      <li>📈 Player comparison performed</li>
-    </ul>
-  </div>
+  <ul class="activity-list">
+    <li>⚽ Lewandowski scored 2 goals</li>
+    <li>🎯 Raphinha assisted once</li>
+    <li>👥 Playing XI comparison performed</li>
+  </ul>
+</div>
 
-  <div class="footer-note">
-    SportSight Analytics · MCA Final Project
-  </div>
+<div class="footer-note">
+  SportSight Analytics · MCA Final Project
+</div>
 
 </body>
 </html>
