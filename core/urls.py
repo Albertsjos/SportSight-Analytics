@@ -9,7 +9,7 @@ urlpatterns = [
     path("season-analytics/", views.season_analytics, name="season_analytics"),
     path("analytics/", views.analytics_page, name="analytics"),
     path("season-analytics/", views.season_analytics, name="season_analytics"),
-    path("compare-xi/", views.compare_xi, name="compare_xi"),
+   path("compare-players/", views.compare_players, name="compare_players"),
     path("compare/", views.compare_page, name="compare"),
     path("logout/", views.logout_view, name="logout"),
 ]

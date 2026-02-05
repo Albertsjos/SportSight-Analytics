@@ -206,55 +206,54 @@ def season_analytics(request):
     )
 
 @login_required
-def compare_xi(request):
-    teams = Player.objects.values_list("team__team_name", flat=True).distinct()
+def compare_players(request):
+    teams = Team.objects.all()
 
-    team1 = request.GET.get("team1")
-    team2 = request.GET.get("team2")
+    team_id = request.GET.get("team")
+    p1_id = request.GET.get("p1")
+    p2_id = request.GET.get("p2")
 
-    def team_stats(team):
-        players = Player.objects.filter(team__team_name=team)[:11]
-        performances = PlayerPerformance.objects.filter(player__in=players)
-
-        goals = sum(p.goals for p in performances)
-        assists = sum(p.assists for p in performances)
-        tackles = sum(p.tackles for p in performances)
-        shots = sum(p.shots_on_target for p in performances)
-
-        return {
-            "players": players,
-            "goals": goals,
-            "assists": assists,
-            "tackles": tackles,
-            "shots": shots,
-        }
-
-    data1 = data2 = None
+    players = Player.objects.none()
+    stats1 = stats2 = None
     insight = None
 
-    if team1 and team2:
-        data1 = team_stats(team1)
-        data2 = team_stats(team2)
+    if team_id:
+        players = Player.objects.filter(team_id=team_id)
 
-        if data1["goals"] > data2["goals"]:
-            insight = f"{team1} Playing XI performed better offensively."
-        elif data1["goals"] < data2["goals"]:
-            insight = f"{team2} Playing XI performed better offensively."
-        else:
-            insight = "Both Playing XIs performed equally."
-
-    return render(
-        request,
-        "core/compare_xi.html",
-        {
-            "teams": teams,
-            "team1": team1,
-            "team2": team2,
-            "data1": data1,
-            "data2": data2,
-            "insight": insight,
+    def get_stats(player_id):
+        qs = PlayerPerformance.objects.filter(player_id=player_id)
+        return {
+            "goals": qs.aggregate(Sum("goals"))["goals__sum"] or 0,
+            "assists": qs.aggregate(Sum("assists"))["assists__sum"] or 0,
+            "tackles": qs.aggregate(Sum("tackles"))["tackles__sum"] or 0,
+            "shots": qs.aggregate(Sum("shots_on_target"))["shots_on_target__sum"] or 0,
+            "matches": qs.count(),
         }
-    )
+
+    if p1_id and p2_id:
+        stats1 = get_stats(p1_id)
+        stats2 = get_stats(p2_id)
+
+        if stats1["goals"] > stats2["goals"]:
+            insight = "Player A is more effective in goal scoring."
+        elif stats1["goals"] < stats2["goals"]:
+            insight = "Player B is more effective in goal scoring."
+        else:
+            insight = "Both players have similar goal contributions."
+
+    context = {
+        "teams": teams,
+        "players": players,
+        "stats1": stats1,
+        "stats2": stats2,
+        "team_id": team_id,
+        "p1_id": p1_id,
+        "p2_id": p2_id,
+        "insight": insight,
+    }
+
+    return render(request, "core/compare_players.html", context)
+
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):
