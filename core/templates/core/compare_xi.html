@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
-  <title>Playing XI Comparison</title>
+  <title>Playing XI Player Comparison</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     body{
@@ -27,7 +29,7 @@
 
     .container{
       padding:30px 28px;
-      max-width:900px;
+      max-width:1000px;
       margin:auto;
     }
 
@@ -37,15 +39,18 @@
 
     select{
       width:100%;
-      height:220px;
-      padding:10px;
+      padding:12px;
       border-radius:12px;
       border:none;
       font-size:14px;
+      margin-bottom:16px;
+    }
+
+    .players{
+      height:220px;
     }
 
     button{
-      margin-top:16px;
       padding:14px 22px;
       background:#4f86ff;
       color:white;
@@ -56,21 +61,16 @@
       font-weight:bold;
     }
 
-    .box{
-      margin-top:30px;
+    .chart-box{
+      margin-top:40px;
       background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
       border-radius:18px;
-      padding:22px;
-    }
-
-    .stat{
-      margin:8px 0;
-      font-size:15px;
+      padding:26px;
     }
 
     .note{
-      margin-top:18px;
+      margin-top:20px;
       padding:14px;
       background:rgba(79,134,255,0.15);
       border-radius:12px;
@@ -82,44 +82,100 @@
 <body>
 
 <div class="top">
-  <b>👥 Playing XI Comparison</b>
+  <b>👥 Playing XI Player Comparison</b>
   <a href="/dashboard/">← Back to Dashboard</a>
 </div>
 
 <div class="container">
 
-  <p>Select up to <b>11 players</b> to compare combined team performance.</p>
+  <p>
+    Select how many players you want to compare (minimum 2, maximum 11).
+    This compares <b>individual player contributions</b>, not team totals.
+  </p>
 
+  <!-- FORM -->
   <form method="get">
-    <select name="players" multiple>
-      {% for p in players %}
-        <option value="{{ p.id }}"
-          {% if p in selected_players %}selected{% endif %}>
-          {{ p.player_name }} ({{ p.position }})
-        </option>
+
+    <label><b>Select number of players:</b></label>
+    <select name="count" required>
+      <option value="">-- Select --</option>
+      {% for i in "23456789101"|make_list %}
+        <option value="{{ i }}" {% if max_count == i|add:"0" %}selected{% endif %}>{{ i }}</option>
       {% endfor %}
     </select>
 
-    <button type="submit">Compare Playing XI</button>
+    <label><b>Select players:</b></label>
+    <select name="players" multiple class="players">
+      {% for p in players %}
+        <option value="{{ p.id }}">{{ p.player_name }} ({{ p.position }})</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Compare Players</button>
   </form>
 
-  {% if count > 0 %}
-  <div class="box">
-    <h3>Team Performance Summary ({{ count }} players)</h3>
+  <!-- CHARTS -->
+  {% if labels %}
+  <div class="chart-box">
+    <h3>📊 Player Performance Comparison</h3>
 
-    <div class="stat">⚽ Goals: {{ stats.goals|default:0 }}</div>
-    <div class="stat">🎯 Assists: {{ stats.assists|default:0 }}</div>
-    <div class="stat">🛡 Tackles: {{ stats.tackles|default:0 }}</div>
-    <div class="stat">🥅 Shots on Target: {{ stats.shots|default:0 }}</div>
+    <canvas id="goalsChart"></canvas>
+    <br><br>
+    <canvas id="assistsChart"></canvas>
+    <br><br>
+    <canvas id="tacklesChart"></canvas>
+    <br><br>
+    <canvas id="shotsChart"></canvas>
 
     <div class="note">
-      📊 <b>Analytics Insight:</b>
-      This Playing XI shows overall team contribution based on aggregated match data.
+      📈 <b>Analytics Insight:</b>
+      This visualization compares selected players equally across multiple performance metrics.
     </div>
   </div>
   {% endif %}
 
 </div>
+
+<!-- DATA FROM DJANGO -->
+{{ labels|json_script:"labels" }}
+{{ goals|json_script:"goals" }}
+{{ assists|json_script:"assists" }}
+{{ tackles|json_script:"tackles" }}
+{{ shots|json_script:"shots" }}
+
+<!-- CHART SCRIPT -->
+<script>
+const labels = JSON.parse(document.getElementById("labels")?.textContent || "[]");
+const goals = JSON.parse(document.getElementById("goals")?.textContent || "[]");
+const assists = JSON.parse(document.getElementById("assists")?.textContent || "[]");
+const tackles = JSON.parse(document.getElementById("tackles")?.textContent || "[]");
+const shots = JSON.parse(document.getElementById("shots")?.textContent || "[]");
+
+function drawChart(id, label, data){
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: label,
+        data: data,
+        backgroundColor: '#4f86ff'
+      }]
+    },
+    options:{
+      responsive:true,
+      scales:{ y:{ beginAtZero:true } }
+    }
+  });
+}
+
+if(labels.length){
+  drawChart("goalsChart", "Goals", goals);
+  drawChart("assistsChart", "Assists", assists);
+  drawChart("tacklesChart", "Tackles", tackles);
+  drawChart("shotsChart", "Shots on Target", shots);
+}
+</script>
 
 </body>
 </html>
