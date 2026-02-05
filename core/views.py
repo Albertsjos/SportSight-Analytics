@@ -205,6 +205,59 @@ def season_analytics(request):
         {"analytics_data": analytics_data}
     )
 
+@login_required
+def compare_xi(request):
+    teams = Match.objects.values_list("team_name", flat=True).distinct()
+
+    team1 = request.GET.get("team1")
+    team2 = request.GET.get("team2")
+
+    def team_stats(team):
+        players = Player.objects.filter(team_name=team)[:11]
+        performances = PlayerPerformance.objects.filter(player__in=players)
+
+        goals = sum(p.goals for p in performances)
+        assists = sum(p.assists for p in performances)
+        tackles = sum(p.tackles for p in performances)
+        shots = sum(p.shots_on_target for p in performances)
+
+        avg_goals = round(goals / 11, 2) if goals else 0
+
+        return {
+            "players": players,
+            "goals": goals,
+            "assists": assists,
+            "tackles": tackles,
+            "shots": shots,
+            "avg_goals": avg_goals
+        }
+
+    data1 = data2 = None
+    insight = None
+
+    if team1 and team2:
+        data1 = team_stats(team1)
+        data2 = team_stats(team2)
+
+        if data1["goals"] > data2["goals"]:
+            insight = f"{team1} Playing XI performed better offensively."
+        elif data1["goals"] < data2["goals"]:
+            insight = f"{team2} Playing XI performed better offensively."
+        else:
+            insight = "Both Playing XIs performed equally in attack."
+
+    return render(
+        request,
+        "core/compare_xi.html",
+        {
+            "teams": teams,
+            "team1": team1,
+            "team2": team2,
+            "data1": data1,
+            "data2": data2,
+            "insight": insight
+        }
+    )
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):
