@@ -206,53 +206,41 @@ def season_analytics(request):
     )
 
 @login_required
-def compare_players(request):
-    teams = Team.objects.all()
+def compare_xi(request):
+    players = Player.objects.all().order_by("player_name")
 
-    team_id = request.GET.get("team")
-    p1_id = request.GET.get("p1")
-    p2_id = request.GET.get("p2")
+    selected_ids = request.GET.getlist("players")
 
-    players = Player.objects.none()
-    stats1 = stats2 = None
-    insight = None
+    selected_players = Player.objects.filter(id__in=selected_ids)
 
-    if team_id:
-        players = Player.objects.filter(team_id=team_id)
+    performances = PlayerPerformance.objects.filter(
+        player__in=selected_players
+    )
 
-    def get_stats(player_id):
-        qs = PlayerPerformance.objects.filter(player_id=player_id)
-        return {
-            "goals": qs.aggregate(Sum("goals"))["goals__sum"] or 0,
-            "assists": qs.aggregate(Sum("assists"))["assists__sum"] or 0,
-            "tackles": qs.aggregate(Sum("tackles"))["tackles__sum"] or 0,
-            "shots": qs.aggregate(Sum("shots_on_target"))["shots_on_target__sum"] or 0,
-            "matches": qs.count(),
-        }
-
-    if p1_id and p2_id:
-        stats1 = get_stats(p1_id)
-        stats2 = get_stats(p2_id)
-
-        if stats1["goals"] > stats2["goals"]:
-            insight = "Player A is more effective in goal scoring."
-        elif stats1["goals"] < stats2["goals"]:
-            insight = "Player B is more effective in goal scoring."
-        else:
-            insight = "Both players have similar goal contributions."
-
-    context = {
-        "teams": teams,
-        "players": players,
-        "stats1": stats1,
-        "stats2": stats2,
-        "team_id": team_id,
-        "p1_id": p1_id,
-        "p2_id": p2_id,
-        "insight": insight,
+    summary = {
+        "goals": sum(p.goals for p in performances),
+        "assists": sum(p.assists for p in performances),
+        "tackles": sum(p.tackles for p in performances),
+        "shots": sum(p.shots_on_target for p in performances),
     }
 
-    return render(request, "core/compare_players.html", context)
+    avg = {}
+    count = selected_players.count()
+    if count > 0:
+        avg = {
+            "goals": round(summary["goals"] / count, 2),
+            "shots": round(summary["shots"] / count, 2),
+        }
+
+    context = {
+        "players": players,
+        "selected_players": selected_players,
+        "summary": summary,
+        "avg": avg,
+        "count": count,
+    }
+
+    return render(request, "core/compare_xi.html", context)
 
 
 # ---------------- LOGOUT ----------------
