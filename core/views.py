@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.db.models import Sum, Count, Avg
-from .models import Player, Match, PlayerPerformance
+from .models import Player, PlayerPerformance
 
 
 # ---------------- HOME ----------------
@@ -207,42 +207,33 @@ def season_analytics(request):
 
 @login_required
 def compare_xi(request):
-    players = Player.objects.all().order_by("player_name")
+    players = Player.objects.all()
 
     selected_ids = request.GET.getlist("players")
 
-    comparison_data = []
+    chart_data = []
 
-    if selected_ids:
-        performances = (
-            PlayerPerformance.objects
-            .filter(player_id__in=selected_ids)
-            .select_related("player")
-        )
-
+    if len(selected_ids) >= 2:
         for pid in selected_ids:
-            p_stats = performances.filter(player_id=pid)
+            player = Player.objects.get(id=pid)
 
-            if not p_stats.exists():
-                continue
+            stats = PlayerPerformance.objects.filter(player=player)
 
-            player = p_stats.first().player
-
-            comparison_data.append({
+            chart_data.append({
                 "name": player.player_name,
-                "goals": sum(x.goals for x in p_stats),
-                "assists": sum(x.assists for x in p_stats),
-                "tackles": sum(x.tackles for x in p_stats),
-                "shots": sum(x.shots_on_target for x in p_stats),
+                "goals": sum(p.goals for p in stats),
+                "assists": sum(p.assists for p in stats),
+                "tackles": sum(p.tackles for p in stats),
+                "shots": sum(p.shots_on_target for p in stats),
             })
 
     context = {
         "players": players,
-        "selected_ids": list(map(int, selected_ids)),
-        "data": comparison_data,
+        "chart_data": chart_data,
+        "selected_count": len(selected_ids)
     }
 
-    return render(request, "core/compare_xi.html", context)
+    return render(request, "compare_xi.html", context)
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):
