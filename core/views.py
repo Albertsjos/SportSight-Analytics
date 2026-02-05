@@ -207,13 +207,13 @@ def season_analytics(request):
 
 @login_required
 def compare_xi(request):
-    teams = Player.objects.values_list("team__name", flat=True).distinct()
+    teams = Player.objects.values_list("team__team_name", flat=True).distinct()
 
     team1 = request.GET.get("team1")
     team2 = request.GET.get("team2")
 
     def team_stats(team):
-        players = Player.objects.filter(team__name=team)[:11]
+        players = Player.objects.filter(team__team_name=team)[:11]
         performances = PlayerPerformance.objects.filter(player__in=players)
 
         goals = sum(p.goals for p in performances)
@@ -221,15 +221,12 @@ def compare_xi(request):
         tackles = sum(p.tackles for p in performances)
         shots = sum(p.shots_on_target for p in performances)
 
-        avg_goals = round(goals / 11, 2) if goals else 0
-
         return {
             "players": players,
             "goals": goals,
             "assists": assists,
             "tackles": tackles,
             "shots": shots,
-            "avg_goals": avg_goals
         }
 
     data1 = data2 = None
@@ -255,7 +252,7 @@ def compare_xi(request):
             "team2": team2,
             "data1": data1,
             "data2": data2,
-            "insight": insight
+            "insight": insight,
         }
     )
 
