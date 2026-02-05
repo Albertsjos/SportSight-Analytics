@@ -41,9 +41,14 @@
       width:100%;
       padding:12px;
       border-radius:12px;
-      border:none;
+      border:1px solid rgba(255,255,255,0.2);
       font-size:14px;
-      margin-bottom:16px;
+      background:#0b1220;
+      color:white;
+    }
+    select option{
+      background:#0b1220;
+      color:white;
     }
 
     .players{
@@ -113,6 +118,22 @@
 
     <button type="submit">Compare Players</button>
   </form>
+  {% if labels %}
+    <div class="box">
+
+     <h3>📊 Player Performance Comparison</h3>
+
+        <canvas id="goalsChart" height="120"></canvas>
+    <br>
+        <canvas id="assistsChart" height="120"></canvas>
+    <br>
+        <canvas id="tacklesChart" height="120"></canvas>
+    <br>
+        <canvas id="shotsChart" height="120"></canvas>
+
+    </div>
+{% endif %}
+
 
   <!-- CHARTS -->
   {% if labels %}
@@ -144,38 +165,66 @@
 {{ shots|json_script:"shots" }}
 
 <!-- CHART SCRIPT -->
-<script>
-const labels = JSON.parse(document.getElementById("labels")?.textContent || "[]");
-const goals = JSON.parse(document.getElementById("goals")?.textContent || "[]");
-const assists = JSON.parse(document.getElementById("assists")?.textContent || "[]");
-const tackles = JSON.parse(document.getElementById("tackles")?.textContent || "[]");
-const shots = JSON.parse(document.getElementById("shots")?.textContent || "[]");
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-function drawChart(id, label, data){
-  new Chart(document.getElementById(id), {
-    type: 'bar',
+{{ labels|json_script:"labels" }}
+{{ goals|json_script:"goals" }}
+{{ assists|json_script:"assists" }}
+{{ tackles|json_script:"tackles" }}
+{{ shots|json_script:"shots" }}
+
+<script>
+const labels = JSON.parse(document.getElementById("labels").textContent);
+const goals = JSON.parse(document.getElementById("goals").textContent);
+const assists = JSON.parse(document.getElementById("assists").textContent);
+const tackles = JSON.parse(document.getElementById("tackles").textContent);
+const shots = JSON.parse(document.getElementById("shots").textContent);
+
+function drawBarChart(canvasId, title, dataArray){
+  new Chart(document.getElementById(canvasId), {
+    type: "bar",
     data: {
       labels: labels,
       datasets: [{
-        label: label,
-        data: data,
-        backgroundColor: '#4f86ff'
+        label: title,
+        data: dataArray,
+        backgroundColor: "#4f86ff"
       }]
     },
-    options:{
-      responsive:true,
-      scales:{ y:{ beginAtZero:true } }
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: title,
+          color: "white",
+          font: { size: 16 }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "white" },
+          grid: { color: "rgba(255,255,255,0.1)" }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: "white" },
+          grid: { color: "rgba(255,255,255,0.1)" }
+        }
+      }
     }
   });
 }
 
-if(labels.length){
-  drawChart("goalsChart", "Goals", goals);
-  drawChart("assistsChart", "Assists", assists);
-  drawChart("tacklesChart", "Tackles", tackles);
-  drawChart("shotsChart", "Shots on Target", shots);
+if(labels.length > 1){
+  drawBarChart("goalsChart", "Goals Comparison", goals);
+  drawBarChart("assistsChart", "Assists Comparison", assists);
+  drawBarChart("tacklesChart", "Tackles Comparison", tackles);
+  drawBarChart("shotsChart", "Shots on Target Comparison", shots);
 }
 </script>
+
 
 </body>
 </html>
