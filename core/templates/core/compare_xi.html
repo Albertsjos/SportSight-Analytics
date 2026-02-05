@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Playing XI Player Comparison</title>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -18,68 +17,51 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      border-bottom:1px solid rgba(255,255,255,0.08);
+      border-bottom:1px solid rgba(255,255,255,0.1);
     }
 
     .top a{
       color:#4f86ff;
       text-decoration:none;
-      font-size:14px;
     }
 
     .container{
-      padding:30px 28px;
       max-width:1000px;
       margin:auto;
-    }
-
-    h2{
-      margin-bottom:10px;
+      padding:30px;
     }
 
     select{
       width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.2);
-      font-size:14px;
-      background:#0b1220;
-      color:white;
-    }
-    select option{
-      background:#0b1220;
-      color:white;
-    }
-
-    .players{
       height:220px;
+      background:#0b1220;
+      color:white;
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:12px;
+      padding:10px;
     }
 
     button{
-      padding:14px 22px;
+      margin-top:15px;
+      padding:14px 24px;
       background:#4f86ff;
-      color:white;
       border:none;
       border-radius:14px;
-      font-size:15px;
-      cursor:pointer;
+      color:white;
       font-weight:bold;
+      cursor:pointer;
     }
 
-    .chart-box{
-      margin-top:40px;
+    .box{
+      margin-top:35px;
       background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
       border-radius:18px;
-      padding:26px;
+      padding:24px;
     }
 
-    .note{
+    canvas{
       margin-top:20px;
-      padding:14px;
-      background:rgba(79,134,255,0.15);
-      border-radius:12px;
-      font-size:14px;
     }
   </style>
 </head>
@@ -93,24 +75,10 @@
 
 <div class="container">
 
-  <p>
-    Select how many players you want to compare (minimum 2, maximum 11).
-    This compares <b>individual player contributions</b>, not team totals.
-  </p>
+  <p>Select <b>2 to 11 players</b> to compare individual performance.</p>
 
-  <!-- FORM -->
   <form method="get">
-
-    <label><b>Select number of players:</b></label>
-    <select name="count" required>
-      <option value="">-- Select --</option>
-      {% for i in "23456789101"|make_list %}
-        <option value="{{ i }}" {% if max_count == i|add:"0" %}selected{% endif %}>{{ i }}</option>
-      {% endfor %}
-    </select>
-
-    <label><b>Select players:</b></label>
-    <select name="players" multiple class="players">
+    <select name="players" multiple required>
       {% for p in players %}
         <option value="{{ p.id }}">{{ p.player_name }} ({{ p.position }})</option>
       {% endfor %}
@@ -118,113 +86,46 @@
 
     <button type="submit">Compare Players</button>
   </form>
-  {% if labels %}
-    <div class="box">
 
-     <h3>📊 Player Performance Comparison</h3>
-
-        <canvas id="goalsChart" height="120"></canvas>
-    <br>
-        <canvas id="assistsChart" height="120"></canvas>
-    <br>
-        <canvas id="tacklesChart" height="120"></canvas>
-    <br>
-        <canvas id="shotsChart" height="120"></canvas>
-
-    </div>
-{% endif %}
-
-
-  <!-- CHARTS -->
-  {% if labels %}
-  <div class="chart-box">
+  {% if selected_count >= 2 %}
+  <div class="box">
     <h3>📊 Player Performance Comparison</h3>
+    <canvas id="compareChart"></canvas>
 
-    <canvas id="goalsChart"></canvas>
-    <br><br>
-    <canvas id="assistsChart"></canvas>
-    <br><br>
-    <canvas id="tacklesChart"></canvas>
-    <br><br>
-    <canvas id="shotsChart"></canvas>
+    {{ labels|json_script:"labels" }}
+    {{ goals|json_script:"goals" }}
+    {{ assists|json_script:"assists" }}
+    {{ tackles|json_script:"tackles" }}
+    {{ shots|json_script:"shots" }}
 
-    <div class="note">
-      📈 <b>Analytics Insight:</b>
-      This visualization compares selected players equally across multiple performance metrics.
-    </div>
+    <script>
+      const labels = JSON.parse(document.getElementById("labels").textContent);
+      const goals = JSON.parse(document.getElementById("goals").textContent);
+      const assists = JSON.parse(document.getElementById("assists").textContent);
+      const tackles = JSON.parse(document.getElementById("tackles").textContent);
+      const shots = JSON.parse(document.getElementById("shots").textContent);
+
+      new Chart(document.getElementById("compareChart"), {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            { label: "Goals", data: goals },
+            { label: "Assists", data: assists },
+            { label: "Tackles", data: tackles },
+            { label: "Shots on Target", data: shots }
+          ]
+        },
+        options:{
+          responsive:true,
+          scales:{ y:{ beginAtZero:true } }
+        }
+      });
+    </script>
   </div>
   {% endif %}
 
 </div>
-
-<!-- DATA FROM DJANGO -->
-{{ labels|json_script:"labels" }}
-{{ goals|json_script:"goals" }}
-{{ assists|json_script:"assists" }}
-{{ tackles|json_script:"tackles" }}
-{{ shots|json_script:"shots" }}
-
-<!-- CHART SCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-{{ labels|json_script:"labels" }}
-{{ goals|json_script:"goals" }}
-{{ assists|json_script:"assists" }}
-{{ tackles|json_script:"tackles" }}
-{{ shots|json_script:"shots" }}
-
-<script>
-const labels = JSON.parse(document.getElementById("labels").textContent);
-const goals = JSON.parse(document.getElementById("goals").textContent);
-const assists = JSON.parse(document.getElementById("assists").textContent);
-const tackles = JSON.parse(document.getElementById("tackles").textContent);
-const shots = JSON.parse(document.getElementById("shots").textContent);
-
-function drawBarChart(canvasId, title, dataArray){
-  new Chart(document.getElementById(canvasId), {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: title,
-        data: dataArray,
-        backgroundColor: "#4f86ff"
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: title,
-          color: "white",
-          font: { size: 16 }
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: "white" },
-          grid: { color: "rgba(255,255,255,0.1)" }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: { color: "white" },
-          grid: { color: "rgba(255,255,255,0.1)" }
-        }
-      }
-    }
-  });
-}
-
-if(labels.length > 1){
-  drawBarChart("goalsChart", "Goals Comparison", goals);
-  drawBarChart("assistsChart", "Assists Comparison", assists);
-  drawBarChart("tacklesChart", "Tackles Comparison", tackles);
-  drawBarChart("shotsChart", "Shots on Target Comparison", shots);
-}
-</script>
-
 
 </body>
 </html>

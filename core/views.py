@@ -210,7 +210,6 @@ def compare_xi(request):
     players = Player.objects.all().order_by("player_name")
 
     selected_ids = request.GET.getlist("players")
-    max_count = int(request.GET.get("count", 0))
 
     labels = []
     goals = []
@@ -218,16 +217,22 @@ def compare_xi(request):
     tackles = []
     shots = []
 
-    if selected_ids and len(selected_ids) <= max_count:
-        selected_players = Player.objects.filter(id__in=selected_ids)
+    if selected_ids:
+        performances = (
+            PlayerPerformance.objects
+            .filter(player_id__in=selected_ids)
+            .select_related("player")
+        )
 
-        for player in selected_players:
-            perf = PlayerPerformance.objects.filter(player=player)
-            labels.append(player.player_name)
-            goals.append(sum(p.goals for p in perf))
-            assists.append(sum(p.assists for p in perf))
-            tackles.append(sum(p.tackles for p in perf))
-            shots.append(sum(p.shots_on_target for p in perf))
+        for pid in selected_ids:
+            p = performances.filter(player_id=pid)
+            player_name = p.first().player.player_name
+
+            labels.append(player_name)
+            goals.append(sum(x.goals for x in p))
+            assists.append(sum(x.assists for x in p))
+            tackles.append(sum(x.tackles for x in p))
+            shots.append(sum(x.shots_on_target for x in p))
 
     context = {
         "players": players,
@@ -236,10 +241,11 @@ def compare_xi(request):
         "assists": assists,
         "tackles": tackles,
         "shots": shots,
-        "max_count": max_count,
+        "selected_count": len(selected_ids),
     }
 
     return render(request, "core/compare_xi.html", context)
+
 
 
 # ---------------- LOGOUT ----------------
