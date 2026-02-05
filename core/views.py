@@ -211,11 +211,7 @@ def compare_xi(request):
 
     selected_ids = request.GET.getlist("players")
 
-    labels = []
-    goals = []
-    assists = []
-    tackles = []
-    shots = []
+    comparison_data = []
 
     if selected_ids:
         performances = (
@@ -225,28 +221,28 @@ def compare_xi(request):
         )
 
         for pid in selected_ids:
-            p = performances.filter(player_id=pid)
-            player_name = p.first().player.player_name
+            p_stats = performances.filter(player_id=pid)
 
-            labels.append(player_name)
-            goals.append(sum(x.goals for x in p))
-            assists.append(sum(x.assists for x in p))
-            tackles.append(sum(x.tackles for x in p))
-            shots.append(sum(x.shots_on_target for x in p))
+            if not p_stats.exists():
+                continue
+
+            player = p_stats.first().player
+
+            comparison_data.append({
+                "name": player.player_name,
+                "goals": sum(x.goals for x in p_stats),
+                "assists": sum(x.assists for x in p_stats),
+                "tackles": sum(x.tackles for x in p_stats),
+                "shots": sum(x.shots_on_target for x in p_stats),
+            })
 
     context = {
         "players": players,
-        "labels": labels,
-        "goals": goals,
-        "assists": assists,
-        "tackles": tackles,
-        "shots": shots,
-        "selected_count": len(selected_ids),
+        "selected_ids": list(map(int, selected_ids)),
+        "data": comparison_data,
     }
 
     return render(request, "core/compare_xi.html", context)
-
-
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):
