@@ -233,7 +233,7 @@ def compare_xi(request):
         "selected_count": len(selected_ids)
     }
 
-    return render(request, "compare_xi.html", context)
+    return render(request, "core/compare_xi.html", context)
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):
