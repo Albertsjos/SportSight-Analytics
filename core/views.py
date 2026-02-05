@@ -207,7 +207,7 @@ def season_analytics(request):
 
 @login_required
 def compare_xi(request):
-    teams = Match.objects.values_list("team_name", flat=True).distinct()
+    teams = Player.objects.values_list("team_name", flat=True).distinct()
 
     team1 = request.GET.get("team1")
     team2 = request.GET.get("team2")
@@ -244,7 +244,7 @@ def compare_xi(request):
         elif data1["goals"] < data2["goals"]:
             insight = f"{team2} Playing XI performed better offensively."
         else:
-            insight = "Both Playing XIs performed equally in attack."
+            insight = "Both Playing XIs performed equally."
 
     return render(
         request,
