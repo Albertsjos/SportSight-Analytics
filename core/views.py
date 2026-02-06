@@ -208,14 +208,13 @@ def season_analytics(request):
 
 @login_required
 def compare_xi(request):
-    players = Player.objects.all().order_by("player_name")
-
+    players = Player.objects.all()
     selected_ids = request.GET.getlist("players")
-    selected_count = len(selected_ids)
 
     chart_data = []
+    insights = {}
 
-    if 2 <= selected_count <= 11:
+    if 2 <= len(selected_ids) <= 11:
         for pid in selected_ids:
             player = Player.objects.get(id=pid)
             stats = PlayerPerformance.objects.filter(player=player)
@@ -228,13 +227,26 @@ def compare_xi(request):
                 "shots": sum(s.shots_on_target for s in stats),
             })
 
+        # -------- ANALYTICS INSIGHTS LOGIC --------
+        top_scorer = max(chart_data, key=lambda x: x["goals"])
+        best_defender = max(chart_data, key=lambda x: x["tackles"])
+        needs_improvement = min(chart_data, key=lambda x: x["goals"])
+
+        insights = {
+            "top_scorer": top_scorer["name"],
+            "best_defender": best_defender["name"],
+            "needs_improvement": needs_improvement["name"],
+        }
+
     context = {
         "players": players,
         "chart_data": chart_data,
-        "selected_count": selected_count,
+        "selected_count": len(chart_data),
+        "insights": insights,
     }
 
     return render(request, "core/compare_xi.html", context)
+
 
 
 # ---------------- LOGOUT ----------------
