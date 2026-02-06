@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Team, Player, Match, PlayerPerformance, Attendance
 from .models import Attendance
-admin.site.register(Attendance)
 
 
 @admin.register(Team)
