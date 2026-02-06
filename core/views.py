@@ -205,10 +205,10 @@ def season_analytics(request):
         {"analytics_data": analytics_data}
     )
 
+
 @login_required
 def compare_xi(request):
     players = Player.objects.all()
-
     selected_ids = request.GET.getlist("players")
 
     chart_data = []
@@ -216,7 +216,6 @@ def compare_xi(request):
     if len(selected_ids) >= 2:
         for pid in selected_ids:
             player = Player.objects.get(id=pid)
-
             stats = PlayerPerformance.objects.filter(player=player)
 
             chart_data.append({
@@ -230,7 +229,7 @@ def compare_xi(request):
     context = {
         "players": players,
         "chart_data": chart_data,
-        "selected_count": len(selected_ids)
+        "selected_count": len(selected_ids),
     }
 
     return render(request, "core/compare_xi.html", context)

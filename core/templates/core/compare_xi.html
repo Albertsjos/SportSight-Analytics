@@ -3,7 +3,6 @@
 <head>
   <title>Playing XI Player Comparison</title>
 
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -18,14 +17,12 @@
       padding:20px 28px;
       display:flex;
       justify-content:space-between;
-      align-items:center;
       border-bottom:1px solid rgba(255,255,255,0.1);
     }
 
     .top a{
       color:#4f86ff;
       text-decoration:none;
-      font-size:14px;
     }
 
     .container{
@@ -46,7 +43,7 @@
     }
 
     button{
-      margin-top:16px;
+      margin-top:18px;
       padding:14px 26px;
       background:#4f86ff;
       border:none;
@@ -54,30 +51,24 @@
       color:white;
       font-weight:bold;
       cursor:pointer;
-      font-size:15px;
-    }
-
-    button:hover{
-      opacity:0.9;
     }
 
     .chart-box{
       margin-top:40px;
-      background:rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.12);
       border-radius:18px;
       padding:24px;
     }
 
     h3{
-      margin-bottom:20px;
+      margin-bottom:16px;
     }
   </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="top">
   <b>👥 Playing XI Player Comparison</b>
   <a href="/dashboard/">← Back to Dashboard</a>
@@ -86,48 +77,37 @@
 <div class="container">
 
   <p>
-    Select <b>2–11 players</b> to compare their
-    <b>individual performance together</b>.
+    Select <b>2–11 players</b>.  
+    All selected players will be compared <b>together in one chart</b>.
   </p>
 
-  <!-- PLAYER SELECT -->
   <form method="get">
     <select name="players" multiple required>
       {% for p in players %}
-        <option value="{{ p.id }}">
-          {{ p.player_name }} ({{ p.position }})
-        </option>
+        <option value="{{ p.id }}">{{ p.player_name }} ({{ p.position }})</option>
       {% endfor %}
     </select>
 
     <button type="submit">Compare Players</button>
   </form>
 
-  <!-- CHART -->
   {% if chart_data %}
   <div class="chart-box">
     <h3>📊 Player Performance Comparison ({{ selected_count }} players)</h3>
     <canvas id="playerChart"></canvas>
   </div>
-  {% endif %}
 
-</div>
+  {{ chart_data|json_script:"chart-data" }}
 
-<!-- SAFELY PASS DATA TO JS -->
-{{ chart_data|json_script:"chart-data" }}
-
-<script>
-  const chartElement = document.getElementById("chart-data");
-
-  if (chartElement) {
-    const data = JSON.parse(chartElement.textContent);
-
-    const labels = data.map(p => p.name);
+  <script>
+    const data = JSON.parse(
+      document.getElementById("chart-data").textContent
+    );
 
     new Chart(document.getElementById('playerChart'), {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: data.map(p => p.name),
         datasets: [
           {
             label: 'Goals',
@@ -154,14 +134,14 @@
       options: {
         responsive: true,
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          y: { beginAtZero: true }
         }
       }
     });
-  }
-</script>
+  </script>
+  {% endif %}
+
+</div>
 
 </body>
 </html>
