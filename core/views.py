@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.db.models import Sum, Count, Avg
-from .models import Player, PlayerPerformance
+from .models import Player, PlayerPerformance, Attendance
 
 
 # ---------------- HOME ----------------
@@ -247,6 +247,24 @@ def compare_xi(request):
 
     return render(request, "core/compare_xi.html", context)
 
+@login_required
+def player_attendance(request):
+    attendance = Attendance.objects.filter(
+        player__player_name=request.user.username
+    ).order_by("-date")
+
+    total = attendance.count()
+    present = attendance.filter(present=True).count()
+    percentage = round((present / total) * 100, 2) if total > 0 else 0
+
+    context = {
+        "attendance": attendance,
+        "total": total,
+        "present": present,
+        "percentage": percentage,
+    }
+
+    return render(request, "core/player_attendance.html", context)
 
 
 # ---------------- LOGOUT ----------------

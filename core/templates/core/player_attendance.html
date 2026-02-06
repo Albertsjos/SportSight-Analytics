@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <title>My Attendance | SportSight</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0b1220, #050816);
+      color:white;
+    }
+
+    .top{
+      padding:20px 28px;
+      display:flex;
+      justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+
+    .top a{
+      color:#4f86ff;
+      text-decoration:none;
+    }
+
+    .container{
+      max-width:900px;
+      margin:auto;
+      padding:30px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:20px;
+    }
+
+    th, td{
+      padding:14px;
+      border-bottom:1px solid rgba(255,255,255,0.15);
+      text-align:left;
+      font-size:14px;
+    }
+
+    th{
+      opacity:0.8;
+    }
+
+    .present{
+      color:#2ecc71;
+      font-weight:bold;
+    }
+
+    .absent{
+      color:#ff6b6b;
+      font-weight:bold;
+    }
+
+    .summary{
+      margin-top:20px;
+      padding:18px;
+      background:rgba(255,255,255,0.06);
+      border-radius:14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="top">
+  <b>📅 My Attendance</b>
+  <a href="/dashboard/">← Back to Dashboard</a>
+</div>
+
+<div class="container">
+
+  <div class="summary">
+    <b>Total Sessions:</b> {{ total }} <br>
+    <b>Present:</b> {{ present }} <br>
+    <b>Attendance %:</b> {{ percentage }}%
+  </div>
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+
+    {% for a in attendance %}
+    <tr>
+      <td>{{ a.date }}</td>
+      <td>
+        {% if a.present %}
+          <span class="present">Present</span>
+        {% else %}
+          <span class="absent">Absent</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="2">No attendance records available.</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+
+</body>
+</html>
