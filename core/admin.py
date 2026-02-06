@@ -1,31 +1,39 @@
 from django.contrib import admin
-from django.urls import reverse
-from django.utils.html import format_html
-from .models import Team, Player, Match, PlayerPerformance
+from .models import Team, Player, Match, PlayerPerformance, Attendance
 
-admin.site.register(Team)
-admin.site.register(Player)
-admin.site.register(Match)
-admin.site.register(PlayerPerformance)
 
-admin.site.site_header = "SportSight Admin"
-admin.site.site_title = "SportSight Admin"
-admin.site.index_title = "Dashboard"
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ("team_name",)
 
-def admin_extra_links(request):
-    return format_html(
-        '<div style="margin:10px 0;">'
-        '<a style="margin-right:12px;" href="{}">📊 Analytics</a>'
-        '<a style="margin-right:12px;" href="{}">⚔ Compare Players</a>'
-        '<a href="{}">🏠 Custom Dashboard</a>'
-        '</div>',
-        reverse("analytics"),
-        reverse("compare"),
-        reverse("dashboard")
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ("player_name", "team", "position", "jersey_no")
+    list_filter = ("team", "position")
+    search_fields = ("player_name",)
+
+
+@admin.register(Match)
+class MatchAdmin(admin.ModelAdmin):
+    list_display = ("match_date", "opponent", "venue")
+
+
+@admin.register(PlayerPerformance)
+class PlayerPerformanceAdmin(admin.ModelAdmin):
+    list_display = (
+        "player",
+        "match",
+        "goals",
+        "assists",
+        "tackles",
+        "shots_on_target",
     )
+    list_filter = ("match", "player")
 
-# Inject links into every admin page header
-admin.site.each_context = (lambda original: (lambda request: {
-    **original(request),
-    "extra_links": admin_extra_links(request),
-}))(admin.site.each_context)
+
+@admin.register(Attendance)
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ("player", "date", "present")
+    list_filter = ("date", "present")
+    search_fields = ("player__player_name",)
