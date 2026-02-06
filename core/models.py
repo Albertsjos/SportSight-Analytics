@@ -39,3 +39,13 @@ class PlayerPerformance(models.Model):
 
     def __str__(self):
         return f"{self.player.player_name} - {self.match}"
+    
+class Attendance(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="attendance")
+    date = models.DateField()
+    present = models.BooleanField(default=True)
+
+    def __str__(self):
+        status = "Present" if self.present else "Absent"
+        return f"{self.player.player_name} - {self.date} - {status}"
+
