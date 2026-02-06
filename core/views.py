@@ -213,23 +213,23 @@ def compare_xi(request):
 
     chart_data = []
 
-    if len(selected_ids) >= 2:
+    if 2 <= len(selected_ids) <= 11:
         for pid in selected_ids:
             player = Player.objects.get(id=pid)
             stats = PlayerPerformance.objects.filter(player=player)
 
             chart_data.append({
                 "name": player.player_name,
-                "goals": sum(p.goals for p in stats),
-                "assists": sum(p.assists for p in stats),
-                "tackles": sum(p.tackles for p in stats),
-                "shots": sum(p.shots_on_target for p in stats),
+                "goals": sum(s.goals for s in stats),
+                "assists": sum(s.assists for s in stats),
+                "tackles": sum(s.tackles for s in stats),
+                "shots": sum(s.shots_on_target for s in stats),
             })
 
     context = {
         "players": players,
         "chart_data": chart_data,
-        "selected_count": len(selected_ids),
+        "selected_count": len(chart_data),
     }
 
     return render(request, "core/compare_xi.html", context)
