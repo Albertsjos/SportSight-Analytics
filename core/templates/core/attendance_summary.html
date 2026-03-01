@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Analytics</title>
+</head>
+<body>
+
+<h2>📊 Squad Attendance Overview</h2>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Player</th>
+    <th>Training Attended</th>
+    <th>Training Missed</th>
+    <th>Matches Played</th>
+  </tr>
+
+  {% for a in attendance_data %}
+  <tr>
+    <td>{{ a.player }}</td>
+    <td>{{ a.training_present }}</td>
+    <td>{{ a.training_absent }}</td>
+    <td>{{ a.matches_played }}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+</body>
+</html>

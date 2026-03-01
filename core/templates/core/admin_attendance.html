@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Players Attendance</title>
+</head>
+<body>
+
+<h2>All Players Attendance</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Player</th>
+        <th>Training Total</th>
+        <th>Present</th>
+        <th>Absent</th>
+        <th>Matches Played</th>
+        <th>Attendance %</th>
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        <td>{{ row.player.player_name }}</td>
+        <td>{{ row.training_total }}</td>
+        <td>{{ row.training_present }}</td>
+        <td>{{ row.training_absent }}</td>
+        <td>{{ row.match_played }}</td>
+        <td>{{ row.percentage }}%</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

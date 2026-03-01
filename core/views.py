@@ -4,8 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.db.models import Sum, Count, Avg
-from .models import Player, PlayerPerformance, Attendance
-
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import (
+    Player,
+    PlayerPerformance,
+    TrainingAttendance,
+    MatchAttendance,
+    TrainingSession,
+)
+from .models import TrainingAttendance
 
 # ---------------- HOME ----------------
 def home_page(request):
@@ -247,25 +254,95 @@ def compare_xi(request):
 
     return render(request, "core/compare_xi.html", context)
 
+
 @login_required
 def player_attendance(request):
-    attendance = Attendance.objects.filter(
-        player__player_name=request.user.username
-    ).order_by("-date")
+    players = Player.objects.all()
+
+    attendance_data = []
+
+    for player in players:
+        training_total = TrainingAttendance.objects.filter(player=player).count()
+        training_present = TrainingAttendance.objects.filter(
+            player=player, present=True
+        ).count()
+
+        match_played = MatchAttendance.objects.filter(
+            player=player, status="Played"
+        ).count()
+
+        attendance_data.append({
+            "player": player.player_name,
+            "training_total": training_total,
+            "training_present": training_present,
+            "training_absent": training_total - training_present,
+            "matches_played": match_played,
+        })
+
+    return render(
+        request,
+        "core/player_attendance.html",
+        {"attendance_data": attendance_data}
+    )
+
+@login_required
+def player_attendance(request):
+    user = request.user
+
+    try:
+        player = Player.objects.get(player_name=user.username)
+    except Player.DoesNotExist:
+        return render(request, "core/player_attendance.html", {
+            "attendance": [],
+            "total": 0,
+            "present": 0,
+            "percentage": 0
+        })
+
+    # Get training attendance only
+    attendance = TrainingAttendance.objects.filter(player=player).select_related("training")
 
     total = attendance.count()
     present = attendance.filter(present=True).count()
+
     percentage = round((present / total) * 100, 2) if total > 0 else 0
 
     context = {
         "attendance": attendance,
         "total": total,
         "present": present,
-        "percentage": percentage,
+        "percentage": percentage
     }
 
     return render(request, "core/player_attendance.html", context)
 
+@staff_member_required
+def admin_attendance_view(request):
+    players = Player.objects.all()
+    data = []
+
+    for player in players:
+        training_total = TrainingAttendance.objects.filter(player=player).count()
+        training_present = TrainingAttendance.objects.filter(
+            player=player, present=True
+        ).count()
+
+        match_played = MatchAttendance.objects.filter(
+            player=player, status="Played"
+        ).count()
+
+        percentage = round((training_present / training_total) * 100, 2) if training_total > 0 else 0
+
+        data.append({
+            "player": player,
+            "training_total": training_total,
+            "training_present": training_present,
+            "training_absent": training_total - training_present,
+            "match_played": match_played,
+            "percentage": percentage
+        })
+
+    return render(request, "core/admin_attendance.html", {"data": data})
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):

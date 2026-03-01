@@ -88,7 +88,7 @@
 
     {% for a in attendance %}
     <tr>
-      <td>{{ a.date }}</td>
+      <td>{{ a.training.date }}</td>
       <td>
         {% if a.present %}
           <span class="present">Present</span>

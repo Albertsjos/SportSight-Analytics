@@ -10,6 +10,9 @@ urlpatterns = [
     path("analytics/", views.analytics_page, name="analytics"),
     path("compare/", views.compare_page, name="compare"),
     path("compare-xi/", views.compare_xi, name="compare_xi"),
+    path("attendance/", views.player_attendance, name="player_attendance"),
+    path("my-attendance/", views.player_attendance, name="player_attendance"),
+    path("admin-attendance/", views.admin_attendance_view, name="admin_attendance"),
 
     path("season-analytics/", views.season_analytics, name="season_analytics"),
     path("logout/", views.logout_view, name="logout"),
