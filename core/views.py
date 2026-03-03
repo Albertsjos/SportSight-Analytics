@@ -1,18 +1,23 @@
 from django.contrib import messages
+from datetime import date
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.db.models import Sum, Count, Avg
+from django.db.models import Sum
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import (
     Player,
     PlayerPerformance,
     TrainingAttendance,
     MatchAttendance,
-    TrainingSession,
+    Match
 )
-from .models import TrainingAttendance
+
+import json
+import csv
+from io import TextIOWrapper
+
 
 # ---------------- HOME ----------------
 def home_page(request):
@@ -30,9 +35,9 @@ def login_page(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
+        if user:
             login(request, user)
-            return redirect("dashboard")   # 👈 THIS IS THE IMPORTANT LINE
+            return redirect("dashboard")
         else:
             messages.error(request, "Invalid username or password")
 
@@ -44,7 +49,7 @@ def register_page(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        role = request.POST.get("role")  # admin / user
+        role = request.POST.get("role")
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
@@ -56,22 +61,36 @@ def register_page(request):
             user.is_staff = True
             user.save()
 
-        messages.success(request, "Account created. Please login.")
+        messages.success(request, "Account created.")
         return redirect("login")
 
     return render(request, "core/register.html")
 
 
-# ---------------- DASHBOARD ROUTER ----------------
+# ---------------- DASHBOARD ----------------
 @login_required
 def dashboard(request):
-    """
-    ONE dashboard entry point.
-    """
     if request.user.is_staff:
-        return render(request, "core/admin_dashboard.html")
-    else:
-        return render(request, "core/user_dashboard.html")
+
+        top_players_qs = (
+            PlayerPerformance.objects
+            .values("player__player_name")
+            .annotate(total_goals=Sum("goals"))
+            .order_by("-total_goals")[:5]
+        )
+
+        top_players = list(top_players_qs)
+
+        chart_labels = [p["player__player_name"] for p in top_players]
+        chart_goals = [p["total_goals"] or 0 for p in top_players]
+
+        return render(request, "core/admin_dashboard.html", {
+            "top_players": top_players,
+            "chart_labels_json": json.dumps(chart_labels),
+            "chart_goals_json": json.dumps(chart_goals),
+        })
+
+    return render(request, "core/user_dashboard.html")
 
 
 # ---------------- ANALYTICS ----------------
@@ -82,209 +101,54 @@ def analytics_page(request):
     labels = [p.player.player_name for p in performances]
     goals = [p.goals for p in performances]
 
-    context = {
+    return render(request, "core/analytics.html", {
         "labels": labels,
         "goals": goals,
         "total_entries": len(performances),
-    }
-
-    return render(request, "core/analytics.html", context)
-
-@login_required
-def season_analytics(request):
-    # Aggregate season data per player
-    season_data = (
-        PlayerPerformance.objects
-        .values("player__player_name")
-        .annotate(
-            matches_played=Count("id"),
-            total_goals=Sum("goals"),
-            total_assists=Sum("assists"),
-            total_tackles=Sum("tackles"),
-            avg_goals=Avg("goals"),
-        )
-        .order_by("-total_goals")
-    )
-
-    # Insights
-    top_scorer = season_data[0]["player__player_name"] if season_data else "N/A"
-    team_avg_goals = round(
-        sum(d["total_goals"] or 0 for d in season_data) / len(season_data), 2
-    ) if season_data else 0
-
-    # Data for chart
-    labels = [d["player__player_name"] for d in season_data]
-    goals = [d["total_goals"] or 0 for d in season_data]
-
-    context = {
-        "season_data": season_data,
-        "top_scorer": top_scorer,
-        "team_avg_goals": team_avg_goals,
-        "labels": labels,
-        "goals": goals,
-    }
-
-    return render(request, "core/season_analytics.html", context)
+    })
 
 
-# ---------------- COMPARE ----------------
-@login_required
-def compare_page(request):
-    players = Player.objects.all().order_by("player_name")
-
-    p1_id = request.GET.get("p1")
-    p2_id = request.GET.get("p2")
-
-    def totals(pid):
-        if not pid:
-            return {"goals": 0, "assists": 0, "tackles": 0, "shots_on_target": 0}
-
-        qs = PlayerPerformance.objects.filter(player_id=pid)
-        return {
-            "goals": sum(x.goals for x in qs),
-            "assists": sum(x.assists for x in qs),
-            "tackles": sum(x.tackles for x in qs),
-            "shots_on_target": sum(x.shots_on_target for x in qs),
-        }
-
-    p1 = totals(p1_id)
-    p2 = totals(p2_id)
-
-    context = {
-        "players": players,
-        "p1_id": p1_id,
-        "p2_id": p2_id,
-        "p1": p1,
-        "p2": p2,
-    }
-
-    return render(request, "core/compare.html", context)
-
+# ---------------- SEASON ANALYTICS ----------------
 @login_required
 def season_analytics(request):
     players = Player.objects.all()
-
-    analytics_data = []
+    data = []
 
     for player in players:
         performances = PlayerPerformance.objects.filter(player=player)
 
         matches = performances.count()
         total_goals = sum(p.goals for p in performances)
-        total_assists = sum(p.assists for p in performances)
-        total_tackles = sum(p.tackles for p in performances)
-        total_shots = sum(p.shots_on_target for p in performances)
 
-        avg_goals = round(total_goals / matches, 2) if matches > 0 else 0
-
-        # ---------- ANALYTICS LOGIC ----------
-        suggestions = []
-
-        if avg_goals < 0.5:
-            suggestions.append("Needs improvement in finishing and shooting accuracy.")
-        else:
-            suggestions.append("Good goal scoring consistency.")
-
-        if total_assists < matches:
-            suggestions.append("Should improve passing and chance creation.")
-        else:
-            suggestions.append("Strong playmaking ability.")
-
-        if total_tackles > matches * 2:
-            suggestions.append("Excellent defensive contribution.")
-        else:
-            suggestions.append("Needs to improve defensive work rate.")
-
-        analytics_data.append({
+        data.append({
             "player": player.player_name,
             "matches": matches,
-            "goals": total_goals,
-            "assists": total_assists,
-            "tackles": total_tackles,
-            "shots": total_shots,
-            "avg_goals": avg_goals,
-            "suggestions": suggestions
+            "goals": total_goals
         })
 
-    return render(
-        request,
-        "core/season_analytics.html",
-        {"analytics_data": analytics_data}
-    )
+    return render(request, "core/season_analytics.html", {
+        "analytics_data": data
+    })
 
 
+# ---------------- COMPARE 2 ----------------
+@login_required
+def compare_page(request):
+    players = Player.objects.all().order_by("player_name")
+    return render(request, "core/compare.html", {
+        "players": players
+    })
+
+
+# ---------------- COMPARE XI ----------------
 @login_required
 def compare_xi(request):
     players = Player.objects.all()
-    selected_ids = request.GET.getlist("players")
+    return render(request, "core/compare_xi.html", {
+        "players": players
+    })
 
-    chart_data = []
-    insights = {}
-
-    if 2 <= len(selected_ids) <= 11:
-        for pid in selected_ids:
-            player = Player.objects.get(id=pid)
-            stats = PlayerPerformance.objects.filter(player=player)
-
-            chart_data.append({
-                "name": player.player_name,
-                "goals": sum(s.goals for s in stats),
-                "assists": sum(s.assists for s in stats),
-                "tackles": sum(s.tackles for s in stats),
-                "shots": sum(s.shots_on_target for s in stats),
-            })
-
-        # -------- ANALYTICS INSIGHTS LOGIC --------
-        top_scorer = max(chart_data, key=lambda x: x["goals"])
-        best_defender = max(chart_data, key=lambda x: x["tackles"])
-        needs_improvement = min(chart_data, key=lambda x: x["goals"])
-
-        insights = {
-            "top_scorer": top_scorer["name"],
-            "best_defender": best_defender["name"],
-            "needs_improvement": needs_improvement["name"],
-        }
-
-    context = {
-        "players": players,
-        "chart_data": chart_data,
-        "selected_count": len(chart_data),
-        "insights": insights,
-    }
-
-    return render(request, "core/compare_xi.html", context)
-
-
-@login_required
-def player_attendance(request):
-    players = Player.objects.all()
-
-    attendance_data = []
-
-    for player in players:
-        training_total = TrainingAttendance.objects.filter(player=player).count()
-        training_present = TrainingAttendance.objects.filter(
-            player=player, present=True
-        ).count()
-
-        match_played = MatchAttendance.objects.filter(
-            player=player, status="Played"
-        ).count()
-
-        attendance_data.append({
-            "player": player.player_name,
-            "training_total": training_total,
-            "training_present": training_present,
-            "training_absent": training_total - training_present,
-            "matches_played": match_played,
-        })
-
-    return render(
-        request,
-        "core/player_attendance.html",
-        {"attendance_data": attendance_data}
-    )
-
+# ---------------- PLAYER ATTENDANCE ----------------
 @login_required
 def player_attendance(request):
     user = request.user
@@ -299,7 +163,6 @@ def player_attendance(request):
             "percentage": 0
         })
 
-    # Get training attendance only
     attendance = TrainingAttendance.objects.filter(player=player).select_related("training")
 
     total = attendance.count()
@@ -307,15 +170,15 @@ def player_attendance(request):
 
     percentage = round((present / total) * 100, 2) if total > 0 else 0
 
-    context = {
+    return render(request, "core/player_attendance.html", {
         "attendance": attendance,
         "total": total,
         "present": present,
         "percentage": percentage
-    }
+    })
 
-    return render(request, "core/player_attendance.html", context)
 
+# ---------------- ADMIN ATTENDANCE ----------------
 @staff_member_required
 def admin_attendance_view(request):
     players = Player.objects.all()
@@ -343,6 +206,58 @@ def admin_attendance_view(request):
         })
 
     return render(request, "core/admin_attendance.html", {"data": data})
+
+# ---------------- CSV UPLOAD ----------------
+@staff_member_required
+def upload_performance_csv(request):
+    if request.method == "POST" and request.FILES.get("csv_file"):
+
+        csv_file = request.FILES["csv_file"]
+
+        if not csv_file.name.endswith(".csv"):
+            messages.error(request, "Please upload a valid CSV file.")
+            return redirect("dashboard")
+
+        file_data = TextIOWrapper(csv_file.file, encoding="utf-8")
+        reader = csv.DictReader(file_data)
+
+        inserted = 0
+        skipped = 0
+
+        for row in reader:
+            try:
+                # 🔥 Create match using your model structure
+                match, _ = Match.objects.get_or_create(
+                    opponent=row["match"].strip(),
+                    defaults={
+                        "match_date": date.today(),
+                        "venue": "Unknown"
+                    }
+                )
+
+                player = Player.objects.get(
+                    player_name=row["player_name"].strip()
+                )
+
+                PlayerPerformance.objects.create(
+                    match=match,
+                    player=player,
+                    goals=int(row["goals"]),
+                    assists=int(row["assists"]),
+                    shots_on_target=int(row["shots_on_target"]),
+                    tackles=int(row["tackles"]),
+                )
+
+                inserted += 1
+
+            except Exception:
+                skipped += 1
+
+        messages.success(request, f"Inserted: {inserted} | Skipped: {skipped}")
+        return redirect("dashboard")
+
+    return redirect("dashboard")
+
 
 # ---------------- LOGOUT ----------------
 def logout_view(request):

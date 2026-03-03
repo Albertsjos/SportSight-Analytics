@@ -6,7 +6,7 @@
   <style>
     body{
       margin:0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background: radial-gradient(circle at top, #0b1220, #050816);
       color:white;
     }
@@ -15,35 +15,111 @@
       padding:20px 28px;
       display:flex;
       justify-content:space-between;
+      align-items:center;
       border-bottom:1px solid rgba(255,255,255,0.1);
     }
 
     .top a{
       color:#4f86ff;
       text-decoration:none;
+      font-size:14px;
     }
 
     .container{
-      max-width:900px;
+      max-width:1000px;
       margin:auto;
-      padding:30px;
+      padding:40px 20px;
     }
+
+    /* KPI CARDS */
+
+    .kpi-wrapper{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
+    }
+
+    .card{
+      flex:1;
+      min-width:220px;
+      padding:22px;
+      background:rgba(255,255,255,0.06);
+      border-radius:16px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      transition:0.3s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+    }
+
+    .card h3{
+      margin:0;
+      font-size:14px;
+      opacity:0.7;
+      font-weight:normal;
+    }
+
+    .card p{
+      font-size:28px;
+      margin:8px 0 0;
+      font-weight:bold;
+    }
+
+    /* PROGRESS BAR */
+
+    .progress-container{
+      margin:20px 0 30px;
+    }
+
+    .progress-label{
+      margin-bottom:8px;
+      font-size:14px;
+      opacity:0.7;
+    }
+
+    .progress-bar{
+      background:rgba(255,255,255,0.1);
+      border-radius:30px;
+      overflow:hidden;
+      height:20px;
+    }
+
+    .progress-fill{
+      height:100%;
+      background:linear-gradient(90deg,#2ecc71,#4f86ff);
+      border-radius:30px;
+      transition:0.5s ease;
+    }
+
+    /* TABLE */
 
     table{
       width:100%;
       border-collapse:collapse;
-      margin-top:20px;
+      background:rgba(255,255,255,0.04);
+      border-radius:16px;
+      overflow:hidden;
     }
 
     th, td{
       padding:14px;
-      border-bottom:1px solid rgba(255,255,255,0.15);
       text-align:left;
       font-size:14px;
     }
 
     th{
+      background:rgba(255,255,255,0.08);
       opacity:0.8;
+    }
+
+    tr{
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+
+    tr:hover{
+      background:rgba(255,255,255,0.05);
     }
 
     .present{
@@ -56,12 +132,12 @@
       font-weight:bold;
     }
 
-    .summary{
-      margin-top:20px;
-      padding:18px;
-      background:rgba(255,255,255,0.06);
-      border-radius:14px;
+    .empty{
+      text-align:center;
+      padding:20px;
+      opacity:0.6;
     }
+
   </style>
 </head>
 
@@ -74,12 +150,33 @@
 
 <div class="container">
 
-  <div class="summary">
-    <b>Total Sessions:</b> {{ total }} <br>
-    <b>Present:</b> {{ present }} <br>
-    <b>Attendance %:</b> {{ percentage }}%
+  <!-- KPI CARDS -->
+  <div class="kpi-wrapper">
+    <div class="card">
+      <h3>Total Sessions</h3>
+      <p>{{ total }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Present</h3>
+      <p>{{ present }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Attendance %</h3>
+      <p>{{ percentage }}%</p>
+    </div>
   </div>
 
+  <!-- PROGRESS BAR -->
+  <div class="progress-container">
+  <div class="progress-label">Overall Attendance Progress</div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" data-percent="{{ percentage }}"></div>
+  </div>
+</div>
+
+  <!-- TABLE -->
   <table>
     <tr>
       <th>Date</th>
@@ -99,12 +196,18 @@
     </tr>
     {% empty %}
     <tr>
-      <td colspan="2">No attendance records available.</td>
+      <td colspan="2" class="empty">
+        No attendance records available.
+      </td>
     </tr>
     {% endfor %}
   </table>
 
 </div>
-
+<script>
+  const progress = document.getElementById("progressFill");
+  const percent = progress.getAttribute("data-percent") || 0;
+  progress.style.width = percent + "%";
+</script>
 </body>
 </html>

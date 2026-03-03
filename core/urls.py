@@ -13,6 +13,7 @@ urlpatterns = [
     path("attendance/", views.player_attendance, name="player_attendance"),
     path("my-attendance/", views.player_attendance, name="player_attendance"),
     path("admin-attendance/", views.admin_attendance_view, name="admin_attendance"),
+    path("upload-performance/", views.upload_performance_csv, name="upload_performance"),
 
     path("season-analytics/", views.season_analytics, name="season_analytics"),
     path("logout/", views.logout_view, name="logout"),
