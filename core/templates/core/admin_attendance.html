@@ -1,187 +1,253 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>All Players Attendance | SportSight</title>
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/themes.css' %}">
     <style>
-        body{
-            margin:0;
-            font-family:'Segoe UI', sans-serif;
-            background: radial-gradient(circle at top, #0b1220, #050816);
-            color:white;
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .top{
-            padding:20px 28px;
-            border-bottom:1px solid rgba(255,255,255,0.1);
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
         }
 
-        .container{
-            max-width:1200px;
-            margin:auto;
-            padding:40px 20px;
+        .topbar {
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .topbar a:hover {
+            color: #93c5fd;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 30px;
         }
 
         /* KPI CARDS */
-
-        .kpi-wrapper{
-            display:flex;
-            gap:20px;
-            flex-wrap:wrap;
-            margin-bottom:30px;
+        .kpi-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
         }
 
-        .card{
-            flex:1;
-            min-width:220px;
-            padding:22px;
-            background:rgba(255,255,255,0.06);
-            border-radius:16px;
-            box-shadow:0 8px 20px rgba(0,0,0,0.4);
+        .kpi-card {
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .card h3{
-            margin:0;
-            font-size:14px;
-            opacity:0.7;
-            font-weight:normal;
+        .kpi-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
 
-        .card p{
-            font-size:26px;
-            margin:8px 0 0;
-            font-weight:bold;
+        .kpi-card p {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .kpi-card.active {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .kpi-card.success {
+            border-left: 5px solid #10b981;
+        }
+
+        .kpi-card.warning {
+            border-left: 5px solid #facc15;
         }
 
         /* TABLE */
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            background:rgba(255,255,255,0.04);
-            border-radius:16px;
-            overflow:hidden;
+        .table-box {
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        th, td{
-            padding:14px;
-            text-align:left;
-            font-size:14px;
+        .table-box h2 {
+            font-size: var(--font-size-h2);
+            border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+            padding-bottom: 15px;
+            display: inline-block;
+            margin-bottom: 30px;
         }
 
-        th{
-            background:rgba(255,255,255,0.08);
-            opacity:0.8;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        tr{
-            border-bottom:1px solid rgba(255,255,255,0.1);
+        th,
+        td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
         }
 
-        tr:hover{
-            background:rgba(255,255,255,0.05);
+        th {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
         }
 
-        .badge{
-            padding:6px 12px;
-            border-radius:20px;
-            font-weight:bold;
-            font-size:13px;
+        tr:last-child td {
+            border-bottom: none;
         }
 
-        .green{
-            background:#2ecc71;
-            color:black;
+        tr:hover td {
+            background: var(--panel-bg);
         }
 
-        .yellow{
-            background:#f1c40f;
-            color:black;
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+            text-align: center;
+            min-width: 80px;
         }
 
-        .red{
-            background:#ff6b6b;
-            color:white;
+        .badge.green {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
+        .badge.yellow {
+            background: rgba(245, 158, 11, 0.2);
+            color: #facc15;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge.red {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
     </style>
 </head>
 
 <body>
 
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-  <h2>📊 All Players Attendance</h2>
-  <a href="/dashboard/" style="
-      padding:8px 14px;
-      background:#4f86ff;
-      color:white;
-      border-radius:8px;
-      text-decoration:none;
-      font-size:14px;
-  ">
-    ← Back to Dashboard
-  </a>
-</div>
-
-<div class="container">
-
-    <!-- KPI CARDS -->
-    <div class="kpi-wrapper">
-
-        <div class="card">
-            <h3>Total Players</h3>
-            <p>{{ data|length }}</p>
+    <div class="topbar">
+        <div class="nav-left">
+            <b style="font-size: 24px;">📋 All Players Attendance</b>
+            <button class="theme-toggle" id="theme-toggle">🌓</button>
         </div>
-
-        <div class="card">
-            <h3>Highest Attendance</h3>
-            <p>
-                {% with max=0 %}
-                {% for row in data %}
-                    {% if row.percentage > max %}
-                        {% with max=row.percentage %}
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
-                {{ max }}%
-                {% endwith %}
-            </p>
-        </div>
-
+        <a href="/dashboard/">← Back to Dashboard</a>
     </div>
 
-    <!-- TABLE -->
-    <table>
-        <tr>
-            <th>Player</th>
-            <th>Training Total</th>
-            <th>Present</th>
-            <th>Absent</th>
-            <th>Matches Played</th>
-            <th>Attendance %</th>
-        </tr>
+    <div class="container">
 
-        {% for row in data %}
-        <tr>
-            <td>{{ row.player.player_name }}</td>
-            <td>{{ row.training_total }}</td>
-            <td>{{ row.training_present }}</td>
-            <td>{{ row.training_absent }}</td>
-            <td>{{ row.match_played }}</td>
-            <td>
-                {% if row.percentage >= 75 %}
-                    <span class="badge green">{{ row.percentage }}%</span>
-                {% elif row.percentage >= 50 %}
-                    <span class="badge yellow">{{ row.percentage }}%</span>
-                {% else %}
-                    <span class="badge red">{{ row.percentage }}%</span>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+        <!-- KPI CARDS -->
+        <div class="kpi-wrapper">
+            <div class="kpi-card card active">
+                <h3 class="muted-text">Registered Roster</h3>
+                <p>{{ data|length }} <span style="font-size: 1.25rem; font-weight: 400;">players</span>
+                </p>
+            </div>
 
-</div>
+            <div class="kpi-card card success">
+                <h3 class="muted-text">Highest Attendance Mark</h3>
+                <p>
+                    {% with max_val=0 %}
+                    {% for row in data %}
+                    {% if row.percentage > max_val %}
+                    {% with max_val=row.percentage %}
+                    {% endwith %}
+                    {% endif %}
+                    {% endfor %}
+                    {{ max_val|default:"100" }}%
+                    {% endwith %}
+                </p>
+            </div>
 
+            <div class="kpi-card card warning">
+                <h3 class="muted-text">Status Requirement</h3>
+                <p style="font-size: 1.25rem; color: #facc15; line-height: 1.5; font-weight: 400;">
+                    <b>&gt;75%</b> for Green Status<br>
+                    <b>&gt;50%</b> for Warning
+                </p>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-box card">
+            <h2>Training & Match Attendance Log</h2>
+            <table>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Training Total</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Matches Played</th>
+                    <th>Attendance %</th>
+                </tr>
+
+                {% for row in data %}
+                <tr>
+                    <td style="font-weight: 700; font-size: 1.2rem;">{{ row.player.player_name }}</td>
+                    <td>{{ row.training_total }}</td>
+                    <td>{{ row.training_present }}</td>
+                    <td><span style="color: #ef4444;">{{ row.training_absent }}</span></td>
+                    <td>{{ row.match_played }}</td>
+                    <td>
+                        {% if row.percentage >= 75 %}
+                        <span class="badge green">{{ row.percentage }}%</span>
+                        {% elif row.percentage >= 50 %}
+                        <span class="badge yellow">{{ row.percentage }}%</span>
+                        {% else %}
+                        <span class="badge red">{{ row.percentage }}%</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/themes.js' %}"></script>
 </body>
+
 </html>

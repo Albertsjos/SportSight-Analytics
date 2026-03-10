@@ -1,194 +1,345 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Compare Players | SportSight</title>
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background: radial-gradient(circle at top, #0b1220, #050816);
-      color:white;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .top{
-      padding:22px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    a{color:#4f86ff;text-decoration:none}
-
-    .box{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      padding:20px;
-      margin:20px auto;
-      max-width:900px;
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
     }
 
-    select,button{
-      padding:10px 14px;
-      border-radius:10px;
-      border:none;
-      margin-right:10px;
-      font-size:14px;
+    .topbar {
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    button{
-      background:#4f86ff;
-      color:white;
-      cursor:pointer;
-      font-weight:bold;
+    .topbar a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+      font-size: 1.1rem;
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:16px;
-      font-size:14px;
-    }
-    th,td{
-      padding:10px;
-      text-align:center;
-      border-bottom:1px solid rgba(255,255,255,0.15);
+    .topbar a:hover {
+      color: #93c5fd;
     }
 
-    canvas{
-      max-height:260px;
-      width:100% !important;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 30px;
     }
 
-    .insight{
-      background:rgba(79,134,255,0.15);
-      padding:14px;
-      border-radius:12px;
-      margin:20px auto;
-      max-width:900px;
-      font-size:14px;
+    .box {
+      border-radius: 20px;
+      padding: 36px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .box h3 {
+      font-size: var(--font-size-h3);
+      border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+      padding-bottom: 10px;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+
+    .selectors-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    select,
+    button.cmp-btn {
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      outline: none;
+      flex: 1;
+      min-width: 250px;
+      transition: 0.3s;
+    }
+
+    select {
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--panel-border);
+    }
+
+    select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    select option {
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    button.cmp-btn {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      max-width: 250px;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    button.cmp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 18px;
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--panel-bg);
+    }
+
+    .insight-card {
+      border-left: 5px solid #34d399;
+      padding: 24px;
+      margin-bottom: 30px;
+      font-size: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
   </style>
 </head>
 
 <body>
 
-<!-- Top Bar -->
-<div class="top">
-  <b>Player Comparison</b>
-  <a href="/dashboard/">← Back to Dashboard</a>
-</div>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="nav-left">
+      <b style="font-size: 24px;">👤 1v1 Player Comparison</b>
+      <button class="theme-toggle" id="theme-toggle">🌓</button>
+    </div>
+    <a href="/dashboard/">← Back to Dashboard</a>
+  </div>
 
-<!-- Player Selection -->
-<div class="box">
-  <form method="get">
-    <select name="p1">
-      <option value="">Select Player A</option>
-      {% for p in players %}
-        <option value="{{ p.id }}" {% if p1_id == p.id|stringformat:"s" %}selected{% endif %}>
-          {{ p.player_name }}
-        </option>
-      {% endfor %}
-    </select>
+  <div class="container">
+    <!-- Player Selection -->
+    <div class="box card">
+      <form method="get" class="selectors-row">
+        <select name="p1">
+          <option value="">Select Player A</option>
+          {% for p in players %}
+          <option value="{{ p.id }}" {% if p.id|slugify == p1_id %}selected{% endif %}>
+            {{ p.player_name }}
+          </option>
+          {% endfor %}
+        </select>
 
-    <select name="p2">
-      <option value="">Select Player B</option>
-      {% for p in players %}
-        <option value="{{ p.id }}" {% if p2_id == p.id|stringformat:"s" %}selected{% endif %}>
-          {{ p.player_name }}
-        </option>
-      {% endfor %}
-    </select>
+        <select name="p2">
+          <option value="">Select Player B</option>
+          {% for p in players %}
+          <option value="{{ p.id }}" {% if p.id|slugify == p2_id %}selected{% endif %}>
+            {{ p.player_name }}
+          </option>
+          {% endfor %}
+        </select>
 
-    <button type="submit">Compare</button>
-  </form>
-</div>
+        <button type="submit" class="cmp-btn">⚔️ Compare</button>
+      </form>
+    </div>
 
-{% if p1_id and p2_id %}
+    {% if p1_id and p2_id %}
 
-<!-- Chart -->
-<div class="box">
-  <h3>Performance Comparison</h3>
-  <canvas id="cmpChart"></canvas>
+    {% if insight %}
+    <div class="insight-card glass-panel">
+      <b style="color: #34d399; display: block; margin-bottom: 8px;">🧠 Head-to-Head Insight</b>
+      {{ insight }}
+    </div>
+    {% endif %}
 
-  <!-- SAFE DATA PASSING -->
-  {{ p1|json_script:"p1-data" }}
-  {{ p2|json_script:"p2-data" }}
+    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: start;">
+      <!-- Chart -->
+      <div class="box card" style="margin-bottom: 0;">
+        <h3>Radar Analysis</h3>
+        <div class="chart-container">
+          <canvas id="cmpChart"></canvas>
+        </div>
 
+        <!-- SAFE DATA PASSING -->
+        {{ p1|json_script:"p1-data" }}
+        {{ p2|json_script:"p2-data" }}
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="box card" style="margin-bottom: 0;">
+        <h3>Statistical Breakdown</h3>
+        <table>
+          <tr>
+            <th>Metric</th>
+            <th><span style="color: #3b82f6;">Player A</span></th>
+            <th><span style="color: #ef4444;">Player B</span></th>
+          </tr>
+          <tr>
+            <td style="font-weight: 500;">Goals</td>
+            <td>{{ p1.goals }}</td>
+            <td>{{ p2.goals }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500;">Assists</td>
+            <td>{{ p1.assists }}</td>
+            <td>{{ p2.assists }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500;">Tackles</td>
+            <td>{{ p1.tackles }}</td>
+            <td>{{ p2.tackles }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500;">Shots on Target</td>
+            <td>{{ p1.shots_on_target }}</td>
+            <td>{{ p2.shots_on_target }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script src="{% static 'js/themes.js' %}"></script>
+  {% if p1_id and p2_id %}
   <script>
     const p1 = JSON.parse(document.getElementById("p1-data").textContent);
     const p2 = JSON.parse(document.getElementById("p2-data").textContent);
+    const initialTheme = localStorage.getItem('theme') || 'dark';
 
-    new Chart(document.getElementById("cmpChart"), {
+    function getThemeColors(theme) {
+      return {
+        text: theme === 'light' ? '#0f172a' : '#cbd5e1',
+        muted: theme === 'light' ? '#64748b' : '#94a3b8',
+        grid: theme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'
+      };
+    }
+
+    const themeColors = getThemeColors(initialTheme);
+
+    const chart = new Chart(document.getElementById("cmpChart"), {
       type: "radar",
       data: {
-        labels: ["Goals","Assists","Tackles","Shots on Target"],
+        labels: ["Goals", "Assists", "Tackles", "Shots on Target"],
         datasets: [
           {
             label: "Player A",
-            data: [
-              p1.goals,
-              p1.assists,
-              p1.tackles,
-              p1.shots_on_target
-            ],
-            borderColor:"#4f86ff",
-            backgroundColor:"rgba(79,134,255,0.15)"
+            data: [p1.goals, p1.assists, p1.tackles, p1.shots_on_target],
+            borderColor: "#3b82f6",
+            backgroundColor: "rgba(59, 130, 246, 0.2)",
+            pointBackgroundColor: "#60a5fa",
+            borderWidth: 2
           },
           {
             label: "Player B",
-            data: [
-              p2.goals,
-              p2.assists,
-              p2.tackles,
-              p2.shots_on_target
-            ],
-            borderColor:"#ff6b6b",
-            backgroundColor:"rgba(255,107,107,0.15)"
+            data: [p2.goals, p2.assists, p2.tackles, p2.shots_on_target],
+            borderColor: "#ef4444",
+            backgroundColor: "rgba(239, 68, 68, 0.2)",
+            pointBackgroundColor: "#f87171",
+            borderWidth: 2
           }
         ]
       },
-      options:{
-        responsive:true,
-        maintainAspectRatio:false,
-        plugins:{
-          legend:{labels:{color:"white"}}
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { color: themeColors.muted, font: { size: 14 } }
+          },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            padding: 12,
+            cornerRadius: 8
+          }
         },
-        scales:{
-          r:{
-            angleLines:{color:"rgba(255,255,255,0.2)"},
-            grid:{color:"rgba(255,255,255,0.2)"},
-            pointLabels:{color:"white"},
-            ticks:{display:false}
+        scales: {
+          r: {
+            angleLines: { color: themeColors.grid },
+            grid: { color: themeColors.grid },
+            pointLabels: { color: themeColors.muted, font: { size: 14, weight: '600' } },
+            ticks: { display: false, beginAtZero: true, min: 0 }
           }
         }
       }
     });
+
+    window.addEventListener('themeChanged', (e) => {
+      const colors = getThemeColors(e.detail.theme);
+      chart.options.plugins.legend.labels.color = colors.muted;
+      chart.options.scales.r.angleLines.color = colors.grid;
+      chart.options.scales.r.grid.color = colors.grid;
+      chart.options.scales.r.pointLabels.color = colors.muted;
+      chart.update();
+    });
   </script>
-</div>
-
-<!-- Comparison Table -->
-<div class="box">
-  <h3>Detailed Statistics</h3>
-  <table>
-    <tr><th>Metric</th><th>Player A</th><th>Player B</th></tr>
-    <tr><td>Goals</td><td>{{ p1.goals }}</td><td>{{ p2.goals }}</td></tr>
-    <tr><td>Assists</td><td>{{ p1.assists }}</td><td>{{ p2.assists }}</td></tr>
-    <tr><td>Tackles</td><td>{{ p1.tackles }}</td><td>{{ p2.tackles }}</td></tr>
-    <tr><td>Shots on Target</td><td>{{ p1.shots_on_target }}</td><td>{{ p2.shots_on_target }}</td></tr>
-  </table>
-</div>
-
-{% if insight %}
-<div class="insight">
-  <b>Insight:</b> {{ insight }}
-</div>
-{% endif %}
-
-{% endif %}
+  {% endif %}
 
 </body>
+
 </html>

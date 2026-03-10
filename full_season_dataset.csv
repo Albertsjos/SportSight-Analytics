@@ -1,0 +1,45 @@
+match,player_name,goals,assists,shots_on_target,tackles
+El Clasico,Lamine Yamal,1,2,3,4
+El Clasico,Pedri,0,3,1,8
+El Clasico,R. Lewandowski,2,0,5,1
+El Clasico,Raphinha,1,1,2,5
+El Clasico,F. de Jong,0,1,1,7
+El Clasico,Gavi,0,0,0,12
+El Clasico,Araujo,0,0,1,15
+El Clasico,Kounde,0,1,0,11
+El Clasico,Balde,0,0,2,9
+El Clasico,Christensen,0,0,1,10
+El Clasico,Marc-André ter Stegen,0,0,0,2
+Derby,Lamine Yamal,2,1,4,2
+Derby,Pedri,1,1,2,6
+Derby,R. Lewandowski,3,0,6,0
+Derby,Raphinha,0,2,3,4
+Derby,F. de Jong,0,2,1,9
+Derby,Gavi,1,0,1,13
+Derby,Araujo,1,0,2,14
+Derby,Kounde,0,0,1,10
+Derby,Balde,0,1,1,8
+Derby,Christensen,0,0,1,12
+Derby,Marc-André ter Stegen,0,0,0,3
+UCL Match 1,Lamine Yamal,0,1,2,5
+UCL Match 1,Pedri,0,1,1,7
+UCL Match 1,R. Lewandowski,1,0,4,1
+UCL Match 1,Raphinha,1,0,3,3
+UCL Match 1,F. de Jong,1,1,2,6
+UCL Match 1,Gavi,0,0,1,14
+UCL Match 1,Araujo,0,0,0,18
+UCL Match 1,Kounde,0,0,0,15
+UCL Match 1,Balde,0,2,2,7
+UCL Match 1,Christensen,0,0,1,11
+UCL Match 1,Marc-André ter Stegen,0,0,0,4
+UCL Match 2,Lamine Yamal,1,0,3,3
+UCL Match 2,Pedri,1,2,2,5
+UCL Match 2,R. Lewandowski,2,1,5,0
+UCL Match 2,Raphinha,0,2,2,5
+UCL Match 2,F. de Jong,0,0,1,8
+UCL Match 2,Gavi,0,1,1,11
+UCL Match 2,Araujo,0,0,1,16
+UCL Match 2,Kounde,0,0,1,12
+UCL Match 2,Balde,0,0,1,10
+UCL Match 2,Christensen,1,0,1,13
+UCL Match 2,Marc-André ter Stegen,0,0,0,1

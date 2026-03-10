@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Sum
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import (
+    Team,
     Player,
     PlayerPerformance,
     TrainingAttendance,
@@ -88,43 +89,171 @@ def dashboard(request):
             "top_players": top_players,
             "chart_labels_json": json.dumps(chart_labels),
             "chart_goals_json": json.dumps(chart_goals),
+            "display_name": request.user.username.title(),
         })
 
-    return render(request, "core/user_dashboard.html")
+    # --- USER DASHBOARD LOGIC ---
+    display_name = request.user.username.title()
+    player_stats = None
+    trend_data = None
+    rankings = None
+    attendance_summary = None
+    next_match = None
+    user_rank = 0
+
+    try:
+        # Try finding linked player first, then fallback to name match
+        player = Player.objects.filter(user=request.user).first()
+        if not player:
+            player = Player.objects.filter(player_name__iexact=request.user.username).first()
+            if player and not player.user:
+                player.user = request.user
+                player.save()
+
+        if player:
+            # 1. Quick Stats
+            perfs = PlayerPerformance.objects.filter(player=player).select_related('match').order_by('match__match_date')
+            player_stats = {
+                "goals": perfs.aggregate(Sum('goals'))['goals__sum'] or 0,
+                "assists": perfs.aggregate(Sum('assists'))['assists__sum'] or 0,
+                "tackles": perfs.aggregate(Sum('tackles'))['tackles__sum'] or 0,
+                "matches": perfs.count(),
+            }
+
+            # 2. Performance Trend (Line Chart Data)
+            trend_labels = [p.match.opponent[:10] for p in perfs if p.match]
+            trend_goals = [p.goals for p in perfs]
+            trend_data = {
+                "labels": json.dumps(trend_labels),
+                "goals": json.dumps(trend_goals),
+            }
+
+            # 3. Squad Ranking (Top 5 Scorers)
+            squad_stats = (
+                PlayerPerformance.objects.values("player__player_name")
+                .annotate(total_goals=Sum("goals"))
+                .order_by("-total_goals")
+            )
+            
+            rankings = []
+            user_rank = 0
+            for i, p_stat in enumerate(squad_stats):
+                name = p_stat["player__player_name"]
+                goals = p_stat["total_goals"] or 0
+                if i < 5:
+                    rankings.append({"name": name, "goals": goals, "rank": i + 1})
+                if name == player.player_name:
+                    user_rank = i + 1
+            
+            # 4. Attendance Summary
+            att_qs = TrainingAttendance.objects.filter(player=player)
+            total_att = att_qs.count()
+            present_att = att_qs.filter(present=True).count()
+            attendance_summary = {
+                "present": present_att,
+                "missed": total_att - present_att,
+                "rate": round((present_att / total_att * 100), 1) if total_att > 0 else 0
+            }
+
+            # 5. Next Match
+            import datetime
+            next_match = Match.objects.filter(match_date__gte=datetime.date.today()).order_by('match_date').first()
+
+    except Player.DoesNotExist:
+        pass
+
+    return render(request, "core/user_dashboard.html", {
+        "display_name": display_name,
+        "stats": player_stats,
+        "trend": trend_data,
+        "rankings": rankings,
+        "user_rank": user_rank,
+        "attendance": attendance_summary,
+        "next_match": next_match,
+    })
 
 
 # ---------------- ANALYTICS ----------------
 @login_required
 def analytics_page(request):
-    performances = PlayerPerformance.objects.select_related("player")
+    # Group goals by Match to show the Team's progression over time
+    matches_data = (
+        PlayerPerformance.objects.values("match__opponent")
+        .annotate(team_goals=Sum("goals"))
+        .order_by("match__match_date") # Assuming match_date exists or it orders naturally
+    )
 
-    labels = [p.player.player_name for p in performances]
-    goals = [p.goals for p in performances]
+    labels = [m["match__opponent"] for m in matches_data if m["match__opponent"]]
+    goals = [m["team_goals"] or 0 for m in matches_data if m["match__opponent"]]
+    
+    # Fallback to pure performances if match aggregation isn't enough data
+    if len(labels) < 2:
+        performances = PlayerPerformance.objects.all().order_by('id')
+        labels = [f"Performance {p.id}" for p in performances]
+        goals = [p.goals for p in performances]
 
     return render(request, "core/analytics.html", {
         "labels": labels,
         "goals": goals,
-        "total_entries": len(performances),
+        "total_entries": PlayerPerformance.objects.count(),
     })
 
 
 # ---------------- SEASON ANALYTICS ----------------
 @login_required
 def season_analytics(request):
-    players = Player.objects.all()
+    players = Player.objects.all().prefetch_related('playerperformance_set')
     data = []
 
     for player in players:
-        performances = PlayerPerformance.objects.filter(player=player)
+        performances = player.playerperformance_set.all()
 
         matches = performances.count()
         total_goals = sum(p.goals for p in performances)
+        total_assists = sum(p.assists for p in performances)
+        total_tackles = sum(p.tackles for p in performances)
+        total_shots = sum(p.shots_on_target for p in performances)
+
+        avg_goals = round(total_goals / matches, 2) if matches > 0 else 0
+        conversion_rate = round((total_goals / total_shots) * 100, 1) if total_shots > 0 else 0
+        goal_involvement = total_goals + total_assists
+        
+        # Max scale for the radar chart scaling (e.g., max stats across all players or arbitrary max)
+        max_stats = 100
+
+        suggestions = []
+        if total_goals >= 5:
+            suggestions.append("🚀 Excellent scoring form. Keep positioning high in the box.")
+        elif total_shots > 10 and total_goals < 3:
+            suggestions.append("🎯 Needs finishing practice. High shots but low goal conversion.")
+        elif total_tackles >= 10:
+            suggestions.append("🛡️ Strong defensive presence. Very reliable at winning the ball back.")
+        elif total_assists >= 5:
+            suggestions.append("👁️ Great vision and playmaking ability. Key creative outlet.")
+        
+        if not suggestions:
+            suggestions.append("✅ Maintain current training regime and consistent performance.")
 
         data.append({
             "player": player.player_name,
             "matches": matches,
-            "goals": total_goals
+            "goals": total_goals,
+            "assists": total_assists,
+            "tackles": total_tackles,
+            "shots": total_shots,
+            "avg_goals": avg_goals,
+            "conversion_rate": conversion_rate,
+            "goal_involvement": goal_involvement,
+            "suggestions": suggestions,
+            "id": player.id
         })
+
+    display_name = request.user.username.lower()
+    for entry in data:
+        entry["is_current"] = (entry["player"].lower() == display_name) or (display_name in entry["player"].lower())
+
+    # Sort data to bring current user's player to the top
+    data.sort(key=lambda x: 0 if x["is_current"] else 1)
 
     return render(request, "core/season_analytics.html", {
         "analytics_data": data
@@ -135,8 +264,50 @@ def season_analytics(request):
 @login_required
 def compare_page(request):
     players = Player.objects.all().order_by("player_name")
+    p1_id = request.GET.get("p1")
+    p2_id = request.GET.get("p2")
+
+    p1_data = None
+    p2_data = None
+    insight = ""
+
+    if p1_id and p2_id:
+        try:
+            player1 = Player.objects.get(id=p1_id)
+            player2 = Player.objects.get(id=p2_id)
+
+            def get_stats(p_obj):
+                perfs = PlayerPerformance.objects.filter(player=p_obj)
+                return {
+                    "goals": sum(p.goals for p in perfs),
+                    "assists": sum(p.assists for p in perfs),
+                    "tackles": sum(p.tackles for p in perfs),
+                    "shots_on_target": sum(p.shots_on_target for p in perfs),
+                }
+
+            p1_data = get_stats(player1)
+            p2_data = get_stats(player2)
+
+            # Generate Insight
+            if p1_data["goals"] > p2_data["goals"]:
+                insight = f"{player1.player_name} is more clinical with {p1_data['goals']} goals."
+            elif p2_data["goals"] > p1_data["goals"]:
+                insight = f"{player2.player_name} is the sharper finisher this season."
+            elif p1_data["assists"] > p2_data["assists"]:
+                insight = f"{player1.player_name} provides more creative support."
+            else:
+                insight = "Both players show very similar performance levels."
+
+        except Player.DoesNotExist:
+            pass
+
     return render(request, "core/compare.html", {
-        "players": players
+        "players": players,
+        "p1": p1_data,
+        "p2": p2_data,
+        "p1_id": p1_id,
+        "p2_id": p2_id,
+        "insight": insight
     })
 
 
@@ -144,8 +315,66 @@ def compare_page(request):
 @login_required
 def compare_xi(request):
     players = Player.objects.all()
+    
+    selected_player_ids = request.GET.getlist('players')
+    
+    chart_data = None
+    insights = None
+    selected_count = 0
+    
+    if selected_player_ids:
+        selected_players = Player.objects.filter(id__in=selected_player_ids)
+        selected_count = selected_players.count()
+        chart_data = []
+        
+        top_scorer = None
+        max_goals = -1
+        
+        best_defender = None
+        max_tackles = -1
+        
+        needs_improvement = None
+        min_impact = 999999
+        
+        for player in selected_players:
+            performances = PlayerPerformance.objects.filter(player=player)
+            goals = sum(p.goals for p in performances)
+            assists = sum(p.assists for p in performances)
+            tackles = sum(p.tackles for p in performances)
+            shots = sum(p.shots_on_target for p in performances)
+            
+            chart_data.append({
+                "name": player.player_name,
+                "goals": goals,
+                "assists": assists,
+                "tackles": tackles,
+                "shots": shots
+            })
+            
+            if goals > max_goals:
+                max_goals = goals
+                top_scorer = player.player_name
+                
+            if tackles > max_tackles:
+                max_tackles = tackles
+                best_defender = player.player_name
+                
+            impact = goals + assists + tackles
+            if impact < min_impact:
+                min_impact = impact
+                needs_improvement = player.player_name
+                
+        insights = {
+            "top_scorer": f"{top_scorer} ({max_goals} goals)" if top_scorer else "N/A",
+            "best_defender": f"{best_defender} ({max_tackles} tackles)" if best_defender else "N/A",
+            "needs_improvement": needs_improvement if needs_improvement else "N/A"
+        }
+
     return render(request, "core/compare_xi.html", {
-        "players": players
+        "players": players,
+        "chart_data": chart_data,
+        "insights": insights,
+        "selected_count": selected_count
     })
 
 # ---------------- PLAYER ATTENDANCE ----------------
@@ -224,33 +453,43 @@ def upload_performance_csv(request):
         inserted = 0
         skipped = 0
 
+        default_team, _ = Team.objects.get_or_create(team_name="FC Barcelona")
+
         for row in reader:
             try:
                 # 🔥 Create match using your model structure
                 match, _ = Match.objects.get_or_create(
-                    opponent=row["match"].strip(),
+                    opponent=row.get("match", "Unknown").strip(),
                     defaults={
                         "match_date": date.today(),
                         "venue": "Unknown"
                     }
                 )
 
-                player = Player.objects.get(
-                    player_name=row["player_name"].strip()
+                player_name_val = row.get("player_name", row.get("player", "")).strip()
+
+                player, _ = Player.objects.get_or_create(
+                    player_name=player_name_val,
+                    defaults={
+                        "team": default_team,
+                        "position": "Unknown",
+                        "jersey_no": 0
+                    }
                 )
 
                 PlayerPerformance.objects.create(
                     match=match,
                     player=player,
-                    goals=int(row["goals"]),
-                    assists=int(row["assists"]),
-                    shots_on_target=int(row["shots_on_target"]),
-                    tackles=int(row["tackles"]),
+                    goals=int(row.get("goals", 0)),
+                    assists=int(row.get("assists", 0)),
+                    shots_on_target=int(row.get("shots_on_target", 0)),
+                    tackles=int(row.get("tackles", 0)),
                 )
 
                 inserted += 1
 
-            except Exception:
+            except Exception as e:
+                print(f"Skipping row due to error: {e}")
                 skipped += 1
 
         messages.success(request, f"Inserted: {inserted} | Skipped: {skipped}")

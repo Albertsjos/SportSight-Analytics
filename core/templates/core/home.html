@@ -1,97 +1,258 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
-  <title>SportSight Analytics</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SportSight Analytics | Premium Football Intelligence</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #0b1220, #050816);
-      color:white;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .hero{
-      text-align:center;
-      padding:80px 20px;
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
-    .hero h1{
-      font-size:42px;
-      margin-bottom:10px;
+
+    /* Animated background elements */
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(80px);
     }
-    .hero p{
-      font-size:18px;
-      opacity:0.85;
-      max-width:700px;
-      margin:0 auto 30px;
+
+    .glow-1 {
+      top: -200px;
+      right: -100px;
     }
-    .btn{
-      padding:14px 28px;
-      border-radius:30px;
-      background:#4f86ff;
-      color:white;
-      text-decoration:none;
-      font-weight:bold;
-      display:inline-block;
+
+    .glow-2 {
+      bottom: -200px;
+      left: -100px;
     }
-    .features{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:20px;
-      padding:40px 60px;
+
+    header {
+      padding: 40px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .card{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:18px;
-      padding:24px;
-      text-align:center;
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .card h3{
-      margin-bottom:10px;
+
+    .nav-links a {
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 500;
+      transition: 0.3s;
     }
-    .card p{
-      font-size:14px;
-      opacity:0.8;
+
+    .hero {
+      padding: 100px 10% 80px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-    .footer{
-      text-align:center;
-      padding:30px;
-      font-size:13px;
-      opacity:0.6;
+
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 100px;
+      color: #60a5fa;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .hero h1 {
+      font-size: var(--font-size-h1);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .btn {
+      padding: 16px 36px;
+      border-radius: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 1.25rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 60px 10% 100px;
+    }
+
+    .card {
+      border-radius: 24px;
+      padding: 40px;
+      transition: all 0.4s;
+      backdrop-filter: blur(12px);
+    }
+
+    .card:hover {
+      border-color: rgba(96, 165, 250, 0.3);
+      transform: translateY(-8px);
+    }
+
+    .icon-box {
+      width: 54px;
+      height: 54px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card h3 {
+      font-size: var(--font-size-h3);
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      line-height: 1.6;
+      font-size: var(--font-size-base);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      padding: 60px 10%;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      font-size: 14px;
     }
   </style>
 </head>
+
 <body>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
 
-  <div class="hero">
-    <h1>SportSight Analytics</h1>
+  <header>
+    <div class="logo">SportSight</div>
+    <div class="nav-links" style="display: flex; align-items: center;">
+      <a href="{% url 'login' %}">Sign In</a>
+      <a href="{% url 'register' %}">Create Account</a>
+      <button class="theme-toggle" id="theme-toggle" style="margin-left: 30px;">🌓</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="badge">Introducing Visual Football Intelligence</div>
+    <h1>Master the Game with Data-Driven Insights</h1>
     <p>
-      A football player performance analysis platform that transforms match data
-      into meaningful insights using visual analytics.
+      Transform raw match statistics into professional-grade visual analytics.
+      Track your squad, compare elite performers, and optimize team performance like a pro.
     </p>
-    <a href="{% url 'login' %}">Go to Dashboard</a>
-  </div>
+    <div class="cta-row">
+      <a href="{% url 'login' %}" class="btn btn-primary">Launch Dashboard</a>
+    </div>
+  </section>
 
-  <div class="features">
+  <section class="features">
     <div class="card">
-      <h3>📊 Player Analytics</h3>
-      <p>Track goals, assists, tackles and performance trends visually.</p>
+      <div class="icon-box">📊</div>
+      <h3>Player Analytics</h3>
+      <p>Analyze performance profiles with radar charts and heatmap-inspired visual data tracking.</p>
     </div>
 
     <div class="card">
-      <h3>⚔ Player Comparison</h3>
-      <p>Compare two players using charts to support data-driven decisions.</p>
+      <div class="icon-box">⚔️</div>
+      <h3>Advanced Comparison</h3>
+      <p>Go head-to-head. Scientifically compare players or whole playing XI using weighted statistics.</p>
     </div>
 
     <div class="card">
-      <h3>📈 Smart Insights</h3>
-      <p>Understand performance beyond visual observation.</p>
+      <div class="icon-box">📈</div>
+      <h3>Trend Discovery</h3>
+      <p>Identify scoring patterns and match-by-match momentum to predict future performance peaks.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="footer">
-    MCA Final Project • SportSight Analytics
-  </div>
+  <footer>
+    &copy; 2026 SportSight Analytics • The Future of Sports Intelligence
+  </footer>
 
+  <script src="{% static 'js/themes.js' %}"></script>
 </body>
+
 </html>

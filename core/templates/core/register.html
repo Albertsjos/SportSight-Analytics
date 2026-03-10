@@ -1,138 +1,214 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Register | SportSight Analytics</title>
-
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-family:Arial, sans-serif;
-      background: radial-gradient(circle at top, #0b1220, #050816);
-      color:white;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .card{
-      width:380px;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:18px;
-      padding:30px;
-      box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
     }
 
-    h2{
-      margin-top:0;
-      text-align:center;
-      margin-bottom:22px;
+    .bg-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(60px);
     }
 
-    label{
-      font-size:13px;
-      opacity:.85;
+    .card {
+      width: 100%;
+      max-width: 500px;
+      /* Increased from 480px */
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.6s ease-out;
     }
 
-    input, select{
-      width:100%;
-      padding:12px;
-      margin-top:6px;
-      margin-bottom:16px;
-      border-radius:10px;
-      border:none;
-      outline:none;
-      font-size:14px;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    button{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:12px;
-      background:#4f86ff;
-      color:white;
-      font-size:15px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:.25s;
+    .logo {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      background: linear-gradient(90deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    button:hover{
-      background:#3b6fe0;
+    h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      text-align: center;
     }
 
-    .link{
-      text-align:center;
-      margin-top:14px;
-      font-size:13px;
+    p.subtitle {
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 15px;
     }
 
-    .link a{
-      color:#4f86ff;
-      text-decoration:none;
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    .messages{
-      margin-bottom:14px;
-      font-size:13px;
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
     }
 
-    .messages div{
-      padding:8px 10px;
-      border-radius:8px;
-      margin-bottom:6px;
-      background:rgba(255,80,80,0.15);
+    input,
+    select {
+      width: 100%;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      transition: 0.3s;
+      outline: none;
     }
 
-    .success{
-      background:rgba(80,200,120,0.2) !important;
+    input:focus,
+    select:focus {
+      border-color: #3b82f6 !important;
+      background: var(--accent-glow) !important;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    select option {
+      background: #0f172a;
+      color: white;
+    }
+
+    button.submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: 0.3s;
+    }
+
+    button.submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .link-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+    }
+
+    .link-footer a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .messages div {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .theme-toggle-reg {
+      position: absolute;
+      top: 20px;
+      right: 20px;
     }
   </style>
 </head>
 
 <body>
+  <div class="bg-glow"></div>
+  <button class="theme-toggle theme-toggle-reg" id="theme-toggle">🌓</button>
 
   <div class="card">
-
+    <div class="logo">SportSight</div>
     <h2>Create Account</h2>
+    <p class="subtitle">Join the elite analytics platform</p>
 
     {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <div class="{% if message.tags == 'success' %}success{% endif %}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      </div>
+    <div class="messages">
+      {% for message in messages %}
+      <div>{{ message }}</div>
+      {% endfor %}
+    </div>
     {% endif %}
 
     <form method="post">
       {% csrf_token %}
-
-      <label>Username</label>
-      <input type="text" name="username" required>
-
-      <label>Password</label>
-      <input type="password" name="password" required>
-
-      <label>Role</label>
-      <select name="role" required>
-        <option value="">Select role</option>
-        <option value="user">Viewer (Read only)</option>
-        <option value="admin">Admin / Coach</option>
-      </select>
-
-      <button type="submit">Register</button>
+      <div class="form-group">
+        <label>Username</label>
+        <input name="username" placeholder="Choose a unique username" required>
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select name="role">
+          <option value="user">Player / User</option>
+          <option value="admin">Administrator / Coach</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="submit-btn">Complete Registration</button>
     </form>
 
-    <div class="link">
-      Already have an account?
-      <a href="{% url 'login' %}">Login</a>
+    <div class="link-footer">
+      Already have an account? <a href="{% url 'login' %}">Sign In</a>
     </div>
-
   </div>
 
+  <script src="{% static 'js/themes.js' %}"></script>
 </body>
+
 </html>

@@ -1,214 +1,507 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SportSight – Admin Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background: radial-gradient(circle at top, #0b1220, #050816);
-      color:white;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .top{
-      padding:22px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-bottom:1px solid rgba(255,255,255,0.1);
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    a{
-      color:#4f86ff;
-      text-decoration:none;
+    /* GLASS TOPBAR */
+    .topbar {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .content{
-      display:grid;
-      grid-template-columns:2fr 1fr;
-      gap:20px;
-      padding:30px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .box{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      padding:20px;
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      color: white;
     }
 
-    canvas{
-      max-height:260px;
-      width:100% !important;
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
-    .actions a{
-      display:block;
-      margin-bottom:12px;
-      padding:12px;
-      background:#4f86ff;
-      color:white;
-      text-align:center;
-      border-radius:10px;
-      font-weight:bold;
-      transition:0.3s;
+    .nav-actions {
+      display: flex;
+      gap: 24px;
+      align-items: center;
     }
 
-    .actions a:hover{
-      opacity:0.85;
+    .nav-actions a {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: 0.3s;
     }
 
-    .leaderboard{
-      margin-top:20px;
+    .logout-btn {
+      padding: 10px 20px;
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
+      border-radius: 10px;
+      font-weight: 600;
+      border: 1px solid rgba(239, 68, 68, 0.1);
     }
 
-    .leader-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:14px 18px;
-      margin-bottom:12px;
-      background:rgba(255,255,255,0.06);
-      border-radius:12px;
+    /* MAIN CONTENT */
+    .dashboard-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px;
     }
 
-    .rank{
-      font-weight:bold;
-      color:#4f86ff;
+    .welcome-header {
+      margin-bottom: 32px;
     }
 
-    .player-name{
-      flex:1;
-      margin-left:15px;
+    .welcome-header h1 {
+      font-size: var(--font-size-h1);
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
-    .goals{
-      font-weight:bold;
-      color:#2ecc71;
+    .welcome-header p {
+      font-size: var(--font-size-base);
     }
 
-    .upload-box{
-      margin-top:20px;
-      padding-top:15px;
-      border-top:1px solid rgba(255,255,255,0.1);
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
     }
 
-    input[type="file"]{
-      width:100%;
-      margin-bottom:10px;
-      color:white;
+    .kpi-card {
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    button{
-      padding:10px;
-      background:#2ecc71;
-      color:white;
-      border:none;
-      border-radius:8px;
-      width:100%;
-      font-weight:bold;
-      cursor:pointer;
+    .kpi-label {
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    button:hover{
-      opacity:0.9;
+    .kpi-value {
+      font-size: var(--font-size-h2);
+      font-weight: 700;
     }
 
-    .message{
-      margin-bottom:15px;
-      padding:10px;
-      border-radius:8px;
-      background:#1abc9c;
+    .kpi-card.blue {
+      border-left: 4px solid #3b82f6 !important;
+    }
+
+    .kpi-card.green {
+      border-left: 4px solid #10b981 !important;
+    }
+
+    .kpi-card.purple {
+      border-left: 4px solid #8b5cf6 !important;
+    }
+
+    /* LAYOUT GRID */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-panel {
+      border-radius: 24px;
+      padding: 32px;
+      height: 100%;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .panel-header h3 {
+      font-size: var(--font-size-h3);
+      font-weight: 600;
+    }
+
+    /* LEADERBOARD */
+    .leaderboard {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .leader-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+
+    .leader-row:hover {
+      background: rgba(59, 130, 246, 0.05) !important;
+      border-color: rgba(59, 130, 246, 0.2) !important;
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rank-num {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .rank-1 .rank-num {
+      background: #facc15;
+      color: #713f12;
+    }
+
+    .player-details b {
+      display: block;
+      font-size: 1.2rem;
+    }
+
+    .stats-pill {
+      background: rgba(16, 185, 129, 0.1);
+      color: #34d399;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* QUICK ACTIONS */
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      border-radius: 16px;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: #3b82f6 !important;
+      transform: translateX(5px);
+    }
+
+    .action-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    /* UPLOAD BOX */
+    .upload-section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .upload-section h4 {
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      border: 2px dashed rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .message {
+      padding: 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
-
-<div class="top">
-  <b>SportSight – Admin Dashboard</b>
-  <div>
-    <a href="/admin/">Admin Panel</a> |
-    <a href="/logout/">Logout</a>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-icon">S</div>
+      <div class="brand-name">SportSight</div>
+    </div>
+    <div class="nav-actions">
+      <a href="/admin/">Django Admin</a>
+      <a href="/attendance/">My Attendance</a>
+      <button class="theme-toggle" id="theme-toggle">🌓</button>
+      <a href="/logout/" class="logout-btn">Log Out</a>
+    </div>
   </div>
-</div>
 
-<div class="content">
+  <div class="dashboard-container">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
 
-  <!-- LEFT SIDE -->
-  <div class="box">
-    <h3>Top 5 Players by Goals</h3>
+    <div class="welcome-header">
+      <h1>Welcome, {{ display_name }}! 👋</h1>
+      <p>Managing squad performance, attendance, and analytics.</p>
+    </div>
 
-    <canvas id="goalsChart"></canvas>
+    <div class="kpi-grid">
+      <div class="kpi-card blue">
+        <div class="kpi-label">Active Players</div>
+        <div class="kpi-value">22</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Goals This Season</div>
+        <div class="kpi-value">54</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">Avg Attendance</div>
+        <div class="kpi-value">84%</div>
+      </div>
+    </div>
 
-    <div class="leaderboard">
-      {% for player in top_players %}
-      <div class="leader-row">
-        <div class="rank">#{{ forloop.counter }}</div>
-        <div class="player-name">
-          {{ player.player__player_name }}
+    <div class="main-grid">
+      <!-- PERFORMANCE CHART PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3>🏆 Top Performers</h3>
+          <span style="font-size: 14px;">Season Goals</span>
         </div>
-        <div class="goals">
-          {{ player.total_goals|default:0 }} Goals
+
+        <div style="height: 300px; margin-bottom: 40px;">
+          <canvas id="goalsChart"></canvas>
+        </div>
+
+        <div class="leaderboard">
+          {% for player in top_players %}
+          <div class="leader-row {% if forloop.first %}rank-1{% endif %}">
+            <div class="player-info">
+              <div class="rank-num">{{ forloop.counter }}</div>
+              <div class="player-details">
+                <b>{{ player.player__player_name }}</b>
+              </div>
+            </div>
+            <div class="stats-pill">{{ player.total_goals|default:0 }} Goals</div>
+          </div>
+          {% endfor %}
         </div>
       </div>
-      {% empty %}
-      <div>No performance data available.</div>
-      {% endfor %}
-    </div>
 
+      <!-- QUICK ACTIONS PANEL -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3>⚡ Quick Actions</h3>
+        </div>
+
+        <div class="action-grid">
+          <a href="/season-analytics/" class="action-btn">
+            <div class="action-icon" style="background: rgba(250, 204, 21, 0.1); color: #facc15;">⭐</div>
+            Full Season Analytics
+          </a>
+          <a href="/compare-xi/" class="action-btn">
+            <div class="action-icon" style="background: rgba(59, 130, 246, 0.1); color: #60a5fa;">👥</div>
+            Compare Playing XI
+          </a>
+          <a href="/compare/" class="action-btn">
+            <div class="action-icon" style="background: rgba(139, 92, 246, 0.1); color: #a78bfa;">👤</div>
+            1v1 Comparison
+          </a>
+          <a href="/analytics/" class="action-btn">
+            <div class="action-icon" style="background: rgba(16, 185, 129, 0.1); color: #34d399;">📈</div>
+            Trend Analysis
+          </a>
+          <a href="{% url 'admin_attendance' %}" class="action-btn">
+            <div class="action-icon" style="background: rgba(244, 63, 94, 0.1); color: #fb7185;">📅</div>
+            Attendance Logs
+          </a>
+        </div>
+
+        <div class="upload-section">
+          <h4>Bulk Match Data Import</h4>
+          <form action="{% url 'upload_performance' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="file-input-wrapper">
+              <input type="file" name="csv_file" accept=".csv" required>
+            </div>
+            <button type="submit" class="submit-btn">📤 Upload CSV</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- RIGHT SIDE -->
-  <div class="box actions">
-    <h3>Quick Actions</h3>
+  <script src="{% static 'js/themes.js' %}"></script>
+  <script>
+    let chartInstance;
+    const initialTheme = localStorage.getItem('theme') || 'dark';
 
-    <a href="/compare/">Compare Players</a>
-    <a href="/compare-xi/">Compare Playing XI</a>
-    <a href="/analytics/">View Analytics</a>
-    <a href="/season-analytics/">Season Analytics</a>
-    <a href="/admin/core/playerperformance/add/">Add Performance</a>
-    <a href="/admin/">Go to Admin Panel</a>
-    <a href="{% url 'admin_attendance' %}">View All Attendance</a>
+    function updateChartColors(theme) {
+      const textColor = theme === 'light' ? '#0f172a' : '#94a3b8';
+      const gridColor = theme === 'light' ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255,255,255,0.05)';
 
-    <!-- CSV Upload -->
-    <div class="upload-box">
-      <form action="{% url 'upload_performance' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="csv_file" required>
-        <button type="submit">Upload Performance CSV</button>
-      </form>
-    </div>
-
-    <a href="/logout/">Logout</a>
-
-  </div>
-
-</div>
-
-<script>
-  const labels = JSON.parse('{{ chart_labels_json|escapejs }}');
-  const goals = JSON.parse('{{ chart_goals_json|escapejs }}');
-
-  new Chart(document.getElementById("goalsChart"), {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        data: goals,
-        backgroundColor: "#4f86ff"
-      }]
-    },
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      plugins:{ legend:{display:false} },
-      scales:{ y:{beginAtZero:true} }
+      if (chartInstance) {
+        chartInstance.options.scales.x.ticks.color = textColor;
+        chartInstance.options.scales.y.grid.color = gridColor;
+        chartInstance.update();
+      }
     }
-  });
-</script>
 
+    window.addEventListener('themeChanged', (e) => {
+      updateChartColors(e.detail.theme);
+    });
+
+    const labels = JSON.parse('{{ chart_labels_json|escapejs }}');
+    const goals = JSON.parse('{{ chart_goals_json|escapejs }}');
+
+    const ctx = document.getElementById("goalsChart").getContext('2d');
+
+    let gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, '#3b82f6');
+    gradient.addColorStop(1, 'rgba(59, 130, 246, 0.05)');
+
+    chartInstance = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: goals,
+          backgroundColor: gradient,
+          borderColor: '#3b82f6',
+          borderWidth: 2,
+          borderRadius: 8,
+          barPercentage: 0.5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            padding: 12,
+            cornerRadius: 10,
+            titleFont: { family: 'Outfit', size: 14 }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: initialTheme === 'light' ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#64748b' }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: initialTheme === 'light' ? '#0f172a' : '#94a3b8', font: { weight: '600', size: 16 } }
+          }
+        }
+      }
+    });
+  </script>
 </body>
+
 </html>

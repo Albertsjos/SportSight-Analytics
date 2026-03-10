@@ -1,30 +1,134 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-    <title>Attendance Analytics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attendance Analytics | SportSight</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 40px;
+      width: 90%;
+    }
+
+    h2 {
+      font-size: var(--font-size-h2);
+      margin-bottom: 30px;
+      display: inline-block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      font-size: 1.1rem;
+    }
+
+    th,
+    td {
+      padding: 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--panel-bg);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="topbar">
+    <div class="nav-left">
+      <b style="font-size: 24px;">📊 Attendance Summary</b>
+      <button class="theme-toggle" id="theme-toggle">🌓</button>
+    </div>
+    <a href="/dashboard/">&larr; Dashboard</a>
+  </div>
 
-<h2>📊 Squad Attendance Overview</h2>
+  <div class="container card">
+    <h2>Squad Attendance Overview</h2>
 
-<table border="1" cellpadding="10">
-  <tr>
-    <th>Player</th>
-    <th>Training Attended</th>
-    <th>Training Missed</th>
-    <th>Matches Played</th>
-  </tr>
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Training Attended</th>
+          <th>Training Missed</th>
+          <th>Matches Played</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in attendance_data %}
+        <tr>
+          <td style="font-weight: 700; font-size: 1.2rem;">{{ a.player }}</td>
+          <td style="color: #10b981; font-weight: 600;">{{ a.training_present }}</td>
+          <td style="color: #ef4444; font-weight: 600;">{{ a.training_absent }}</td>
+          <td>{{ a.matches_played }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-  {% for a in attendance_data %}
-  <tr>
-    <td>{{ a.player }}</td>
-    <td>{{ a.training_present }}</td>
-    <td>{{ a.training_absent }}</td>
-    <td>{{ a.matches_played }}</td>
-  </tr>
-  {% endfor %}
-
-</table>
-
+  <script src="{% static 'js/themes.js' %}"></script>
 </body>
+
 </html>

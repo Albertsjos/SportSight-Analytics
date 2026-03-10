@@ -1,247 +1,473 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>User Dashboard | SportSight Analytics</title>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #0b1220, #050816);
-      color:white;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .top{
-      padding:22px 28px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-bottom:1px solid rgba(255,255,255,0.08);
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .top b{
-      font-size:22px;
+    .topbar {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .top a{
-      color:#ff6b6b;
-      text-decoration:none;
-      font-size:14px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .welcome{
-      padding:26px 28px;
-      font-size:15px;
-      opacity:.85;
-      max-width:900px;
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:22px;
-      padding:0 28px 40px;
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
     }
 
-    .card{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:20px;
-      padding:26px;
-      transition:.3s;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+    .nav-actions {
+      display: flex;
+      gap: 24px;
+      align-items: center;
     }
 
-    .card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 18px 45px rgba(0,0,0,.4);
+    .nav-actions a {
+      text-decoration: none;
+      font-weight: 500;
     }
 
-    .card h3{
-      margin:0 0 10px;
-      font-size:18px;
+    .logout-btn {
+      color: #f87171 !important;
+      font-weight: 700 !important;
     }
 
-    .card p{
-      font-size:14px;
-      opacity:.8;
-      margin-bottom:20px;
-      line-height:1.5;
+    .dashboard-container {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px;
     }
 
-    .card a{
-      display:block;
-      text-align:center;
-      padding:14px;
-      background:#4f86ff;
-      color:white;
-      text-decoration:none;
-      border-radius:14px;
-      font-weight:bold;
+    /* WELCOME CARD */
+    .hero-banner {
+      border-radius: 24px;
+      padding: 30px 40px;
+      margin-bottom: 30px;
     }
 
-    .section{
-      padding:0 28px 40px;
+    .hero-banner h1 {
+      font-size: var(--font-size-h1);
+      margin-bottom: 8px;
     }
 
-    .section-title{
-      font-size:22px;
-      margin-bottom:6px;
+    .hero-banner p {
+      font-size: var(--font-size-base);
     }
 
-    .section-subtitle{
-      opacity:.7;
-      margin-bottom:22px;
-      font-size:14px;
+    /* PLAYER QUICK STATS */
+    .quick-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
     }
 
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:20px;
+    @media (max-width: 768px) {
+      .quick-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
-    .mini-card{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.1);
-      border-radius:18px;
-      padding:24px;
-      text-align:center;
+    .stat-card {
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s;
     }
 
-    .mini-card h3{
-      margin:10px 0 0;
-      font-size:26px;
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(59, 130, 246, 0.4);
     }
 
-    .activity-list{
-      list-style:none;
-      padding:0;
-      margin-top:10px;
-      max-width:600px;
+    .stat-label {
+      font-size: var(--font-size-base);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
     }
 
-    .activity-list li{
-      padding:14px 0;
-      border-bottom:1px solid rgba(255,255,255,0.12);
-      font-size:14px;
-      opacity:.85;
+    .stat-val {
+      font-size: var(--font-size-h2);
+      font-weight: 700;
     }
 
-    .footer-note{
-      text-align:center;
-      font-size:12px;
-      opacity:.4;
-      padding:20px 0 26px;
+    /* MAIN SECTION GRID */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      gap: 30px;
+      margin-bottom: 40px;
     }
-    .dashboard-container{
-  max-width:1200px;
-  margin:60px auto;
-  padding:0 20px;
-}
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-panel {
+      border-radius: 24px;
+      padding: 28px;
+    }
+
+    .panel-header {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* RANKING LIST */
+    .ranking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ranking-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+    }
+
+    .ranking-row.active {
+      border-color: #3b82f6 !important;
+      background: rgba(59, 130, 246, 0.05) !important;
+    }
+
+    .rank-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rank-num {
+      font-weight: 700;
+      width: 24px;
+    }
+
+    .active .rank-num {
+      color: #3b82f6;
+    }
+
+    /* MINI CARDS (Attendance / Match) */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .info-box {
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .info-box h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .match-content b {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .match-content span {
+      font-size: 13px;
+    }
+
+    /* FEATURE BUTTONS */
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .nav-card {
+      border-radius: 20px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: 0.3s;
+    }
+
+    .nav-card:hover {
+      background: rgba(59, 130, 246, 0.08) !important;
+      border-color: #3b82f6 !important;
+    }
+
+    .nav-card h4 {
+      font-size: 17px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-card p {
+      font-size: 13px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 
 <body>
-<div class="dashboard-container">
-<!-- TOP BAR -->
-<div class="top">
-  <b>User Dashboard</b>
-  <a href="/logout/">Logout</a>
-</div>
-<a href="{% url 'player_attendance' %}">
-    <button>View My Attendance</button>
-</a>
-<!-- WELCOME -->
-<div class="welcome">
-  Welcome to <b>SportSight Analytics</b>.  
-  Track individual player performance, compare squad members, and analyze season-level trends using data-driven analytics.
-</div>
-
-<!-- MAIN FEATURES -->
-<div class="grid">
-
-  <div class="card">
-    <div>
-      <h3>📊 Match Analytics</h3>
-      <p>
-        Analyze match-wise performance such as goals scored, assists, and tackles across different games.
-      </p>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-icon">S</div>
+      <div class="brand-name">SportSight</div>
     </div>
-    <a href="/analytics/">View Match Analytics</a>
-  </div>
-
-  <div class="card">
-    <div>
-      <h3>⚖️ Player Comparison (2 Players)</h3>
-      <p>
-        Compare two players based on goals, assists, tackles, and shots on target.
-      </p>
-    </div>
-    <a href="/compare/">Compare Players</a>
-  </div>
-
-  <div class="card">
-    <div>
-      <h3>👥 Playing XI Comparison</h3>
-      <p>
-        Compare up to 11 players together to evaluate full squad performance using aggregated analytics.
-      </p>
-    </div>
-    <a href="/compare-xi/">Compare Playing XI</a>
-  </div>
-
-  <div class="card">
-    <div>
-      <h3>📈 Season Analytics</h3>
-      <p>
-        View season-level performance trends and identify areas for improvement.
-      </p>
-    </div>
-    <a href="/season-analytics/">View Season Analytics</a>
-  </div>
-
-</div>
-
-<!-- QUICK INSIGHTS -->
-<div class="section">
-  <h2 class="section-title">Quick Insights</h2>
-  <p class="section-subtitle">Snapshot of overall performance data</p>
-
-  <div class="grid-3">
-    <div class="mini-card">
-      ⚽ Total Goals
-      <h3>24</h3>
-    </div>
-
-    <div class="mini-card">
-      📊 Matches Analyzed
-      <h3>8</h3>
-    </div>
-
-    <div class="mini-card">
-      🏆 Top Performer
-      <h3>Lewandowski</h3>
+    <div class="nav-actions">
+      <a href="/attendance/">Attendance</a>
+      <button class="theme-toggle" id="theme-toggle">🌓</button>
+      <a href="/logout/" class="logout-btn">Log Out</a>
     </div>
   </div>
-</div>
 
-<!-- RECENT ACTIVITY -->
-<div class="section">
-  <h2 class="section-title">Recent Activity</h2>
+  <div class="dashboard-container">
+    <!-- WELCOME CARD -->
+    <div class="hero-banner">
+      <h1>Hello, {{ display_name }}! 👋</h1>
+      <p>Welcome to your personal performance hub. Here is your season at a glance.</p>
+    </div>
 
-  <ul class="activity-list">
-    <li>⚽ Lewandowski scored 2 goals</li>
-    <li>🎯 Raphinha assisted once</li>
-    <li>👥 Playing XI comparison performed</li>
-  </ul>
-</div>
+    {% if stats %}
+    <!-- PLAYER QUICK STATS -->
+    <div class="quick-stats-row">
+      <div class="stat-card">
+        <label class="stat-label">⚽ Goals</label>
+        <div class="stat-val">{{ stats.goals }}</div>
+      </div>
+      <div class="stat-card">
+        <label class="stat-label">🎯 Assists</label>
+        <div class="stat-val">{{ stats.assists }}</div>
+      </div>
+      <div class="stat-card">
+        <label class="stat-label">🛡️ Tackles</label>
+        <div class="stat-val">{{ stats.tackles }}</div>
+      </div>
+      <div class="stat-card">
+        <label class="stat-label">📊 Matches</label>
+        <div class="stat-val">{{ stats.matches }}</div>
+      </div>
+    </div>
 
-<div class="footer-note">
-  SportSight Analytics · MCA Final Project
-</div>
-</div>
+    <!-- MAIN SECTION -->
+    <div class="main-grid">
+      <!-- GOALS PER MATCH TREND -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3>📈 Performance Trend (Goals per Match)</h3>
+        </div>
+        <div style="height: 350px;">
+          <canvas id="userTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- SQUAD RANKING -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h3>🏆 Squad Goals Ranking</h3>
+        </div>
+        <div class="ranking-list">
+          {% for rank in rankings %}
+          <div class="ranking-row {% if rank.name|lower == display_name|lower %}active{% endif %}">
+            <div class="rank-info">
+              <span class="rank-num">#{{ rank.rank }}</span>
+              <b>{{ rank.name }}</b>
+            </div>
+            <span style="font-weight: 600;">{{ rank.goals }}</span>
+          </div>
+          {% endfor %}
+
+          {% if user_rank > 5 %}
+          <div class="ranking-row active" style="margin-top: 20px;">
+            <div class="rank-info">
+              <span class="rank-num">#{{ user_rank }}</span>
+              <b>{{ display_name }} (You)</b>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- INFO BOXES -->
+        <div class="sub-grid">
+          <div class="info-box">
+            <h4>📅 Next Match</h4>
+            <div class="match-content">
+              {% if next_match %}
+              <b>vs {{ next_match.opponent }}</b>
+              <span>{{ next_match.match_date }}</span>
+              {% else %}
+              <b>TBD</b>
+              <span>Check back later</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="info-box">
+            <h4>🏃 Attendance</h4>
+            <div class="match-content">
+              <b>{{ attendance.rate }}% Present</b>
+              <span>Missed: {{ attendance.missed }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="glass-panel" style="margin-bottom: 40px; text-align: center;">
+      <p>No performance data found for your player profile. Please ensure your username matches
+        your player name in the database.</p>
+    </div>
+    {% endif %}
+
+    <!-- FEATURE NAVIGATION -->
+    <h3 style="margin-bottom: 20px; font-size: 18px;">Explore Analytics</h3>
+    <div class="features-row">
+      <a href="/analytics/" class="nav-card">
+        <h4>📊 Team Heatmaps</h4>
+        <p>Analyze how the entire team scales across matches.</p>
+      </a>
+      <a href="/compare/" class="nav-card">
+        <h4>⚖️ Direct Comparison</h4>
+        <p>Compare yourself head-to-head with any squad member.</p>
+      </a>
+      <a href="/season-analytics/" class="nav-card">
+        <h4>📊 Season Profiles</h4>
+        <p>Full architectural breakdown of including radar charts.</p>
+      </a>
+      <a href="/attendance/" class="nav-card">
+        <h4>📅 Training Logs</h4>
+        <p>Full history of your training presence and commitment.</p>
+      </a>
+    </div>
+
+  </div>
+
+  <script src="{% static 'js/themes.js' %}"></script>
+  {% if trend %}
+  <script>
+    const ctx = document.getElementById("userTrendChart").getContext('2d');
+    let chartInstance;
+    const initialTheme = localStorage.getItem('theme') || 'dark';
+
+    function updateChartColors(theme) {
+      const textColor = theme === 'light' ? '#0f172a' : '#cbd5e1';
+      const gridColor = theme === 'light' ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255,255,255,0.05)';
+
+      if (chartInstance) {
+        chartInstance.options.scales.x.ticks.color = textColor;
+        chartInstance.options.scales.y.grid.color = gridColor;
+        chartInstance.update();
+      }
+    }
+
+    // Listen for theme changes from external script
+    window.addEventListener('themeChanged', (e) => {
+      updateChartColors(e.detail.theme);
+    });
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+    gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+    chartInstance = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: JSON.parse('{{ trend.labels|safe }}'),
+        datasets: [{
+          label: "Goals",
+          data: JSON.parse('{{ trend.goals|safe }}'),
+          borderColor: "#3b82f6",
+          backgroundColor: gradient,
+          borderWidth: 3,
+          pointBackgroundColor: '#60a5fa',
+          pointBorderColor: '#fff',
+          pointRadius: 5,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            padding: 12,
+            cornerRadius: 10
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: initialTheme === 'light' ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255,255,255,0.05)' },
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: initialTheme === 'light' ? '#0f172a' : '#cbd5e1', font: { size: 14, weight: '600' } }
+          }
+        }
+      }
+    });
+  </script>
+  {% endif %}
 </body>
+
 </html>
