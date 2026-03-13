@@ -352,15 +352,15 @@
     <div class="kpi-grid">
       <div class="kpi-card blue">
         <div class="kpi-label">Active Players</div>
-        <div class="kpi-value">22</div>
+        <div class="kpi-value">{{ total_players }}</div>
       </div>
       <div class="kpi-card green">
         <div class="kpi-label">Goals This Season</div>
-        <div class="kpi-value">54</div>
+        <div class="kpi-value">{{ total_goals_season }}</div>
       </div>
       <div class="kpi-card purple">
         <div class="kpi-label">Avg Attendance</div>
-        <div class="kpi-value">84%</div>
+        <div class="kpi-value">{% if avg_attendance %}{{ avg_attendance }}%{% else %}N/A{% endif %}</div>
       </div>
     </div>
 

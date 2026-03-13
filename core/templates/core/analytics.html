@@ -4,24 +4,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trend Analytics | SportSight</title>
+  <title>Performance Analytics | SportSight</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/themes.css' %}">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Outfit', sans-serif;
       min-height: 100vh;
     }
 
+    /* ── TOPBAR ── */
     .topbar {
       padding: 20px 40px;
       display: flex;
@@ -32,63 +29,152 @@
       top: 0;
       z-index: 100;
     }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .topbar a { color: #60a5fa; text-decoration: none; font-weight: 500; font-size: 1.1rem; }
+    .topbar a:hover { color: #93c5fd; }
 
-    .topbar a {
-      color: #60a5fa;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.1rem;
-    }
+    /* ── LAYOUT ── */
+    .container { max-width: 1300px; margin: 0 auto; padding: 32px 40px 60px; }
 
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-
-    .cards-grid {
+    /* ── KPI STRIP ── */
+    .kpi-strip {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
     }
 
-    .stat-card {
+    .kpi-box {
       border-radius: 20px;
-      padding: 28px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
     }
+    .kpi-box:hover { transform: translateY(-3px); }
+    .kpi-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      border-radius: 4px 0 0 4px;
+    }
+    .kpi-box.blue::before  { background: #3b82f6; }
+    .kpi-box.green::before { background: #10b981; }
+    .kpi-box.amber::before { background: #f59e0b; }
+    .kpi-box.purple::before{ background: #8b5cf6; }
+    .kpi-box.red::before   { background: #ef4444; }
 
-    .stat-card label {
-      font-size: 1rem;
+    .kpi-label {
+      font-size: 0.8rem;
       text-transform: uppercase;
-      margin-bottom: 8px;
-      display: block;
+      letter-spacing: 1px;
+      font-weight: 600;
     }
-
-    .stat-card .val {
-      font-size: 2.5rem;
+    .kpi-val {
+      font-size: 2rem;
       font-weight: 700;
+      line-height: 1;
     }
+    .kpi-sub { font-size: 0.85rem; }
 
+    /* ── CHART PANEL ── */
     .chart-panel {
       border-radius: 24px;
       padding: 36px;
+      margin-bottom: 32px;
     }
 
-    .chart-panel h3 {
-      font-size: var(--font-size-h3);
-      margin-bottom: 24px;
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    .chart-wrapper {
-      height: 450px;
-      width: 100%;
+    .chart-title {
+      font-size: 1.4rem;
+      font-weight: 700;
     }
+    .chart-title span { font-size: 0.95rem; font-weight: 400; margin-left: 8px; }
 
-    .nav-left {
+    /* legend pills */
+    .legend-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .legend-pill {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 7px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* colour key bar */
+    .colour-key {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .colour-key-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+    .colour-key-swatch {
+      width: 28px; height: 10px;
+      border-radius: 4px;
+    }
+
+    .chart-wrapper { height: 560px; width: 100%; }
+
+    /* ── INSIGHT BAR ── */
+    .insight-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .insight-card {
+      border-radius: 18px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: transform 0.2s;
+    }
+    .insight-card:hover { transform: translateY(-2px); }
+
+    .insight-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .insight-body {}
+    .insight-body small {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+    .insight-body p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-color);
     }
   </style>
 </head>
@@ -96,108 +182,302 @@
 <body>
   <div class="topbar">
     <div class="nav-left">
-      <b style="font-size: 24px;">📈 Performance Trend Map</b>
+      <b style="font-size: 22px;">📊 Performance Analytics</b>
       <button class="theme-toggle" id="theme-toggle">🌓</button>
     </div>
     <a href="/dashboard/">← Back to Dashboard</a>
   </div>
 
   <div class="container">
-    <div class="cards-grid">
-      <div class="stat-card card">
-        <label class="muted-text">Analyzed Matches</label>
-        <div class="val">{{ total_entries }}</div>
+
+    <!-- KPI STRIP -->
+    <div class="kpi-strip">
+      <div class="kpi-box card blue">
+        <div class="kpi-label muted-text">Total Matches</div>
+        <div class="kpi-val">{{ total_matches }}</div>
+        <div class="kpi-sub muted-text">Analyzed this season</div>
       </div>
-      <div class="stat-card card">
-        <label class="muted-text">Primary Metric</label>
-        <div class="val" style="color: #3b82f6;">Goals Trend</div>
+      <div class="kpi-box card green">
+        <div class="kpi-label muted-text">Total Goals</div>
+        <div class="kpi-val" style="color:#10b981;">{{ total_goals }}</div>
+        <div class="kpi-sub muted-text">Team goals in season</div>
       </div>
-      <div class="stat-card card">
-        <label class="muted-text">Resolution</label>
-        <div class="val" style="color: #10b981;">Per Match</div>
+      <div class="kpi-box card amber">
+        <div class="kpi-label muted-text">Avg Goals / Match</div>
+        <div class="kpi-val" style="color:#f59e0b;">{{ avg_goals }}</div>
+        <div class="kpi-sub muted-text">Season average</div>
+      </div>
+      <div class="kpi-box card purple">
+        <div class="kpi-label muted-text">Best Performance</div>
+        <div class="kpi-val" style="color:#a78bfa; font-size:1.4rem;">{{ max_goals }} ⚽</div>
+        <div class="kpi-sub muted-text">vs {{ best_match }}</div>
+      </div>
+      <div class="kpi-box card">
+        <div class="kpi-label muted-text">Data Points</div>
+        <div class="kpi-val">{{ total_entries }}</div>
+        <div class="kpi-sub muted-text">Player performance records</div>
       </div>
     </div>
 
+    <!-- MAIN MIXED CHART -->
     <div class="chart-panel card">
-      <h3>📈 Team Scoring Progression</h3>
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">⚡ Team Performance Dashboard <span class="muted-text">— Goals · Assists · Tackles · Trend</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-pill">
+            <div class="legend-dot" style="background:#3b82f6;"></div>
+            <span class="muted-text">Goals</span>
+          </div>
+          <div class="legend-pill">
+            <div class="legend-dot" style="background:#10b981;"></div>
+            <span class="muted-text">Assists</span>
+          </div>
+          <div class="legend-pill">
+            <div class="legend-dot" style="background:#f59e0b;"></div>
+            <span class="muted-text">Tackles</span>
+          </div>
+          <div class="legend-pill">
+            <div class="legend-dot" style="background:#ef4444; border-radius:2px; width:18px; height:3px;"></div>
+            <span class="muted-text">Goal Trend</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colour key for bar intensity -->
+      <div class="colour-key">
+        <div class="colour-key-item muted-text">
+          <div class="colour-key-swatch" style="background:#10b981;"></div>
+          Above average
+        </div>
+        <div class="colour-key-item muted-text">
+          <div class="colour-key-swatch" style="background:#f59e0b;"></div>
+          At average
+        </div>
+        <div class="colour-key-item muted-text">
+          <div class="colour-key-swatch" style="background:#ef4444;opacity:0.7;"></div>
+          Below average
+        </div>
+      </div>
+
       <div class="chart-wrapper">
-        <canvas id="trendChart"></canvas>
+        <canvas id="mixedChart"></canvas>
       </div>
     </div>
 
-    {{ labels|json_script:"labels-data" }}
-    {{ goals|json_script:"goals-data" }}
+    <!-- INSIGHT CARDS -->
+    <div class="insight-bar">
+      <div class="insight-card card">
+        <div class="insight-icon">🏆</div>
+        <div class="insight-body">
+          <small class="muted-text">Best Scoring Match</small>
+          <p>{{ max_goals }} goals vs <b>{{ best_match }}</b></p>
+        </div>
+      </div>
+      <div class="insight-card card">
+        <div class="insight-icon">📈</div>
+        <div class="insight-body">
+          <small class="muted-text">Season Average</small>
+          <p><b>{{ avg_goals }}</b> goals per match</p>
+        </div>
+      </div>
+      <div class="insight-card card">
+        <div class="insight-icon">⚽</div>
+        <div class="insight-body">
+          <small class="muted-text">Total Output</small>
+          <p><b>{{ total_goals }}</b> goals across <b>{{ total_matches }}</b> matches</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- JSON data bridges -->
+  {{ labels|json_script:"labels-data" }}
+  {{ goals|json_script:"goals-data" }}
+  {{ assists|json_script:"assists-data" }}
+  {{ tackles|json_script:"tackles-data" }}
 
   <script src="{% static 'js/themes.js' %}"></script>
   <script>
-    const labels = JSON.parse(document.getElementById("labels-data").textContent);
-    const goals = JSON.parse(document.getElementById("goals-data").textContent);
+    const labels  = JSON.parse(document.getElementById("labels-data").textContent);
+    const goals   = JSON.parse(document.getElementById("goals-data").textContent);
+    const assists = JSON.parse(document.getElementById("assists-data").textContent);
+    const tackles = JSON.parse(document.getElementById("tackles-data").textContent);
+
     const initialTheme = localStorage.getItem('theme') || 'dark';
 
     function getThemeColors(theme) {
       return {
-        text: theme === 'light' ? '#0f172a' : '#cbd5e1',
+        text:  theme === 'light' ? '#1e293b' : '#cbd5e1',
         muted: theme === 'light' ? '#64748b' : '#94a3b8',
-        grid: theme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'
+        grid:  theme === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
+        tooltip: theme === 'light' ? '#ffffff' : '#0f172a',
+        tooltipText: theme === 'light' ? '#1e293b' : '#e2e8f0',
       };
     }
 
-    const ctx = document.getElementById("trendChart").getContext('2d');
+    // ── Rolling average (window=3) for the trend line ──
+    function rollingAvg(data, win) {
+      return data.map((_, i) => {
+        const slice = data.slice(Math.max(0, i - win + 1), i + 1);
+        return parseFloat((slice.reduce((a, b) => a + b, 0) / slice.length).toFixed(2));
+      });
+    }
+
+    // ── Color-code goal bars relative to avg ──
+    const avgGoals = goals.reduce((a, b) => a + b, 0) / (goals.length || 1);
+    const goalBarColors = goals.map(g => {
+      if (g > avgGoals) return 'rgba(16, 185, 129, 0.85)';   // green – above avg
+      if (g === avgGoals) return 'rgba(245, 158, 11, 0.85)'; // amber – at avg
+      return 'rgba(239, 68, 68, 0.7)';                        // red   – below avg
+    });
+    const goalBorderColors = goals.map(g => {
+      if (g > avgGoals) return '#10b981';
+      if (g === avgGoals) return '#f59e0b';
+      return '#ef4444';
+    });
+
+    const trendLine = rollingAvg(goals, 3);
+
+    const ctx = document.getElementById("mixedChart");
     let themeColors = getThemeColors(initialTheme);
 
-    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
-    gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
-
     const chart = new Chart(ctx, {
-      type: "line",
+      type: 'bar',
       data: {
         labels: labels,
-        datasets: [{
-          label: "Goals scored in Match",
-          data: goals,
-          borderColor: "#3b82f6",
-          backgroundColor: gradient,
-          borderWidth: 3,
-          pointBackgroundColor: '#60a5fa',
-          pointBorderWidth: 2,
-          pointBorderColor: '#fff',
-          pointRadius: 6,
-          fill: true,
-          tension: 0.4
-        }]
+        datasets: [
+          // Goals — colored bars
+          {
+            type: 'bar',
+            label: 'Goals',
+            data: goals,
+            backgroundColor: goalBarColors,
+            borderColor: goalBorderColors,
+            borderWidth: 2,
+            borderRadius: 8,
+            borderSkipped: false,
+            yAxisID: 'y',
+            order: 3,
+          },
+          // Assists — thinner semi-transparent bars
+          {
+            type: 'bar',
+            label: 'Assists',
+            data: assists,
+            backgroundColor: 'rgba(16, 185, 129, 0.35)',
+            borderColor: '#10b981',
+            borderWidth: 1.5,
+            borderRadius: 6,
+            borderSkipped: false,
+            yAxisID: 'y',
+            order: 4,
+          },
+          // Tackles — thinner semi-transparent bars
+          {
+            type: 'bar',
+            label: 'Tackles',
+            data: tackles,
+            backgroundColor: 'rgba(245, 158, 11, 0.3)',
+            borderColor: '#f59e0b',
+            borderWidth: 1.5,
+            borderRadius: 6,
+            borderSkipped: false,
+            yAxisID: 'y',
+            order: 5,
+          },
+          // Rolling average trend line
+          {
+            type: 'line',
+            label: 'Goal Trend (3-match avg)',
+            data: trendLine,
+            borderColor: '#ef4444',
+            backgroundColor: 'rgba(239, 68, 68, 0.08)',
+            borderWidth: 3,
+            pointRadius: 4,
+            pointBackgroundColor: '#ef4444',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            tension: 0.45,
+            fill: false,
+            yAxisID: 'y',
+            order: 1,
+          },
+        ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        animation: {
+          duration: 900,
+          easing: 'easeOutQuart',
+        },
         plugins: {
-          legend: { display: false },
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: themeColors.muted,
+              font: { size: 13, family: 'Outfit', weight: '500' },
+              padding: 20,
+              usePointStyle: true,
+              pointStyleWidth: 14,
+            }
+          },
           tooltip: {
-            backgroundColor: '#0f172a',
-            padding: 12,
-            cornerRadius: 10
+            backgroundColor: themeColors.tooltip,
+            titleColor: themeColors.tooltipText,
+            bodyColor: themeColors.muted,
+            borderColor: 'rgba(99,102,241,0.2)',
+            borderWidth: 1,
+            padding: 14,
+            cornerRadius: 12,
+            titleFont: { size: 14, weight: '700', family: 'Outfit' },
+            bodyFont: { size: 13, family: 'Outfit' },
+            callbacks: {
+              afterLabel: (ctx) => {
+                if (ctx.dataset.label === 'Goals') {
+                  const g = ctx.raw;
+                  if (g > avgGoals) return `  ↑ Above season avg (${avgGoals.toFixed(1)})`;
+                  if (g < avgGoals) return `  ↓ Below season avg (${avgGoals.toFixed(1)})`;
+                  return `  ≈ Exactly at avg`;
+                }
+              }
+            }
           }
         },
         scales: {
           y: {
-            grid: { color: themeColors.grid },
             beginAtZero: true,
-            ticks: { color: themeColors.muted, font: { size: 14 } }
+            grid: { color: themeColors.grid },
+            ticks: { color: themeColors.muted, font: { size: 13 }, stepSize: 1 },
+            border: { dash: [4, 4] },
           },
           x: {
             grid: { display: false },
-            ticks: { color: themeColors.text, font: { size: 14, weight: '600' } }
+            ticks: {
+              color: themeColors.text,
+              font: { size: 12, weight: '600' },
+              maxRotation: 45,
+              minRotation: 30,
+            }
           }
         }
       }
     });
 
+    // Respond to theme changes
     window.addEventListener('themeChanged', (e) => {
-      const colors = getThemeColors(e.detail.theme);
-      chart.options.scales.y.grid.color = colors.grid;
-      chart.options.scales.y.ticks.color = colors.muted;
-      chart.options.scales.x.ticks.color = colors.text;
+      const c = getThemeColors(e.detail.theme);
+      chart.options.plugins.legend.labels.color = c.muted;
+      chart.options.plugins.tooltip.backgroundColor = c.tooltip;
+      chart.options.plugins.tooltip.titleColor = c.tooltipText;
+      chart.options.plugins.tooltip.bodyColor = c.muted;
+      chart.options.scales.y.grid.color = c.grid;
+      chart.options.scales.y.ticks.color = c.muted;
+      chart.options.scales.x.ticks.color = c.text;
       chart.update();
     });
   </script>

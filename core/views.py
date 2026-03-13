@@ -85,11 +85,25 @@ def dashboard(request):
         chart_labels = [p["player__player_name"] for p in top_players]
         chart_goals = [p["total_goals"] or 0 for p in top_players]
 
+        # --- REAL KPI DATA ---
+        total_players = Player.objects.count()
+        total_goals_season = PlayerPerformance.objects.aggregate(
+            t=Sum("goals")
+        )["t"] or 0
+
+        from .models import TrainingAttendance as TA
+        total_att = TA.objects.count()
+        present_att = TA.objects.filter(present=True).count()
+        avg_attendance = round((present_att / total_att) * 100, 1) if total_att > 0 else 0
+
         return render(request, "core/admin_dashboard.html", {
             "top_players": top_players,
             "chart_labels_json": json.dumps(chart_labels),
             "chart_goals_json": json.dumps(chart_goals),
             "display_name": request.user.username.title(),
+            "total_players": total_players,
+            "total_goals_season": total_goals_season,
+            "avg_attendance": avg_attendance,
         })
 
     # --- USER DASHBOARD LOGIC ---
@@ -176,26 +190,48 @@ def dashboard(request):
 # ---------------- ANALYTICS ----------------
 @login_required
 def analytics_page(request):
-    # Group goals by Match to show the Team's progression over time
-    matches_data = (
-        PlayerPerformance.objects.values("match__opponent")
-        .annotate(team_goals=Sum("goals"))
-        .order_by("match__match_date") # Assuming match_date exists or it orders naturally
+    # Aggregate goals AND assists AND tackles per match
+    matches_qs = (
+        PlayerPerformance.objects
+        .values("match__opponent", "match__match_date")
+        .annotate(
+            team_goals=Sum("goals"),
+            team_assists=Sum("assists"),
+            team_tackles=Sum("tackles"),
+        )
+        .order_by("match__match_date")
     )
 
-    labels = [m["match__opponent"] for m in matches_data if m["match__opponent"]]
-    goals = [m["team_goals"] or 0 for m in matches_data if m["match__opponent"]]
-    
-    # Fallback to pure performances if match aggregation isn't enough data
+    labels   = [m["match__opponent"] for m in matches_qs if m["match__opponent"]]
+    goals    = [m["team_goals"]   or 0 for m in matches_qs if m["match__opponent"]]
+    assists  = [m["team_assists"] or 0 for m in matches_qs if m["match__opponent"]]
+    tackles  = [m["team_tackles"] or 0 for m in matches_qs if m["match__opponent"]]
+
+    # Fallback if not enough matches
     if len(labels) < 2:
         performances = PlayerPerformance.objects.all().order_by('id')
-        labels = [f"Performance {p.id}" for p in performances]
-        goals = [p.goals for p in performances]
+        labels  = [f"Match {p.id}" for p in performances]
+        goals   = [p.goals for p in performances]
+        assists = [p.assists for p in performances]
+        tackles = [p.tackles for p in performances]
+
+    total_goals   = sum(goals)
+    avg_goals     = round(total_goals / len(goals), 1) if goals else 0
+    max_goals     = max(goals) if goals else 0
+    best_match    = labels[goals.index(max_goals)] if goals else "N/A"
+    total_matches = len(labels)
 
     return render(request, "core/analytics.html", {
-        "labels": labels,
-        "goals": goals,
+        "labels":        labels,
+        "goals":         goals,
+        "assists":       assists,
+        "tackles":       tackles,
         "total_entries": PlayerPerformance.objects.count(),
+        "total_goals":   total_goals,
+        "avg_goals":     avg_goals,
+        "max_goals":     max_goals,
+        "best_match":    best_match,
+        "total_matches": total_matches,
     })
 
 
@@ -382,9 +418,14 @@ def compare_xi(request):
 def player_attendance(request):
     user = request.user
 
-    try:
-        player = Player.objects.get(player_name=user.username)
-    except Player.DoesNotExist:
+    player = Player.objects.filter(user=user).first()
+    if not player:
+        player = Player.objects.filter(player_name__iexact=user.username).first()
+        if player and not player.user:
+            player.user = user
+            player.save()
+
+    if not player:
         return render(request, "core/player_attendance.html", {
             "attendance": [],
             "total": 0,

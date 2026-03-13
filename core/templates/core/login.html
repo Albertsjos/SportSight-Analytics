@@ -155,15 +155,52 @@
       top: 20px;
       right: 20px;
     }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 50px;
+      border: 1px solid var(--panel-border);
+      background: var(--card-bg);
+      color: var(--text-color);
+      backdrop-filter: blur(12px);
+      transition: 0.25s;
+      z-index: 999;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .home-btn:hover {
+      border-color: #3b82f6;
+      color: #60a5fa;
+      transform: translateX(-2px);
+      box-shadow: 0 6px 20px rgba(59,130,246,0.2);
+    }
+
+    .logo a {
+      background: linear-gradient(90deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
   </style>
 </head>
 
 <body>
   <div class="bg-glow"></div>
+  <a href="{% url 'home' %}" class="home-btn">← Home</a>
   <button class="theme-toggle theme-toggle-login" id="theme-toggle">🌓</button>
 
   <div class="card">
-    <div class="logo">SportSight</div>
+    <div class="logo"><a href="{% url 'home' %}">SportSight</a></div>
     <h2>Welcome Back</h2>
     <p class="subtitle">Enter your credentials to access the analytics</p>
 
@@ -193,20 +230,7 @@
     </div>
   </div>
 
-  <script>
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    htmlElement.setAttribute('data-theme', savedTheme);
-
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = htmlElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      htmlElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-  </script>
+  <script src="{% static 'js/themes.js' %}"></script>
 </body>
 
 </html>

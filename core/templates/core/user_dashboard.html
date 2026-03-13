@@ -361,8 +361,13 @@
           <div class="info-box">
             <h4>🏃 Attendance</h4>
             <div class="match-content">
+              {% if attendance %}
               <b>{{ attendance.rate }}% Present</b>
               <span>Missed: {{ attendance.missed }}</span>
+              {% else %}
+              <b>Not recorded</b>
+              <span>No sessions logged yet</span>
+              {% endif %}
             </div>
           </div>
         </div>
