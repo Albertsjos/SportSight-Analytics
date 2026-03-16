@@ -494,7 +494,11 @@ def upload_performance_csv(request):
         inserted = 0
         skipped = 0
 
-        default_team, _ = Team.objects.get_or_create(team_name="FC Barcelona")
+        team_name_input = request.POST.get("team_name", "FC Barcelona").strip()
+        if not team_name_input:
+            team_name_input = "FC Barcelona"
+
+        default_team, _ = Team.objects.get_or_create(team_name=team_name_input)
 
         for row in reader:
             try:

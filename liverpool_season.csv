@@ -1,0 +1,419 @@
+match,player_name,goals,assists,shots_on_target,tackles
+Opponent 1,Alisson Becker,0,0,0,1
+Opponent 1,Trent Alexander-Arnold,0,0,2,5
+Opponent 1,Virgil van Dijk,0,0,2,8
+Opponent 1,Ibrahima Konaté,0,0,1,6
+Opponent 1,Andrew Robertson,0,0,2,8
+Opponent 1,Alexis Mac Allister,2,0,2,3
+Opponent 1,Dominik Szoboszlai,0,0,0,6
+Opponent 1,Ryan Gravenberch,0,1,2,2
+Opponent 1,Mohamed Salah,0,0,3,0
+Opponent 1,Darwin Núñez,1,2,2,0
+Opponent 1,Luis Díaz,0,1,1,2
+Opponent 2,Alisson Becker,0,0,0,1
+Opponent 2,Trent Alexander-Arnold,0,0,0,3
+Opponent 2,Virgil van Dijk,0,0,0,3
+Opponent 2,Ibrahima Konaté,0,0,1,6
+Opponent 2,Andrew Robertson,0,0,0,8
+Opponent 2,Alexis Mac Allister,0,1,1,3
+Opponent 2,Dominik Szoboszlai,0,1,0,6
+Opponent 2,Ryan Gravenberch,0,0,1,5
+Opponent 2,Mohamed Salah,1,1,5,2
+Opponent 2,Darwin Núñez,1,0,2,0
+Opponent 2,Luis Díaz,0,1,2,2
+Opponent 3,Alisson Becker,0,0,0,1
+Opponent 3,Trent Alexander-Arnold,0,0,1,6
+Opponent 3,Virgil van Dijk,0,0,2,3
+Opponent 3,Ibrahima Konaté,0,0,0,8
+Opponent 3,Andrew Robertson,0,0,2,4
+Opponent 3,Alexis Mac Allister,0,0,0,5
+Opponent 3,Dominik Szoboszlai,0,1,2,3
+Opponent 3,Ryan Gravenberch,0,0,0,3
+Opponent 3,Mohamed Salah,0,0,3,0
+Opponent 3,Darwin Núñez,1,1,2,0
+Opponent 3,Luis Díaz,0,0,2,1
+Opponent 4,Alisson Becker,0,0,0,0
+Opponent 4,Trent Alexander-Arnold,0,0,1,8
+Opponent 4,Virgil van Dijk,0,0,2,5
+Opponent 4,Ibrahima Konaté,0,0,0,7
+Opponent 4,Andrew Robertson,0,0,1,7
+Opponent 4,Alexis Mac Allister,0,0,0,6
+Opponent 4,Dominik Szoboszlai,0,0,2,5
+Opponent 4,Ryan Gravenberch,0,0,0,5
+Opponent 4,Mohamed Salah,0,0,2,0
+Opponent 4,Darwin Núñez,0,2,4,2
+Opponent 4,Luis Díaz,1,1,2,1
+Opponent 5,Alisson Becker,0,0,0,0
+Opponent 5,Trent Alexander-Arnold,0,0,1,4
+Opponent 5,Virgil van Dijk,0,0,2,8
+Opponent 5,Ibrahima Konaté,0,0,0,6
+Opponent 5,Andrew Robertson,0,0,2,7
+Opponent 5,Alexis Mac Allister,1,0,1,6
+Opponent 5,Dominik Szoboszlai,1,1,2,5
+Opponent 5,Ryan Gravenberch,2,1,4,4
+Opponent 5,Mohamed Salah,0,0,2,2
+Opponent 5,Darwin Núñez,1,1,5,2
+Opponent 5,Luis Díaz,3,0,6,1
+Opponent 6,Alisson Becker,0,0,0,1
+Opponent 6,Trent Alexander-Arnold,0,0,2,7
+Opponent 6,Virgil van Dijk,0,0,0,3
+Opponent 6,Ibrahima Konaté,0,0,0,7
+Opponent 6,Andrew Robertson,0,0,2,6
+Opponent 6,Alexis Mac Allister,2,1,2,2
+Opponent 6,Dominik Szoboszlai,0,0,1,4
+Opponent 6,Ryan Gravenberch,1,3,1,2
+Opponent 6,Mohamed Salah,2,0,3,2
+Opponent 6,Darwin Núñez,0,1,4,0
+Opponent 6,Luis Díaz,0,0,3,1
+Opponent 7,Alisson Becker,0,0,0,0
+Opponent 7,Trent Alexander-Arnold,0,0,2,3
+Opponent 7,Virgil van Dijk,1,0,1,5
+Opponent 7,Ibrahima Konaté,0,0,0,4
+Opponent 7,Andrew Robertson,0,0,1,8
+Opponent 7,Alexis Mac Allister,0,0,1,6
+Opponent 7,Dominik Szoboszlai,0,0,1,2
+Opponent 7,Ryan Gravenberch,0,0,1,5
+Opponent 7,Mohamed Salah,0,1,2,2
+Opponent 7,Darwin Núñez,0,2,2,0
+Opponent 7,Luis Díaz,0,0,2,1
+Opponent 8,Alisson Becker,0,0,0,0
+Opponent 8,Trent Alexander-Arnold,0,1,0,7
+Opponent 8,Virgil van Dijk,0,0,0,6
+Opponent 8,Ibrahima Konaté,1,0,1,4
+Opponent 8,Andrew Robertson,0,0,1,5
+Opponent 8,Alexis Mac Allister,2,0,5,3
+Opponent 8,Dominik Szoboszlai,0,2,1,5
+Opponent 8,Ryan Gravenberch,0,0,0,4
+Opponent 8,Mohamed Salah,1,1,4,0
+Opponent 8,Darwin Núñez,1,1,2,0
+Opponent 8,Luis Díaz,0,0,4,2
+Opponent 9,Alisson Becker,0,0,0,0
+Opponent 9,Trent Alexander-Arnold,0,0,1,8
+Opponent 9,Virgil van Dijk,0,0,0,6
+Opponent 9,Ibrahima Konaté,0,0,2,4
+Opponent 9,Andrew Robertson,0,0,0,8
+Opponent 9,Alexis Mac Allister,1,1,2,6
+Opponent 9,Dominik Szoboszlai,0,3,2,4
+Opponent 9,Ryan Gravenberch,0,0,1,5
+Opponent 9,Mohamed Salah,0,0,1,1
+Opponent 9,Darwin Núñez,2,2,4,2
+Opponent 9,Luis Díaz,0,1,3,2
+Opponent 10,Alisson Becker,0,0,0,1
+Opponent 10,Trent Alexander-Arnold,0,0,1,8
+Opponent 10,Virgil van Dijk,0,0,0,6
+Opponent 10,Ibrahima Konaté,0,0,2,7
+Opponent 10,Andrew Robertson,0,0,2,8
+Opponent 10,Alexis Mac Allister,0,2,1,4
+Opponent 10,Dominik Szoboszlai,0,0,1,2
+Opponent 10,Ryan Gravenberch,0,0,3,5
+Opponent 10,Mohamed Salah,2,2,4,2
+Opponent 10,Darwin Núñez,0,0,1,0
+Opponent 10,Luis Díaz,0,2,1,1
+Opponent 11,Alisson Becker,0,0,0,1
+Opponent 11,Trent Alexander-Arnold,0,0,1,3
+Opponent 11,Virgil van Dijk,0,0,2,4
+Opponent 11,Ibrahima Konaté,0,0,2,4
+Opponent 11,Andrew Robertson,0,1,0,3
+Opponent 11,Alexis Mac Allister,0,0,1,3
+Opponent 11,Dominik Szoboszlai,0,2,3,4
+Opponent 11,Ryan Gravenberch,0,0,2,3
+Opponent 11,Mohamed Salah,0,0,2,0
+Opponent 11,Darwin Núñez,0,1,4,2
+Opponent 11,Luis Díaz,3,1,6,1
+Opponent 12,Alisson Becker,0,0,0,0
+Opponent 12,Trent Alexander-Arnold,0,0,2,7
+Opponent 12,Virgil van Dijk,0,0,0,3
+Opponent 12,Ibrahima Konaté,0,0,2,6
+Opponent 12,Andrew Robertson,0,0,1,8
+Opponent 12,Alexis Mac Allister,0,0,0,5
+Opponent 12,Dominik Szoboszlai,0,0,1,2
+Opponent 12,Ryan Gravenberch,0,0,2,5
+Opponent 12,Mohamed Salah,0,1,4,0
+Opponent 12,Darwin Núñez,0,1,4,2
+Opponent 12,Luis Díaz,0,0,4,0
+Opponent 13,Alisson Becker,0,0,0,1
+Opponent 13,Trent Alexander-Arnold,0,0,1,8
+Opponent 13,Virgil van Dijk,0,0,0,6
+Opponent 13,Ibrahima Konaté,0,0,0,6
+Opponent 13,Andrew Robertson,0,0,1,3
+Opponent 13,Alexis Mac Allister,0,0,0,3
+Opponent 13,Dominik Szoboszlai,0,0,3,2
+Opponent 13,Ryan Gravenberch,0,1,3,3
+Opponent 13,Mohamed Salah,1,0,2,1
+Opponent 13,Darwin Núñez,0,1,2,2
+Opponent 13,Luis Díaz,0,0,1,2
+Opponent 14,Alisson Becker,0,0,0,1
+Opponent 14,Trent Alexander-Arnold,0,0,0,3
+Opponent 14,Virgil van Dijk,0,0,0,4
+Opponent 14,Ibrahima Konaté,1,0,2,5
+Opponent 14,Andrew Robertson,0,1,2,6
+Opponent 14,Alexis Mac Allister,0,1,3,4
+Opponent 14,Dominik Szoboszlai,2,3,2,5
+Opponent 14,Ryan Gravenberch,0,1,1,5
+Opponent 14,Mohamed Salah,0,0,1,2
+Opponent 14,Darwin Núñez,0,1,4,1
+Opponent 14,Luis Díaz,1,2,4,2
+Opponent 15,Alisson Becker,0,0,0,1
+Opponent 15,Trent Alexander-Arnold,0,1,0,8
+Opponent 15,Virgil van Dijk,0,0,1,5
+Opponent 15,Ibrahima Konaté,0,0,0,4
+Opponent 15,Andrew Robertson,0,0,0,8
+Opponent 15,Alexis Mac Allister,0,3,2,2
+Opponent 15,Dominik Szoboszlai,0,0,3,3
+Opponent 15,Ryan Gravenberch,0,2,2,6
+Opponent 15,Mohamed Salah,0,1,3,1
+Opponent 15,Darwin Núñez,2,0,3,1
+Opponent 15,Luis Díaz,1,2,2,1
+Opponent 16,Alisson Becker,0,0,0,1
+Opponent 16,Trent Alexander-Arnold,1,0,3,3
+Opponent 16,Virgil van Dijk,0,0,0,7
+Opponent 16,Ibrahima Konaté,0,1,0,3
+Opponent 16,Andrew Robertson,0,0,1,6
+Opponent 16,Alexis Mac Allister,0,1,1,4
+Opponent 16,Dominik Szoboszlai,0,0,1,5
+Opponent 16,Ryan Gravenberch,0,0,1,2
+Opponent 16,Mohamed Salah,1,0,5,1
+Opponent 16,Darwin Núñez,0,1,3,0
+Opponent 16,Luis Díaz,0,0,4,1
+Opponent 17,Alisson Becker,0,0,0,0
+Opponent 17,Trent Alexander-Arnold,0,0,2,5
+Opponent 17,Virgil van Dijk,0,0,1,5
+Opponent 17,Ibrahima Konaté,0,1,2,5
+Opponent 17,Andrew Robertson,0,0,2,4
+Opponent 17,Alexis Mac Allister,2,0,2,2
+Opponent 17,Dominik Szoboszlai,0,2,2,4
+Opponent 17,Ryan Gravenberch,0,2,0,3
+Opponent 17,Mohamed Salah,0,2,2,2
+Opponent 17,Darwin Núñez,1,1,4,0
+Opponent 17,Luis Díaz,0,0,2,0
+Opponent 18,Alisson Becker,0,0,0,0
+Opponent 18,Trent Alexander-Arnold,0,0,1,6
+Opponent 18,Virgil van Dijk,1,0,2,8
+Opponent 18,Ibrahima Konaté,0,0,0,7
+Opponent 18,Andrew Robertson,0,1,0,6
+Opponent 18,Alexis Mac Allister,0,1,0,5
+Opponent 18,Dominik Szoboszlai,0,0,1,5
+Opponent 18,Ryan Gravenberch,0,0,1,3
+Opponent 18,Mohamed Salah,2,1,5,0
+Opponent 18,Darwin Núñez,0,0,3,1
+Opponent 18,Luis Díaz,2,1,6,1
+Opponent 19,Alisson Becker,0,0,0,1
+Opponent 19,Trent Alexander-Arnold,0,0,0,8
+Opponent 19,Virgil van Dijk,0,0,0,4
+Opponent 19,Ibrahima Konaté,0,0,2,3
+Opponent 19,Andrew Robertson,0,0,1,4
+Opponent 19,Alexis Mac Allister,0,3,3,6
+Opponent 19,Dominik Szoboszlai,0,0,2,6
+Opponent 19,Ryan Gravenberch,0,0,0,4
+Opponent 19,Mohamed Salah,0,0,1,0
+Opponent 19,Darwin Núñez,1,0,4,0
+Opponent 19,Luis Díaz,1,1,4,0
+Opponent 20,Alisson Becker,0,0,0,0
+Opponent 20,Trent Alexander-Arnold,0,0,2,7
+Opponent 20,Virgil van Dijk,0,0,0,8
+Opponent 20,Ibrahima Konaté,0,1,2,8
+Opponent 20,Andrew Robertson,0,0,2,5
+Opponent 20,Alexis Mac Allister,0,3,1,6
+Opponent 20,Dominik Szoboszlai,0,2,0,5
+Opponent 20,Ryan Gravenberch,0,1,3,2
+Opponent 20,Mohamed Salah,0,1,3,2
+Opponent 20,Darwin Núñez,0,1,3,2
+Opponent 20,Luis Díaz,1,0,4,2
+Opponent 21,Alisson Becker,0,0,0,0
+Opponent 21,Trent Alexander-Arnold,0,0,1,5
+Opponent 21,Virgil van Dijk,0,0,2,8
+Opponent 21,Ibrahima Konaté,0,0,2,3
+Opponent 21,Andrew Robertson,0,1,0,6
+Opponent 21,Alexis Mac Allister,1,0,4,6
+Opponent 21,Dominik Szoboszlai,0,1,2,6
+Opponent 21,Ryan Gravenberch,0,1,2,6
+Opponent 21,Mohamed Salah,3,1,7,1
+Opponent 21,Darwin Núñez,1,1,4,2
+Opponent 21,Luis Díaz,0,0,3,1
+Opponent 22,Alisson Becker,0,0,0,1
+Opponent 22,Trent Alexander-Arnold,0,0,2,6
+Opponent 22,Virgil van Dijk,0,0,2,4
+Opponent 22,Ibrahima Konaté,0,0,0,8
+Opponent 22,Andrew Robertson,0,0,2,6
+Opponent 22,Alexis Mac Allister,0,0,3,5
+Opponent 22,Dominik Szoboszlai,1,3,4,6
+Opponent 22,Ryan Gravenberch,0,2,0,4
+Opponent 22,Mohamed Salah,0,0,1,0
+Opponent 22,Darwin Núñez,1,1,2,1
+Opponent 22,Luis Díaz,1,2,4,1
+Opponent 23,Alisson Becker,0,0,0,1
+Opponent 23,Trent Alexander-Arnold,0,0,1,5
+Opponent 23,Virgil van Dijk,0,0,2,3
+Opponent 23,Ibrahima Konaté,0,0,0,3
+Opponent 23,Andrew Robertson,0,0,2,3
+Opponent 23,Alexis Mac Allister,0,0,2,3
+Opponent 23,Dominik Szoboszlai,1,2,3,3
+Opponent 23,Ryan Gravenberch,0,1,1,3
+Opponent 23,Mohamed Salah,1,2,5,2
+Opponent 23,Darwin Núñez,1,1,3,1
+Opponent 23,Luis Díaz,1,0,3,1
+Opponent 24,Alisson Becker,0,0,0,0
+Opponent 24,Trent Alexander-Arnold,0,0,0,5
+Opponent 24,Virgil van Dijk,0,0,0,8
+Opponent 24,Ibrahima Konaté,0,0,2,4
+Opponent 24,Andrew Robertson,0,0,1,3
+Opponent 24,Alexis Mac Allister,0,0,2,5
+Opponent 24,Dominik Szoboszlai,0,0,1,4
+Opponent 24,Ryan Gravenberch,0,0,2,4
+Opponent 24,Mohamed Salah,1,0,5,2
+Opponent 24,Darwin Núñez,3,0,7,1
+Opponent 24,Luis Díaz,2,1,6,2
+Opponent 25,Alisson Becker,0,0,0,0
+Opponent 25,Trent Alexander-Arnold,0,0,2,6
+Opponent 25,Virgil van Dijk,0,0,2,3
+Opponent 25,Ibrahima Konaté,0,0,1,6
+Opponent 25,Andrew Robertson,0,0,0,3
+Opponent 25,Alexis Mac Allister,0,2,1,6
+Opponent 25,Dominik Szoboszlai,1,1,2,2
+Opponent 25,Ryan Gravenberch,0,1,1,2
+Opponent 25,Mohamed Salah,1,0,2,1
+Opponent 25,Darwin Núñez,0,1,3,2
+Opponent 25,Luis Díaz,2,0,3,1
+Opponent 26,Alisson Becker,0,0,0,0
+Opponent 26,Trent Alexander-Arnold,0,0,2,5
+Opponent 26,Virgil van Dijk,0,0,2,4
+Opponent 26,Ibrahima Konaté,1,0,3,6
+Opponent 26,Andrew Robertson,0,0,0,5
+Opponent 26,Alexis Mac Allister,0,0,3,2
+Opponent 26,Dominik Szoboszlai,0,2,3,6
+Opponent 26,Ryan Gravenberch,0,1,3,2
+Opponent 26,Mohamed Salah,1,0,3,2
+Opponent 26,Darwin Núñez,1,1,3,0
+Opponent 26,Luis Díaz,0,2,2,2
+Opponent 27,Alisson Becker,0,0,0,1
+Opponent 27,Trent Alexander-Arnold,0,0,1,3
+Opponent 27,Virgil van Dijk,0,1,1,7
+Opponent 27,Ibrahima Konaté,0,1,1,8
+Opponent 27,Andrew Robertson,0,0,0,7
+Opponent 27,Alexis Mac Allister,0,1,1,4
+Opponent 27,Dominik Szoboszlai,0,1,3,4
+Opponent 27,Ryan Gravenberch,0,2,0,5
+Opponent 27,Mohamed Salah,1,2,4,0
+Opponent 27,Darwin Núñez,1,1,5,1
+Opponent 27,Luis Díaz,0,1,2,1
+Opponent 28,Alisson Becker,0,0,0,0
+Opponent 28,Trent Alexander-Arnold,0,0,0,8
+Opponent 28,Virgil van Dijk,0,0,1,3
+Opponent 28,Ibrahima Konaté,0,0,1,6
+Opponent 28,Andrew Robertson,0,0,2,6
+Opponent 28,Alexis Mac Allister,0,1,1,3
+Opponent 28,Dominik Szoboszlai,0,0,0,3
+Opponent 28,Ryan Gravenberch,0,0,1,3
+Opponent 28,Mohamed Salah,1,1,4,0
+Opponent 28,Darwin Núñez,0,0,2,1
+Opponent 28,Luis Díaz,0,0,1,1
+Opponent 29,Alisson Becker,0,0,0,0
+Opponent 29,Trent Alexander-Arnold,0,0,1,5
+Opponent 29,Virgil van Dijk,0,0,1,4
+Opponent 29,Ibrahima Konaté,0,0,0,3
+Opponent 29,Andrew Robertson,0,0,2,7
+Opponent 29,Alexis Mac Allister,1,1,3,5
+Opponent 29,Dominik Szoboszlai,0,0,1,3
+Opponent 29,Ryan Gravenberch,0,1,2,4
+Opponent 29,Mohamed Salah,0,0,1,2
+Opponent 29,Darwin Núñez,1,0,4,2
+Opponent 29,Luis Díaz,1,0,4,1
+Opponent 30,Alisson Becker,0,0,0,1
+Opponent 30,Trent Alexander-Arnold,0,0,2,4
+Opponent 30,Virgil van Dijk,0,0,0,7
+Opponent 30,Ibrahima Konaté,0,0,1,7
+Opponent 30,Andrew Robertson,0,1,1,3
+Opponent 30,Alexis Mac Allister,0,1,0,6
+Opponent 30,Dominik Szoboszlai,0,1,2,5
+Opponent 30,Ryan Gravenberch,1,1,4,2
+Opponent 30,Mohamed Salah,0,1,1,2
+Opponent 30,Darwin Núñez,0,1,4,2
+Opponent 30,Luis Díaz,3,2,4,2
+Opponent 31,Alisson Becker,0,0,0,1
+Opponent 31,Trent Alexander-Arnold,1,0,3,3
+Opponent 31,Virgil van Dijk,0,0,0,6
+Opponent 31,Ibrahima Konaté,0,0,2,5
+Opponent 31,Andrew Robertson,1,0,3,3
+Opponent 31,Alexis Mac Allister,1,0,1,2
+Opponent 31,Dominik Szoboszlai,0,1,3,2
+Opponent 31,Ryan Gravenberch,0,2,0,6
+Opponent 31,Mohamed Salah,0,2,2,0
+Opponent 31,Darwin Núñez,0,0,4,0
+Opponent 31,Luis Díaz,0,0,3,1
+Opponent 32,Alisson Becker,0,0,0,0
+Opponent 32,Trent Alexander-Arnold,0,0,1,5
+Opponent 32,Virgil van Dijk,0,0,1,3
+Opponent 32,Ibrahima Konaté,0,1,2,3
+Opponent 32,Andrew Robertson,0,0,1,4
+Opponent 32,Alexis Mac Allister,0,0,1,2
+Opponent 32,Dominik Szoboszlai,0,0,2,4
+Opponent 32,Ryan Gravenberch,0,0,3,3
+Opponent 32,Mohamed Salah,1,1,2,1
+Opponent 32,Darwin Núñez,0,0,3,0
+Opponent 32,Luis Díaz,2,0,3,2
+Opponent 33,Alisson Becker,0,0,0,1
+Opponent 33,Trent Alexander-Arnold,0,0,1,5
+Opponent 33,Virgil van Dijk,0,1,0,5
+Opponent 33,Ibrahima Konaté,0,0,2,7
+Opponent 33,Andrew Robertson,0,0,0,3
+Opponent 33,Alexis Mac Allister,0,1,1,3
+Opponent 33,Dominik Szoboszlai,0,1,1,2
+Opponent 33,Ryan Gravenberch,1,1,4,6
+Opponent 33,Mohamed Salah,0,0,2,0
+Opponent 33,Darwin Núñez,1,0,4,0
+Opponent 33,Luis Díaz,0,0,1,1
+Opponent 34,Alisson Becker,0,0,0,0
+Opponent 34,Trent Alexander-Arnold,0,0,0,3
+Opponent 34,Virgil van Dijk,0,1,1,7
+Opponent 34,Ibrahima Konaté,0,0,1,8
+Opponent 34,Andrew Robertson,0,0,0,8
+Opponent 34,Alexis Mac Allister,1,0,4,5
+Opponent 34,Dominik Szoboszlai,0,2,0,5
+Opponent 34,Ryan Gravenberch,0,1,0,6
+Opponent 34,Mohamed Salah,0,0,3,1
+Opponent 34,Darwin Núñez,3,0,4,0
+Opponent 34,Luis Díaz,1,0,5,2
+Opponent 35,Alisson Becker,0,0,0,1
+Opponent 35,Trent Alexander-Arnold,0,0,1,3
+Opponent 35,Virgil van Dijk,0,1,0,4
+Opponent 35,Ibrahima Konaté,0,0,1,8
+Opponent 35,Andrew Robertson,0,0,1,7
+Opponent 35,Alexis Mac Allister,0,0,0,2
+Opponent 35,Dominik Szoboszlai,0,1,0,5
+Opponent 35,Ryan Gravenberch,1,1,4,2
+Opponent 35,Mohamed Salah,0,1,1,2
+Opponent 35,Darwin Núñez,0,1,4,2
+Opponent 35,Luis Díaz,0,0,4,1
+Opponent 36,Alisson Becker,0,0,0,1
+Opponent 36,Trent Alexander-Arnold,0,0,0,4
+Opponent 36,Virgil van Dijk,0,0,2,6
+Opponent 36,Ibrahima Konaté,0,0,2,3
+Opponent 36,Andrew Robertson,0,0,2,8
+Opponent 36,Alexis Mac Allister,0,1,1,5
+Opponent 36,Dominik Szoboszlai,0,2,3,4
+Opponent 36,Ryan Gravenberch,1,2,2,3
+Opponent 36,Mohamed Salah,0,1,1,2
+Opponent 36,Darwin Núñez,2,0,5,1
+Opponent 36,Luis Díaz,2,0,5,0
+Opponent 37,Alisson Becker,0,0,0,1
+Opponent 37,Trent Alexander-Arnold,0,1,2,7
+Opponent 37,Virgil van Dijk,0,0,1,7
+Opponent 37,Ibrahima Konaté,0,0,0,3
+Opponent 37,Andrew Robertson,0,0,0,4
+Opponent 37,Alexis Mac Allister,0,0,1,2
+Opponent 37,Dominik Szoboszlai,0,1,1,3
+Opponent 37,Ryan Gravenberch,1,0,2,6
+Opponent 37,Mohamed Salah,0,0,3,0
+Opponent 37,Darwin Núñez,1,1,5,1
+Opponent 37,Luis Díaz,1,1,2,2
+Opponent 38,Alisson Becker,0,0,0,0
+Opponent 38,Trent Alexander-Arnold,0,0,2,4
+Opponent 38,Virgil van Dijk,0,0,1,6
+Opponent 38,Ibrahima Konaté,0,1,1,5
+Opponent 38,Andrew Robertson,0,0,0,3
+Opponent 38,Alexis Mac Allister,0,1,3,4
+Opponent 38,Dominik Szoboszlai,0,0,0,3
+Opponent 38,Ryan Gravenberch,0,2,2,4
+Opponent 38,Mohamed Salah,2,0,6,1
+Opponent 38,Darwin Núñez,1,0,4,1
+Opponent 38,Luis Díaz,0,0,2,1

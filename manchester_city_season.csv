@@ -1,0 +1,419 @@
+match,player_name,goals,assists,shots_on_target,tackles
+Opponent 1,Ederson,0,0,0,1
+Opponent 1,Kyle Walker,0,0,0,4
+Opponent 1,Rúben Dias,0,1,1,6
+Opponent 1,John Stones,0,1,0,3
+Opponent 1,Nathan Aké,0,0,2,3
+Opponent 1,Rodri,1,2,3,3
+Opponent 1,Kevin De Bruyne,0,0,3,4
+Opponent 1,Bernardo Silva,0,0,1,5
+Opponent 1,Phil Foden,3,0,5,1
+Opponent 1,Erling Haaland,1,1,4,2
+Opponent 1,Jack Grealish,0,1,1,0
+Opponent 2,Ederson,0,0,0,1
+Opponent 2,Kyle Walker,0,0,1,5
+Opponent 2,Rúben Dias,0,0,2,3
+Opponent 2,John Stones,0,0,2,8
+Opponent 2,Nathan Aké,0,1,2,7
+Opponent 2,Rodri,0,1,2,6
+Opponent 2,Kevin De Bruyne,0,1,3,4
+Opponent 2,Bernardo Silva,0,0,1,4
+Opponent 2,Phil Foden,1,2,4,1
+Opponent 2,Erling Haaland,0,0,4,1
+Opponent 2,Jack Grealish,0,2,2,0
+Opponent 3,Ederson,0,0,0,0
+Opponent 3,Kyle Walker,0,0,2,7
+Opponent 3,Rúben Dias,0,0,2,6
+Opponent 3,John Stones,0,0,1,4
+Opponent 3,Nathan Aké,0,0,2,5
+Opponent 3,Rodri,1,2,4,4
+Opponent 3,Kevin De Bruyne,0,1,1,4
+Opponent 3,Bernardo Silva,0,1,2,3
+Opponent 3,Phil Foden,1,2,4,1
+Opponent 3,Erling Haaland,0,0,4,1
+Opponent 3,Jack Grealish,1,2,3,2
+Opponent 4,Ederson,0,0,0,0
+Opponent 4,Kyle Walker,0,0,0,8
+Opponent 4,Rúben Dias,0,0,0,7
+Opponent 4,John Stones,0,0,1,4
+Opponent 4,Nathan Aké,0,0,0,4
+Opponent 4,Rodri,1,2,3,2
+Opponent 4,Kevin De Bruyne,0,1,0,4
+Opponent 4,Bernardo Silva,0,0,3,3
+Opponent 4,Phil Foden,1,0,5,1
+Opponent 4,Erling Haaland,0,1,1,2
+Opponent 4,Jack Grealish,2,0,3,2
+Opponent 5,Ederson,0,0,0,1
+Opponent 5,Kyle Walker,0,0,2,8
+Opponent 5,Rúben Dias,0,0,0,4
+Opponent 5,John Stones,0,0,0,8
+Opponent 5,Nathan Aké,0,1,2,7
+Opponent 5,Rodri,0,0,3,2
+Opponent 5,Kevin De Bruyne,0,1,2,5
+Opponent 5,Bernardo Silva,0,0,0,5
+Opponent 5,Phil Foden,0,0,3,0
+Opponent 5,Erling Haaland,1,0,4,1
+Opponent 5,Jack Grealish,2,1,3,1
+Opponent 6,Ederson,0,0,0,1
+Opponent 6,Kyle Walker,0,0,2,7
+Opponent 6,Rúben Dias,0,0,0,6
+Opponent 6,John Stones,1,1,2,3
+Opponent 6,Nathan Aké,0,0,0,6
+Opponent 6,Rodri,0,1,1,2
+Opponent 6,Kevin De Bruyne,0,0,0,3
+Opponent 6,Bernardo Silva,0,0,2,4
+Opponent 6,Phil Foden,0,2,1,0
+Opponent 6,Erling Haaland,0,0,1,0
+Opponent 6,Jack Grealish,0,1,4,2
+Opponent 7,Ederson,0,0,0,0
+Opponent 7,Kyle Walker,0,1,0,5
+Opponent 7,Rúben Dias,0,0,0,8
+Opponent 7,John Stones,0,1,1,7
+Opponent 7,Nathan Aké,0,0,1,8
+Opponent 7,Rodri,0,0,1,4
+Opponent 7,Kevin De Bruyne,0,2,2,2
+Opponent 7,Bernardo Silva,0,0,0,4
+Opponent 7,Phil Foden,0,0,3,0
+Opponent 7,Erling Haaland,0,2,3,0
+Opponent 7,Jack Grealish,0,0,1,2
+Opponent 8,Ederson,0,0,0,1
+Opponent 8,Kyle Walker,1,0,2,8
+Opponent 8,Rúben Dias,0,0,2,3
+Opponent 8,John Stones,0,1,2,4
+Opponent 8,Nathan Aké,0,0,0,3
+Opponent 8,Rodri,1,2,2,5
+Opponent 8,Kevin De Bruyne,0,1,2,4
+Opponent 8,Bernardo Silva,0,0,0,5
+Opponent 8,Phil Foden,0,0,1,0
+Opponent 8,Erling Haaland,0,2,3,2
+Opponent 8,Jack Grealish,1,0,3,0
+Opponent 9,Ederson,0,0,0,0
+Opponent 9,Kyle Walker,0,0,0,4
+Opponent 9,Rúben Dias,0,0,1,3
+Opponent 9,John Stones,0,0,0,3
+Opponent 9,Nathan Aké,0,0,2,8
+Opponent 9,Rodri,1,0,1,3
+Opponent 9,Kevin De Bruyne,0,0,1,5
+Opponent 9,Bernardo Silva,1,0,4,2
+Opponent 9,Phil Foden,0,1,1,0
+Opponent 9,Erling Haaland,2,2,5,1
+Opponent 9,Jack Grealish,2,0,6,0
+Opponent 10,Ederson,0,0,0,0
+Opponent 10,Kyle Walker,0,1,0,6
+Opponent 10,Rúben Dias,0,0,1,3
+Opponent 10,John Stones,0,0,2,5
+Opponent 10,Nathan Aké,0,0,1,3
+Opponent 10,Rodri,0,1,2,2
+Opponent 10,Kevin De Bruyne,0,2,3,6
+Opponent 10,Bernardo Silva,0,0,2,3
+Opponent 10,Phil Foden,1,1,2,2
+Opponent 10,Erling Haaland,0,1,3,2
+Opponent 10,Jack Grealish,3,0,6,0
+Opponent 11,Ederson,0,0,0,0
+Opponent 11,Kyle Walker,0,0,1,6
+Opponent 11,Rúben Dias,0,0,1,3
+Opponent 11,John Stones,0,0,0,7
+Opponent 11,Nathan Aké,0,0,0,5
+Opponent 11,Rodri,0,2,2,5
+Opponent 11,Kevin De Bruyne,0,0,1,5
+Opponent 11,Bernardo Silva,1,2,4,6
+Opponent 11,Phil Foden,0,1,3,1
+Opponent 11,Erling Haaland,1,1,3,0
+Opponent 11,Jack Grealish,0,0,1,2
+Opponent 12,Ederson,0,0,0,0
+Opponent 12,Kyle Walker,0,0,0,8
+Opponent 12,Rúben Dias,0,0,1,8
+Opponent 12,John Stones,0,0,0,4
+Opponent 12,Nathan Aké,0,0,2,6
+Opponent 12,Rodri,0,1,3,6
+Opponent 12,Kevin De Bruyne,0,3,0,3
+Opponent 12,Bernardo Silva,0,1,1,4
+Opponent 12,Phil Foden,1,1,2,0
+Opponent 12,Erling Haaland,1,1,5,0
+Opponent 12,Jack Grealish,1,1,3,0
+Opponent 13,Ederson,0,0,0,0
+Opponent 13,Kyle Walker,0,1,2,7
+Opponent 13,Rúben Dias,0,0,0,5
+Opponent 13,John Stones,0,0,0,6
+Opponent 13,Nathan Aké,0,0,0,6
+Opponent 13,Rodri,0,0,0,5
+Opponent 13,Kevin De Bruyne,0,0,1,6
+Opponent 13,Bernardo Silva,1,0,1,6
+Opponent 13,Phil Foden,0,1,3,0
+Opponent 13,Erling Haaland,2,1,3,0
+Opponent 13,Jack Grealish,1,1,5,0
+Opponent 14,Ederson,0,0,0,0
+Opponent 14,Kyle Walker,0,1,1,6
+Opponent 14,Rúben Dias,0,0,1,8
+Opponent 14,John Stones,0,0,0,3
+Opponent 14,Nathan Aké,0,0,0,5
+Opponent 14,Rodri,0,1,1,4
+Opponent 14,Kevin De Bruyne,0,2,0,5
+Opponent 14,Bernardo Silva,0,0,0,5
+Opponent 14,Phil Foden,0,1,2,1
+Opponent 14,Erling Haaland,2,1,3,0
+Opponent 14,Jack Grealish,2,1,5,2
+Opponent 15,Ederson,0,0,0,0
+Opponent 15,Kyle Walker,0,0,2,5
+Opponent 15,Rúben Dias,0,0,2,3
+Opponent 15,John Stones,0,0,1,4
+Opponent 15,Nathan Aké,0,0,1,5
+Opponent 15,Rodri,0,0,0,5
+Opponent 15,Kevin De Bruyne,1,0,3,3
+Opponent 15,Bernardo Silva,0,1,1,6
+Opponent 15,Phil Foden,1,2,2,0
+Opponent 15,Erling Haaland,0,2,1,1
+Opponent 15,Jack Grealish,0,1,2,1
+Opponent 16,Ederson,0,0,0,0
+Opponent 16,Kyle Walker,0,0,2,5
+Opponent 16,Rúben Dias,0,1,0,5
+Opponent 16,John Stones,0,0,2,3
+Opponent 16,Nathan Aké,0,0,1,4
+Opponent 16,Rodri,0,0,1,6
+Opponent 16,Kevin De Bruyne,0,1,2,2
+Opponent 16,Bernardo Silva,0,1,2,3
+Opponent 16,Phil Foden,1,0,2,1
+Opponent 16,Erling Haaland,3,0,6,2
+Opponent 16,Jack Grealish,2,0,3,2
+Opponent 17,Ederson,0,0,0,0
+Opponent 17,Kyle Walker,0,0,1,4
+Opponent 17,Rúben Dias,0,0,0,5
+Opponent 17,John Stones,0,0,1,7
+Opponent 17,Nathan Aké,0,0,1,7
+Opponent 17,Rodri,0,0,0,2
+Opponent 17,Kevin De Bruyne,0,0,2,6
+Opponent 17,Bernardo Silva,1,0,3,6
+Opponent 17,Phil Foden,1,2,5,2
+Opponent 17,Erling Haaland,2,0,3,2
+Opponent 17,Jack Grealish,0,1,2,2
+Opponent 18,Ederson,0,0,0,1
+Opponent 18,Kyle Walker,0,0,0,4
+Opponent 18,Rúben Dias,0,0,0,5
+Opponent 18,John Stones,0,0,2,6
+Opponent 18,Nathan Aké,0,0,2,5
+Opponent 18,Rodri,0,0,1,5
+Opponent 18,Kevin De Bruyne,0,2,1,2
+Opponent 18,Bernardo Silva,0,0,1,6
+Opponent 18,Phil Foden,0,1,1,0
+Opponent 18,Erling Haaland,0,1,3,1
+Opponent 18,Jack Grealish,1,0,2,0
+Opponent 19,Ederson,0,0,0,1
+Opponent 19,Kyle Walker,0,0,2,5
+Opponent 19,Rúben Dias,0,0,0,5
+Opponent 19,John Stones,0,0,1,8
+Opponent 19,Nathan Aké,1,0,2,6
+Opponent 19,Rodri,0,3,1,6
+Opponent 19,Kevin De Bruyne,0,0,2,3
+Opponent 19,Bernardo Silva,1,1,4,4
+Opponent 19,Phil Foden,0,0,3,0
+Opponent 19,Erling Haaland,1,0,3,1
+Opponent 19,Jack Grealish,0,2,4,0
+Opponent 20,Ederson,0,0,0,1
+Opponent 20,Kyle Walker,0,1,1,7
+Opponent 20,Rúben Dias,0,0,0,5
+Opponent 20,John Stones,0,0,0,3
+Opponent 20,Nathan Aké,0,0,0,8
+Opponent 20,Rodri,0,0,2,4
+Opponent 20,Kevin De Bruyne,0,0,2,3
+Opponent 20,Bernardo Silva,0,0,2,3
+Opponent 20,Phil Foden,2,1,6,2
+Opponent 20,Erling Haaland,0,0,3,1
+Opponent 20,Jack Grealish,0,1,2,1
+Opponent 21,Ederson,0,0,0,1
+Opponent 21,Kyle Walker,0,0,2,6
+Opponent 21,Rúben Dias,0,0,1,8
+Opponent 21,John Stones,0,0,2,3
+Opponent 21,Nathan Aké,1,0,3,6
+Opponent 21,Rodri,0,0,3,3
+Opponent 21,Kevin De Bruyne,0,0,0,6
+Opponent 21,Bernardo Silva,0,1,1,6
+Opponent 21,Phil Foden,0,2,4,1
+Opponent 21,Erling Haaland,1,2,3,0
+Opponent 21,Jack Grealish,1,2,3,1
+Opponent 22,Ederson,0,0,0,0
+Opponent 22,Kyle Walker,0,0,1,6
+Opponent 22,Rúben Dias,0,0,1,6
+Opponent 22,John Stones,0,0,2,5
+Opponent 22,Nathan Aké,0,0,0,7
+Opponent 22,Rodri,0,0,2,6
+Opponent 22,Kevin De Bruyne,0,0,3,3
+Opponent 22,Bernardo Silva,1,0,1,6
+Opponent 22,Phil Foden,1,1,5,2
+Opponent 22,Erling Haaland,0,2,2,0
+Opponent 22,Jack Grealish,0,1,1,2
+Opponent 23,Ederson,0,0,0,0
+Opponent 23,Kyle Walker,0,0,2,5
+Opponent 23,Rúben Dias,0,0,2,7
+Opponent 23,John Stones,0,0,2,7
+Opponent 23,Nathan Aké,0,1,0,7
+Opponent 23,Rodri,0,0,3,3
+Opponent 23,Kevin De Bruyne,0,0,0,5
+Opponent 23,Bernardo Silva,0,0,0,4
+Opponent 23,Phil Foden,1,0,4,2
+Opponent 23,Erling Haaland,0,0,3,2
+Opponent 23,Jack Grealish,0,1,4,0
+Opponent 24,Ederson,0,0,0,1
+Opponent 24,Kyle Walker,0,0,0,7
+Opponent 24,Rúben Dias,1,0,2,8
+Opponent 24,John Stones,0,0,1,7
+Opponent 24,Nathan Aké,0,1,2,8
+Opponent 24,Rodri,0,1,3,6
+Opponent 24,Kevin De Bruyne,1,1,3,2
+Opponent 24,Bernardo Silva,0,0,3,6
+Opponent 24,Phil Foden,1,0,2,2
+Opponent 24,Erling Haaland,2,0,3,0
+Opponent 24,Jack Grealish,0,2,3,2
+Opponent 25,Ederson,0,0,0,1
+Opponent 25,Kyle Walker,0,0,2,8
+Opponent 25,Rúben Dias,0,0,2,4
+Opponent 25,John Stones,0,0,1,6
+Opponent 25,Nathan Aké,0,0,1,6
+Opponent 25,Rodri,0,1,1,6
+Opponent 25,Kevin De Bruyne,1,3,3,5
+Opponent 25,Bernardo Silva,0,0,0,6
+Opponent 25,Phil Foden,0,0,3,1
+Opponent 25,Erling Haaland,0,1,3,2
+Opponent 25,Jack Grealish,0,1,2,1
+Opponent 26,Ederson,0,0,0,0
+Opponent 26,Kyle Walker,0,0,2,6
+Opponent 26,Rúben Dias,0,0,0,6
+Opponent 26,John Stones,0,1,2,8
+Opponent 26,Nathan Aké,0,0,2,3
+Opponent 26,Rodri,0,0,2,6
+Opponent 26,Kevin De Bruyne,0,1,3,5
+Opponent 26,Bernardo Silva,0,3,2,4
+Opponent 26,Phil Foden,1,1,5,0
+Opponent 26,Erling Haaland,0,2,2,2
+Opponent 26,Jack Grealish,0,0,3,0
+Opponent 27,Ederson,0,0,0,0
+Opponent 27,Kyle Walker,0,1,2,7
+Opponent 27,Rúben Dias,0,1,0,6
+Opponent 27,John Stones,0,0,2,7
+Opponent 27,Nathan Aké,0,1,0,3
+Opponent 27,Rodri,0,0,1,5
+Opponent 27,Kevin De Bruyne,0,0,0,5
+Opponent 27,Bernardo Silva,0,0,3,2
+Opponent 27,Phil Foden,0,0,1,0
+Opponent 27,Erling Haaland,2,1,6,0
+Opponent 27,Jack Grealish,2,2,6,0
+Opponent 28,Ederson,0,0,0,1
+Opponent 28,Kyle Walker,0,0,2,5
+Opponent 28,Rúben Dias,0,0,2,6
+Opponent 28,John Stones,0,0,0,4
+Opponent 28,Nathan Aké,0,0,1,6
+Opponent 28,Rodri,1,1,3,4
+Opponent 28,Kevin De Bruyne,0,0,0,4
+Opponent 28,Bernardo Silva,1,1,3,2
+Opponent 28,Phil Foden,1,1,5,2
+Opponent 28,Erling Haaland,1,1,4,2
+Opponent 28,Jack Grealish,0,0,1,2
+Opponent 29,Ederson,0,0,0,1
+Opponent 29,Kyle Walker,0,0,1,4
+Opponent 29,Rúben Dias,0,0,1,5
+Opponent 29,John Stones,0,0,1,8
+Opponent 29,Nathan Aké,0,0,2,6
+Opponent 29,Rodri,0,0,0,2
+Opponent 29,Kevin De Bruyne,0,1,3,4
+Opponent 29,Bernardo Silva,0,0,3,3
+Opponent 29,Phil Foden,0,1,2,2
+Opponent 29,Erling Haaland,1,0,4,0
+Opponent 29,Jack Grealish,0,0,4,2
+Opponent 30,Ederson,0,0,0,1
+Opponent 30,Kyle Walker,0,1,0,3
+Opponent 30,Rúben Dias,0,1,0,8
+Opponent 30,John Stones,0,0,1,6
+Opponent 30,Nathan Aké,0,0,0,4
+Opponent 30,Rodri,0,0,0,5
+Opponent 30,Kevin De Bruyne,0,2,2,6
+Opponent 30,Bernardo Silva,0,0,1,5
+Opponent 30,Phil Foden,0,0,2,1
+Opponent 30,Erling Haaland,1,1,2,1
+Opponent 30,Jack Grealish,2,0,6,0
+Opponent 31,Ederson,0,0,0,1
+Opponent 31,Kyle Walker,0,1,2,7
+Opponent 31,Rúben Dias,0,0,2,6
+Opponent 31,John Stones,0,0,1,6
+Opponent 31,Nathan Aké,0,1,0,5
+Opponent 31,Rodri,0,1,1,6
+Opponent 31,Kevin De Bruyne,1,0,2,5
+Opponent 31,Bernardo Silva,0,1,0,3
+Opponent 31,Phil Foden,0,0,4,0
+Opponent 31,Erling Haaland,2,0,3,2
+Opponent 31,Jack Grealish,1,0,4,0
+Opponent 32,Ederson,0,0,0,0
+Opponent 32,Kyle Walker,0,0,0,7
+Opponent 32,Rúben Dias,0,0,1,7
+Opponent 32,John Stones,0,1,0,8
+Opponent 32,Nathan Aké,0,0,1,5
+Opponent 32,Rodri,1,1,3,4
+Opponent 32,Kevin De Bruyne,1,0,1,4
+Opponent 32,Bernardo Silva,0,1,3,5
+Opponent 32,Phil Foden,0,2,3,2
+Opponent 32,Erling Haaland,0,2,1,0
+Opponent 32,Jack Grealish,0,1,2,1
+Opponent 33,Ederson,0,0,0,1
+Opponent 33,Kyle Walker,0,0,1,8
+Opponent 33,Rúben Dias,0,0,0,4
+Opponent 33,John Stones,1,0,3,7
+Opponent 33,Nathan Aké,0,0,2,7
+Opponent 33,Rodri,0,2,1,3
+Opponent 33,Kevin De Bruyne,0,0,0,5
+Opponent 33,Bernardo Silva,0,2,2,2
+Opponent 33,Phil Foden,1,1,3,1
+Opponent 33,Erling Haaland,3,0,7,0
+Opponent 33,Jack Grealish,0,0,3,1
+Opponent 34,Ederson,0,0,0,0
+Opponent 34,Kyle Walker,0,0,2,7
+Opponent 34,Rúben Dias,0,0,2,4
+Opponent 34,John Stones,0,0,2,8
+Opponent 34,Nathan Aké,0,0,0,5
+Opponent 34,Rodri,0,0,3,3
+Opponent 34,Kevin De Bruyne,0,1,3,6
+Opponent 34,Bernardo Silva,0,2,1,3
+Opponent 34,Phil Foden,1,0,3,1
+Opponent 34,Erling Haaland,0,0,3,1
+Opponent 34,Jack Grealish,0,2,2,2
+Opponent 35,Ederson,0,0,0,1
+Opponent 35,Kyle Walker,0,1,1,6
+Opponent 35,Rúben Dias,0,0,1,7
+Opponent 35,John Stones,0,1,1,7
+Opponent 35,Nathan Aké,0,0,0,3
+Opponent 35,Rodri,0,0,0,3
+Opponent 35,Kevin De Bruyne,0,2,2,2
+Opponent 35,Bernardo Silva,0,0,3,3
+Opponent 35,Phil Foden,1,1,5,0
+Opponent 35,Erling Haaland,2,0,6,1
+Opponent 35,Jack Grealish,0,1,1,1
+Opponent 36,Ederson,0,0,0,1
+Opponent 36,Kyle Walker,0,0,1,5
+Opponent 36,Rúben Dias,0,0,2,6
+Opponent 36,John Stones,0,0,2,7
+Opponent 36,Nathan Aké,0,0,2,3
+Opponent 36,Rodri,0,0,3,3
+Opponent 36,Kevin De Bruyne,0,3,1,3
+Opponent 36,Bernardo Silva,1,2,2,2
+Opponent 36,Phil Foden,0,1,2,0
+Opponent 36,Erling Haaland,0,0,2,2
+Opponent 36,Jack Grealish,1,2,5,0
+Opponent 37,Ederson,0,0,0,0
+Opponent 37,Kyle Walker,0,0,2,6
+Opponent 37,Rúben Dias,0,0,0,7
+Opponent 37,John Stones,0,0,2,4
+Opponent 37,Nathan Aké,0,0,1,3
+Opponent 37,Rodri,0,2,1,2
+Opponent 37,Kevin De Bruyne,0,0,3,4
+Opponent 37,Bernardo Silva,1,1,3,2
+Opponent 37,Phil Foden,0,1,4,1
+Opponent 37,Erling Haaland,0,0,1,1
+Opponent 37,Jack Grealish,0,0,1,0
+Opponent 38,Ederson,0,0,0,1
+Opponent 38,Kyle Walker,0,0,1,5
+Opponent 38,Rúben Dias,0,0,1,8
+Opponent 38,John Stones,0,0,1,4
+Opponent 38,Nathan Aké,0,0,2,3
+Opponent 38,Rodri,1,0,1,6
+Opponent 38,Kevin De Bruyne,0,1,0,2
+Opponent 38,Bernardo Silva,0,0,0,6
+Opponent 38,Phil Foden,2,0,3,1
+Opponent 38,Erling Haaland,0,1,2,2
+Opponent 38,Jack Grealish,0,1,2,0

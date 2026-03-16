@@ -286,11 +286,29 @@
       margin-bottom: 16px;
     }
 
-    input[type="file"] {
+    input[type="file"],
+    input[type="text"].upload-input {
       width: 100%;
       border: 2px dashed rgba(255, 255, 255, 0.1);
       padding: 20px;
       border-radius: 16px;
+      background: transparent;
+      color: inherit;
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    input[type="text"].upload-input {
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    input[type="text"].upload-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    input[type="file"] {
       cursor: pointer;
     }
 
@@ -425,6 +443,7 @@
           <form action="{% url 'upload_performance' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="file-input-wrapper">
+              <input type="text" name="team_name" placeholder="Enter Team Name (e.g., Liverpool)" class="upload-input" required>
               <input type="file" name="csv_file" accept=".csv" required>
             </div>
             <button type="submit" class="submit-btn">📤 Upload CSV</button>
@@ -496,7 +515,12 @@
           },
           x: {
             grid: { display: false },
-            ticks: { color: initialTheme === 'light' ? '#0f172a' : '#94a3b8', font: { weight: '600', size: 16 } }
+            ticks: { 
+              color: initialTheme === 'light' ? '#0f172a' : '#94a3b8', 
+              font: { weight: '600', size: 13 },
+              maxRotation: 0,
+              minRotation: 0 
+            }
           }
         }
       }

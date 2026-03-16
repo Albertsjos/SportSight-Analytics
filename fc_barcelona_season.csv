@@ -1,0 +1,419 @@
+match,player_name,goals,assists,shots_on_target,tackles
+Opponent 1,Marc-André ter Stegen,0,0,0,0
+Opponent 1,Jules Koundé,0,0,2,4
+Opponent 1,Ronald Araújo,0,1,0,8
+Opponent 1,Andreas Christensen,0,0,0,3
+Opponent 1,Alejandro Balde,0,0,0,6
+Opponent 1,Frenkie de Jong,0,0,3,5
+Opponent 1,Pedri,0,3,3,2
+Opponent 1,Gavi,0,2,0,2
+Opponent 1,Raphinha,0,0,3,1
+Opponent 1,Robert Lewandowski,1,1,5,1
+Opponent 1,Lamine Yamal,1,1,4,2
+Opponent 2,Marc-André ter Stegen,0,0,0,1
+Opponent 2,Jules Koundé,0,0,0,6
+Opponent 2,Ronald Araújo,0,1,2,3
+Opponent 2,Andreas Christensen,0,0,2,5
+Opponent 2,Alejandro Balde,0,1,0,8
+Opponent 2,Frenkie de Jong,1,3,2,2
+Opponent 2,Pedri,0,0,3,6
+Opponent 2,Gavi,0,3,2,6
+Opponent 2,Raphinha,1,0,4,2
+Opponent 2,Robert Lewandowski,2,1,6,1
+Opponent 2,Lamine Yamal,1,0,4,2
+Opponent 3,Marc-André ter Stegen,0,0,0,0
+Opponent 3,Jules Koundé,0,1,1,3
+Opponent 3,Ronald Araújo,0,0,0,8
+Opponent 3,Andreas Christensen,0,0,2,3
+Opponent 3,Alejandro Balde,0,1,0,4
+Opponent 3,Frenkie de Jong,0,1,3,5
+Opponent 3,Pedri,1,1,1,2
+Opponent 3,Gavi,0,0,3,5
+Opponent 3,Raphinha,0,0,4,0
+Opponent 3,Robert Lewandowski,0,1,4,0
+Opponent 3,Lamine Yamal,1,0,5,2
+Opponent 4,Marc-André ter Stegen,0,0,0,0
+Opponent 4,Jules Koundé,0,0,0,7
+Opponent 4,Ronald Araújo,0,0,1,6
+Opponent 4,Andreas Christensen,0,0,1,5
+Opponent 4,Alejandro Balde,0,0,1,3
+Opponent 4,Frenkie de Jong,0,0,0,3
+Opponent 4,Pedri,1,2,1,2
+Opponent 4,Gavi,0,2,3,6
+Opponent 4,Raphinha,1,2,5,2
+Opponent 4,Robert Lewandowski,1,0,2,2
+Opponent 4,Lamine Yamal,1,1,3,0
+Opponent 5,Marc-André ter Stegen,0,0,0,0
+Opponent 5,Jules Koundé,0,0,2,8
+Opponent 5,Ronald Araújo,0,1,2,5
+Opponent 5,Andreas Christensen,0,1,1,5
+Opponent 5,Alejandro Balde,0,0,2,5
+Opponent 5,Frenkie de Jong,0,0,0,6
+Opponent 5,Pedri,0,1,1,3
+Opponent 5,Gavi,0,0,1,6
+Opponent 5,Raphinha,0,0,1,0
+Opponent 5,Robert Lewandowski,1,0,5,2
+Opponent 5,Lamine Yamal,0,1,3,1
+Opponent 6,Marc-André ter Stegen,0,0,0,0
+Opponent 6,Jules Koundé,0,1,1,5
+Opponent 6,Ronald Araújo,0,0,2,7
+Opponent 6,Andreas Christensen,0,1,0,8
+Opponent 6,Alejandro Balde,0,0,0,4
+Opponent 6,Frenkie de Jong,0,0,3,2
+Opponent 6,Pedri,0,0,1,6
+Opponent 6,Gavi,0,0,3,4
+Opponent 6,Raphinha,0,0,3,2
+Opponent 6,Robert Lewandowski,0,0,1,0
+Opponent 6,Lamine Yamal,1,0,4,1
+Opponent 7,Marc-André ter Stegen,0,0,0,1
+Opponent 7,Jules Koundé,0,0,1,5
+Opponent 7,Ronald Araújo,0,1,0,6
+Opponent 7,Andreas Christensen,0,0,0,4
+Opponent 7,Alejandro Balde,0,0,0,3
+Opponent 7,Frenkie de Jong,0,0,1,2
+Opponent 7,Pedri,0,1,2,5
+Opponent 7,Gavi,0,0,0,6
+Opponent 7,Raphinha,1,0,5,2
+Opponent 7,Robert Lewandowski,0,0,3,2
+Opponent 7,Lamine Yamal,0,2,3,2
+Opponent 8,Marc-André ter Stegen,0,0,0,1
+Opponent 8,Jules Koundé,0,0,0,5
+Opponent 8,Ronald Araújo,0,0,0,6
+Opponent 8,Andreas Christensen,0,0,1,7
+Opponent 8,Alejandro Balde,0,0,1,8
+Opponent 8,Frenkie de Jong,0,1,2,6
+Opponent 8,Pedri,0,1,2,3
+Opponent 8,Gavi,0,1,2,4
+Opponent 8,Raphinha,0,0,4,1
+Opponent 8,Robert Lewandowski,0,1,1,0
+Opponent 8,Lamine Yamal,0,0,1,0
+Opponent 9,Marc-André ter Stegen,0,0,0,1
+Opponent 9,Jules Koundé,0,0,1,7
+Opponent 9,Ronald Araújo,0,0,0,6
+Opponent 9,Andreas Christensen,0,0,0,5
+Opponent 9,Alejandro Balde,0,0,2,8
+Opponent 9,Frenkie de Jong,0,2,0,4
+Opponent 9,Pedri,0,0,0,5
+Opponent 9,Gavi,0,0,1,4
+Opponent 9,Raphinha,2,0,5,2
+Opponent 9,Robert Lewandowski,2,1,4,2
+Opponent 9,Lamine Yamal,0,2,4,2
+Opponent 10,Marc-André ter Stegen,0,0,0,0
+Opponent 10,Jules Koundé,0,0,0,4
+Opponent 10,Ronald Araújo,0,1,2,8
+Opponent 10,Andreas Christensen,0,0,2,7
+Opponent 10,Alejandro Balde,0,0,1,3
+Opponent 10,Frenkie de Jong,0,0,3,5
+Opponent 10,Pedri,1,0,2,3
+Opponent 10,Gavi,0,1,3,2
+Opponent 10,Raphinha,1,0,3,0
+Opponent 10,Robert Lewandowski,2,0,3,2
+Opponent 10,Lamine Yamal,1,0,5,0
+Opponent 11,Marc-André ter Stegen,0,0,0,0
+Opponent 11,Jules Koundé,0,0,2,7
+Opponent 11,Ronald Araújo,0,0,2,5
+Opponent 11,Andreas Christensen,0,0,0,7
+Opponent 11,Alejandro Balde,1,0,1,6
+Opponent 11,Frenkie de Jong,0,0,0,2
+Opponent 11,Pedri,2,1,4,6
+Opponent 11,Gavi,0,3,2,3
+Opponent 11,Raphinha,0,1,3,0
+Opponent 11,Robert Lewandowski,2,1,5,2
+Opponent 11,Lamine Yamal,0,1,4,0
+Opponent 12,Marc-André ter Stegen,0,0,0,1
+Opponent 12,Jules Koundé,0,0,2,3
+Opponent 12,Ronald Araújo,0,0,0,7
+Opponent 12,Andreas Christensen,0,0,2,7
+Opponent 12,Alejandro Balde,0,0,0,3
+Opponent 12,Frenkie de Jong,0,2,3,3
+Opponent 12,Pedri,0,1,0,5
+Opponent 12,Gavi,0,0,2,6
+Opponent 12,Raphinha,1,1,2,1
+Opponent 12,Robert Lewandowski,1,0,3,0
+Opponent 12,Lamine Yamal,2,1,6,2
+Opponent 13,Marc-André ter Stegen,0,0,0,0
+Opponent 13,Jules Koundé,0,0,2,5
+Opponent 13,Ronald Araújo,1,0,3,3
+Opponent 13,Andreas Christensen,0,0,2,7
+Opponent 13,Alejandro Balde,0,0,2,8
+Opponent 13,Frenkie de Jong,0,1,3,2
+Opponent 13,Pedri,0,0,3,3
+Opponent 13,Gavi,1,1,1,5
+Opponent 13,Raphinha,1,1,4,1
+Opponent 13,Robert Lewandowski,2,1,6,1
+Opponent 13,Lamine Yamal,1,0,5,2
+Opponent 14,Marc-André ter Stegen,0,0,0,1
+Opponent 14,Jules Koundé,0,0,0,3
+Opponent 14,Ronald Araújo,0,0,2,6
+Opponent 14,Andreas Christensen,0,0,2,4
+Opponent 14,Alejandro Balde,0,0,1,3
+Opponent 14,Frenkie de Jong,1,0,4,3
+Opponent 14,Pedri,0,2,0,6
+Opponent 14,Gavi,1,2,4,5
+Opponent 14,Raphinha,1,0,2,0
+Opponent 14,Robert Lewandowski,1,0,5,2
+Opponent 14,Lamine Yamal,1,1,4,2
+Opponent 15,Marc-André ter Stegen,0,0,0,1
+Opponent 15,Jules Koundé,0,0,1,6
+Opponent 15,Ronald Araújo,1,0,3,5
+Opponent 15,Andreas Christensen,0,0,1,5
+Opponent 15,Alejandro Balde,0,0,0,5
+Opponent 15,Frenkie de Jong,0,1,0,2
+Opponent 15,Pedri,0,0,2,2
+Opponent 15,Gavi,0,1,3,4
+Opponent 15,Raphinha,1,0,2,2
+Opponent 15,Robert Lewandowski,0,0,2,2
+Opponent 15,Lamine Yamal,0,0,4,2
+Opponent 16,Marc-André ter Stegen,0,0,0,0
+Opponent 16,Jules Koundé,0,0,1,6
+Opponent 16,Ronald Araújo,0,0,1,6
+Opponent 16,Andreas Christensen,0,0,2,6
+Opponent 16,Alejandro Balde,0,1,2,6
+Opponent 16,Frenkie de Jong,0,0,0,5
+Opponent 16,Pedri,0,0,0,5
+Opponent 16,Gavi,0,0,0,4
+Opponent 16,Raphinha,2,0,5,1
+Opponent 16,Robert Lewandowski,2,0,3,1
+Opponent 16,Lamine Yamal,0,0,2,1
+Opponent 17,Marc-André ter Stegen,0,0,0,0
+Opponent 17,Jules Koundé,0,0,1,5
+Opponent 17,Ronald Araújo,0,0,0,5
+Opponent 17,Andreas Christensen,0,0,2,3
+Opponent 17,Alejandro Balde,0,0,2,7
+Opponent 17,Frenkie de Jong,0,1,0,6
+Opponent 17,Pedri,0,0,1,4
+Opponent 17,Gavi,0,0,0,4
+Opponent 17,Raphinha,0,2,4,1
+Opponent 17,Robert Lewandowski,1,0,2,0
+Opponent 17,Lamine Yamal,0,0,2,0
+Opponent 18,Marc-André ter Stegen,0,0,0,1
+Opponent 18,Jules Koundé,0,0,0,3
+Opponent 18,Ronald Araújo,0,1,1,4
+Opponent 18,Andreas Christensen,0,1,1,5
+Opponent 18,Alejandro Balde,0,1,2,3
+Opponent 18,Frenkie de Jong,2,0,2,4
+Opponent 18,Pedri,2,0,3,6
+Opponent 18,Gavi,0,0,1,5
+Opponent 18,Raphinha,0,1,1,2
+Opponent 18,Robert Lewandowski,1,0,3,2
+Opponent 18,Lamine Yamal,0,0,1,2
+Opponent 19,Marc-André ter Stegen,0,0,0,0
+Opponent 19,Jules Koundé,1,0,2,5
+Opponent 19,Ronald Araújo,0,0,2,8
+Opponent 19,Andreas Christensen,0,0,1,7
+Opponent 19,Alejandro Balde,0,1,1,6
+Opponent 19,Frenkie de Jong,0,2,1,4
+Opponent 19,Pedri,0,1,2,4
+Opponent 19,Gavi,0,0,0,3
+Opponent 19,Raphinha,0,1,4,0
+Opponent 19,Robert Lewandowski,1,0,3,0
+Opponent 19,Lamine Yamal,1,0,3,0
+Opponent 20,Marc-André ter Stegen,0,0,0,0
+Opponent 20,Jules Koundé,0,0,0,7
+Opponent 20,Ronald Araújo,0,0,2,4
+Opponent 20,Andreas Christensen,0,1,1,3
+Opponent 20,Alejandro Balde,0,1,1,8
+Opponent 20,Frenkie de Jong,0,0,1,2
+Opponent 20,Pedri,0,0,0,3
+Opponent 20,Gavi,1,0,2,5
+Opponent 20,Raphinha,1,2,4,0
+Opponent 20,Robert Lewandowski,0,2,3,1
+Opponent 20,Lamine Yamal,0,0,1,0
+Opponent 21,Marc-André ter Stegen,0,0,0,1
+Opponent 21,Jules Koundé,0,0,2,8
+Opponent 21,Ronald Araújo,0,0,1,4
+Opponent 21,Andreas Christensen,0,0,1,8
+Opponent 21,Alejandro Balde,0,0,0,4
+Opponent 21,Frenkie de Jong,1,1,2,4
+Opponent 21,Pedri,1,0,4,3
+Opponent 21,Gavi,0,2,3,3
+Opponent 21,Raphinha,1,1,3,2
+Opponent 21,Robert Lewandowski,0,1,1,1
+Opponent 21,Lamine Yamal,1,0,3,0
+Opponent 22,Marc-André ter Stegen,0,0,0,1
+Opponent 22,Jules Koundé,0,0,1,4
+Opponent 22,Ronald Araújo,0,0,2,4
+Opponent 22,Andreas Christensen,0,1,1,5
+Opponent 22,Alejandro Balde,0,0,0,8
+Opponent 22,Frenkie de Jong,0,0,0,3
+Opponent 22,Pedri,0,2,3,2
+Opponent 22,Gavi,0,2,2,5
+Opponent 22,Raphinha,0,0,2,1
+Opponent 22,Robert Lewandowski,2,1,3,2
+Opponent 22,Lamine Yamal,3,1,5,2
+Opponent 23,Marc-André ter Stegen,0,0,0,1
+Opponent 23,Jules Koundé,0,0,2,5
+Opponent 23,Ronald Araújo,0,0,0,7
+Opponent 23,Andreas Christensen,0,0,0,5
+Opponent 23,Alejandro Balde,0,0,2,8
+Opponent 23,Frenkie de Jong,0,1,1,5
+Opponent 23,Pedri,0,0,2,2
+Opponent 23,Gavi,0,0,2,5
+Opponent 23,Raphinha,0,0,1,2
+Opponent 23,Robert Lewandowski,1,0,2,2
+Opponent 23,Lamine Yamal,0,0,1,0
+Opponent 24,Marc-André ter Stegen,0,0,0,1
+Opponent 24,Jules Koundé,0,1,2,5
+Opponent 24,Ronald Araújo,0,0,2,8
+Opponent 24,Andreas Christensen,0,0,2,8
+Opponent 24,Alejandro Balde,1,1,1,8
+Opponent 24,Frenkie de Jong,0,3,2,5
+Opponent 24,Pedri,0,1,1,3
+Opponent 24,Gavi,0,0,1,4
+Opponent 24,Raphinha,2,0,6,1
+Opponent 24,Robert Lewandowski,0,0,1,0
+Opponent 24,Lamine Yamal,1,0,2,1
+Opponent 25,Marc-André ter Stegen,0,0,0,0
+Opponent 25,Jules Koundé,0,0,2,7
+Opponent 25,Ronald Araújo,0,0,0,7
+Opponent 25,Andreas Christensen,0,0,0,7
+Opponent 25,Alejandro Balde,0,1,2,7
+Opponent 25,Frenkie de Jong,0,0,1,4
+Opponent 25,Pedri,1,0,3,6
+Opponent 25,Gavi,0,0,0,3
+Opponent 25,Raphinha,0,0,1,1
+Opponent 25,Robert Lewandowski,3,2,7,2
+Opponent 25,Lamine Yamal,1,2,4,1
+Opponent 26,Marc-André ter Stegen,0,0,0,1
+Opponent 26,Jules Koundé,1,0,1,5
+Opponent 26,Ronald Araújo,0,0,1,4
+Opponent 26,Andreas Christensen,1,1,2,7
+Opponent 26,Alejandro Balde,0,0,0,7
+Opponent 26,Frenkie de Jong,0,1,1,2
+Opponent 26,Pedri,0,2,3,3
+Opponent 26,Gavi,0,1,3,4
+Opponent 26,Raphinha,3,0,6,2
+Opponent 26,Robert Lewandowski,1,0,5,1
+Opponent 26,Lamine Yamal,2,0,3,0
+Opponent 27,Marc-André ter Stegen,0,0,0,1
+Opponent 27,Jules Koundé,0,0,0,4
+Opponent 27,Ronald Araújo,1,0,2,3
+Opponent 27,Andreas Christensen,0,0,1,3
+Opponent 27,Alejandro Balde,0,0,0,5
+Opponent 27,Frenkie de Jong,0,1,1,2
+Opponent 27,Pedri,0,2,3,5
+Opponent 27,Gavi,0,1,0,2
+Opponent 27,Raphinha,2,0,6,2
+Opponent 27,Robert Lewandowski,0,0,1,1
+Opponent 27,Lamine Yamal,1,2,4,1
+Opponent 28,Marc-André ter Stegen,0,0,0,0
+Opponent 28,Jules Koundé,0,0,0,3
+Opponent 28,Ronald Araújo,0,0,2,8
+Opponent 28,Andreas Christensen,0,0,2,6
+Opponent 28,Alejandro Balde,0,0,1,8
+Opponent 28,Frenkie de Jong,0,0,3,2
+Opponent 28,Pedri,0,0,0,5
+Opponent 28,Gavi,0,0,1,4
+Opponent 28,Raphinha,0,0,3,0
+Opponent 28,Robert Lewandowski,2,2,3,2
+Opponent 28,Lamine Yamal,0,0,3,1
+Opponent 29,Marc-André ter Stegen,0,0,0,0
+Opponent 29,Jules Koundé,0,0,0,3
+Opponent 29,Ronald Araújo,0,0,2,7
+Opponent 29,Andreas Christensen,0,0,2,5
+Opponent 29,Alejandro Balde,0,0,2,6
+Opponent 29,Frenkie de Jong,0,0,3,3
+Opponent 29,Pedri,0,0,2,6
+Opponent 29,Gavi,0,2,2,6
+Opponent 29,Raphinha,0,1,4,0
+Opponent 29,Robert Lewandowski,2,0,6,0
+Opponent 29,Lamine Yamal,0,1,2,1
+Opponent 30,Marc-André ter Stegen,0,0,0,0
+Opponent 30,Jules Koundé,0,0,1,6
+Opponent 30,Ronald Araújo,0,0,1,4
+Opponent 30,Andreas Christensen,0,0,1,5
+Opponent 30,Alejandro Balde,0,0,1,3
+Opponent 30,Frenkie de Jong,0,2,1,6
+Opponent 30,Pedri,0,0,1,3
+Opponent 30,Gavi,0,0,0,5
+Opponent 30,Raphinha,1,0,5,2
+Opponent 30,Robert Lewandowski,2,2,4,0
+Opponent 30,Lamine Yamal,1,0,4,0
+Opponent 31,Marc-André ter Stegen,0,0,0,0
+Opponent 31,Jules Koundé,0,0,0,4
+Opponent 31,Ronald Araújo,0,0,2,4
+Opponent 31,Andreas Christensen,0,0,2,3
+Opponent 31,Alejandro Balde,0,0,1,4
+Opponent 31,Frenkie de Jong,0,1,3,6
+Opponent 31,Pedri,1,1,1,2
+Opponent 31,Gavi,2,0,3,4
+Opponent 31,Raphinha,0,1,3,0
+Opponent 31,Robert Lewandowski,0,0,4,0
+Opponent 31,Lamine Yamal,2,1,4,0
+Opponent 32,Marc-André ter Stegen,0,0,0,0
+Opponent 32,Jules Koundé,0,0,1,5
+Opponent 32,Ronald Araújo,0,1,0,7
+Opponent 32,Andreas Christensen,0,0,0,4
+Opponent 32,Alejandro Balde,0,0,2,4
+Opponent 32,Frenkie de Jong,0,0,2,2
+Opponent 32,Pedri,2,0,3,2
+Opponent 32,Gavi,0,0,1,6
+Opponent 32,Raphinha,0,2,4,2
+Opponent 32,Robert Lewandowski,2,2,3,1
+Opponent 32,Lamine Yamal,0,1,3,0
+Opponent 33,Marc-André ter Stegen,0,0,0,1
+Opponent 33,Jules Koundé,0,0,2,7
+Opponent 33,Ronald Araújo,0,1,0,8
+Opponent 33,Andreas Christensen,0,1,2,6
+Opponent 33,Alejandro Balde,0,0,1,7
+Opponent 33,Frenkie de Jong,0,1,3,3
+Opponent 33,Pedri,0,2,2,4
+Opponent 33,Gavi,0,0,3,6
+Opponent 33,Raphinha,0,0,3,2
+Opponent 33,Robert Lewandowski,0,2,2,2
+Opponent 33,Lamine Yamal,0,1,2,2
+Opponent 34,Marc-André ter Stegen,0,0,0,1
+Opponent 34,Jules Koundé,0,0,1,3
+Opponent 34,Ronald Araújo,0,0,0,8
+Opponent 34,Andreas Christensen,0,0,0,7
+Opponent 34,Alejandro Balde,0,1,2,3
+Opponent 34,Frenkie de Jong,0,2,1,3
+Opponent 34,Pedri,0,0,2,6
+Opponent 34,Gavi,0,0,1,5
+Opponent 34,Raphinha,2,1,4,0
+Opponent 34,Robert Lewandowski,2,1,3,0
+Opponent 34,Lamine Yamal,1,0,3,1
+Opponent 35,Marc-André ter Stegen,0,0,0,1
+Opponent 35,Jules Koundé,0,0,0,4
+Opponent 35,Ronald Araújo,0,1,1,4
+Opponent 35,Andreas Christensen,0,0,0,8
+Opponent 35,Alejandro Balde,0,0,0,3
+Opponent 35,Frenkie de Jong,0,1,1,3
+Opponent 35,Pedri,0,0,3,2
+Opponent 35,Gavi,1,0,4,4
+Opponent 35,Raphinha,0,2,4,0
+Opponent 35,Robert Lewandowski,0,0,2,1
+Opponent 35,Lamine Yamal,0,1,3,1
+Opponent 36,Marc-André ter Stegen,0,0,0,0
+Opponent 36,Jules Koundé,0,0,1,5
+Opponent 36,Ronald Araújo,0,0,0,5
+Opponent 36,Andreas Christensen,0,0,0,5
+Opponent 36,Alejandro Balde,1,0,2,8
+Opponent 36,Frenkie de Jong,1,2,4,2
+Opponent 36,Pedri,0,2,3,6
+Opponent 36,Gavi,0,2,0,3
+Opponent 36,Raphinha,0,0,2,1
+Opponent 36,Robert Lewandowski,0,1,1,1
+Opponent 36,Lamine Yamal,0,1,1,2
+Opponent 37,Marc-André ter Stegen,0,0,0,0
+Opponent 37,Jules Koundé,0,0,0,3
+Opponent 37,Ronald Araújo,0,0,1,7
+Opponent 37,Andreas Christensen,0,0,1,4
+Opponent 37,Alejandro Balde,0,0,1,4
+Opponent 37,Frenkie de Jong,1,2,3,3
+Opponent 37,Pedri,0,1,2,2
+Opponent 37,Gavi,1,1,1,6
+Opponent 37,Raphinha,1,0,4,1
+Opponent 37,Robert Lewandowski,0,0,3,0
+Opponent 37,Lamine Yamal,0,0,3,2
+Opponent 38,Marc-André ter Stegen,0,0,0,1
+Opponent 38,Jules Koundé,0,0,0,3
+Opponent 38,Ronald Araújo,0,0,1,8
+Opponent 38,Andreas Christensen,0,0,2,4
+Opponent 38,Alejandro Balde,0,0,1,3
+Opponent 38,Frenkie de Jong,0,0,3,2
+Opponent 38,Pedri,1,1,1,3
+Opponent 38,Gavi,1,1,2,6
+Opponent 38,Raphinha,1,0,2,2
+Opponent 38,Robert Lewandowski,0,1,4,0
+Opponent 38,Lamine Yamal,3,0,6,0

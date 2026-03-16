@@ -69,7 +69,15 @@ SportSight is a comprehensive sports performance tracking and squad management w
 
 ## 📈 CSV Data Format
 For bulk uploads, use a CSV with the following headers:
-`match_date, opponent, venue, player_name, goals, assists, shots_on_target, tackles`
+`match, player_name, goals, assists, shots_on_target, tackles`
+*Note: Make sure to specify the Team Name in the Dashboard before uploading.*
+
+## 🧪 Generating Test Data
+To generate realistic full-season (38 matches) data for FC Barcelona, Liverpool, Manchester City, and Real Madrid, run the included generator script:
+```bash
+python generate_csvs.py
+```
+This will create four CSV files ready for uploading via the Admin Dashboard.
 
 ---
 Developed with ❤️ by the SportSight Team.
