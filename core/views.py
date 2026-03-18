@@ -119,14 +119,25 @@ def dashboard(request):
         # Try finding linked player first, then fallback to name match
         player = Player.objects.filter(user=request.user).first()
         if not player:
+            # Exact match
             player = Player.objects.filter(player_name__iexact=request.user.username).first()
+            
+            # Fallback 1: Match by the last part of the username (i.e. last name)
+            if not player and " " in request.user.username:
+                last_name = request.user.username.split()[-1]
+                player = Player.objects.filter(player_name__icontains=last_name).first()
+                
+            # Fallback 2: Basic 'contains' check
+            if not player:
+                player = Player.objects.filter(player_name__icontains=request.user.username).first()
+
             if player and not player.user:
                 player.user = request.user
                 player.save()
 
         if player:
             # 1. Quick Stats
-            perfs = PlayerPerformance.objects.filter(player=player).select_related('match').order_by('match__match_date')
+            perfs = PlayerPerformance.objects.filter(player=player).select_related('match').order_by('match__match_date', 'match__id')
             player_stats = {
                 "goals": perfs.aggregate(Sum('goals'))['goals__sum'] or 0,
                 "assists": perfs.aggregate(Sum('assists'))['assists__sum'] or 0,
@@ -135,7 +146,7 @@ def dashboard(request):
             }
 
             # 2. Performance Trend (Line Chart Data)
-            trend_labels = [p.match.opponent[:10] for p in perfs if p.match]
+            trend_labels = [p.match.opponent[:20] for p in perfs if p.match]
             trend_goals = [p.goals for p in perfs]
             trend_data = {
                 "labels": json.dumps(trend_labels),
@@ -193,13 +204,13 @@ def analytics_page(request):
     # Aggregate goals AND assists AND tackles per match
     matches_qs = (
         PlayerPerformance.objects
-        .values("match__opponent", "match__match_date")
+        .values("match__id", "match__opponent", "match__match_date")
         .annotate(
             team_goals=Sum("goals"),
             team_assists=Sum("assists"),
             team_tackles=Sum("tackles"),
         )
-        .order_by("match__match_date")
+        .order_by("match__match_date", "match__id")
     )
 
     labels   = [m["match__opponent"] for m in matches_qs if m["match__opponent"]]
@@ -257,6 +268,16 @@ def season_analytics(request):
         # Max scale for the radar chart scaling (e.g., max stats across all players or arbitrary max)
         max_stats = 100
 
+        # Heuristic to determine role (1=Attacker, 2=Midfielder, 3=Defender, 4=GK) for sorting purposes
+        role_rank = 3
+        if total_goals >= 5 or total_shots >= 20:
+            role_rank = 1
+        elif total_assists >= 5 or (total_goals >= 2 and total_tackles < 120):
+            role_rank = 2
+            
+        if total_goals == 0 and total_assists == 0 and total_tackles <= 30:
+            role_rank = 4
+
         suggestions = []
         if total_goals >= 5:
             suggestions.append("🚀 Excellent scoring form. Keep positioning high in the box.")
@@ -280,6 +301,7 @@ def season_analytics(request):
             "avg_goals": avg_goals,
             "conversion_rate": conversion_rate,
             "goal_involvement": goal_involvement,
+            "role_rank": role_rank,
             "suggestions": suggestions,
             "id": player.id
         })
@@ -288,8 +310,14 @@ def season_analytics(request):
     for entry in data:
         entry["is_current"] = (entry["player"].lower() == display_name) or (display_name in entry["player"].lower())
 
-    # Sort data to bring current user's player to the top
-    data.sort(key=lambda x: 0 if x["is_current"] else 1)
+    # Sort data to bring current user's player to the top, then by role, then by output
+    data.sort(key=lambda x: (
+        0 if x["is_current"] else 1, 
+        x["role_rank"], 
+        -x["goals"], 
+        -x["assists"], 
+        -x["tackles"]
+    ))
 
     return render(request, "core/season_analytics.html", {
         "analytics_data": data
@@ -379,12 +407,22 @@ def compare_xi(request):
             tackles = sum(p.tackles for p in performances)
             shots = sum(p.shots_on_target for p in performances)
             
+            # Heuristic for sorting positions
+            role_rank = 3
+            if goals >= 5 or shots >= 20:
+                role_rank = 1
+            elif assists >= 5 or (goals >= 2 and tackles < 120):
+                role_rank = 2
+            if goals == 0 and assists == 0 and tackles <= 30:
+                role_rank = 4
+            
             chart_data.append({
                 "name": player.player_name,
                 "goals": goals,
                 "assists": assists,
                 "tackles": tackles,
-                "shots": shots
+                "shots": shots,
+                "role_rank": role_rank
             })
             
             if goals > max_goals:
@@ -406,6 +444,14 @@ def compare_xi(request):
             "needs_improvement": needs_improvement if needs_improvement else "N/A"
         }
 
+        # Sort correctly: Attackers -> Midfielders -> Defenders -> GK
+        chart_data.sort(key=lambda x: (
+            x["role_rank"], 
+            -x["goals"], 
+            -x["assists"], 
+            -x["tackles"]
+        ))
+
     return render(request, "core/compare_xi.html", {
         "players": players,
         "chart_data": chart_data,
@@ -418,9 +464,20 @@ def compare_xi(request):
 def player_attendance(request):
     user = request.user
 
-    player = Player.objects.filter(user=user).first()
+    player = Player.objects.filter(user=request.user).first()
     if not player:
-        player = Player.objects.filter(player_name__iexact=user.username).first()
+        # Exact match
+        player = Player.objects.filter(player_name__iexact=request.user.username).first()
+        
+        # Fallback 1: Match by the last part of the username (i.e. last name)
+        if not player and " " in request.user.username:
+            last_name = request.user.username.split()[-1]
+            player = Player.objects.filter(player_name__icontains=last_name).first()
+            
+        # Fallback 2: Basic 'contains' check
+        if not player:
+            player = Player.objects.filter(player_name__icontains=request.user.username).first()
+
         if player and not player.user:
             player.user = user
             player.save()

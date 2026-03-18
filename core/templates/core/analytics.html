@@ -244,18 +244,18 @@
         </div>
       </div>
 
-      <!-- Colour key for bar intensity -->
+      <!-- Colour key for bar intensity (Goals) -->
       <div class="colour-key">
         <div class="colour-key-item muted-text">
-          <div class="colour-key-swatch" style="background:#10b981;"></div>
+          <div class="colour-key-swatch" style="background:#1d4ed8;"></div>
           Above average
         </div>
         <div class="colour-key-item muted-text">
-          <div class="colour-key-swatch" style="background:#f59e0b;"></div>
+          <div class="colour-key-swatch" style="background:#3b82f6;"></div>
           At average
         </div>
         <div class="colour-key-item muted-text">
-          <div class="colour-key-swatch" style="background:#ef4444;opacity:0.7;"></div>
+          <div class="colour-key-swatch" style="background:#93c5fd;opacity:0.7;"></div>
           Below average
         </div>
       </div>
@@ -328,14 +328,14 @@
     // ── Color-code goal bars relative to avg ──
     const avgGoals = goals.reduce((a, b) => a + b, 0) / (goals.length || 1);
     const goalBarColors = goals.map(g => {
-      if (g > avgGoals) return 'rgba(16, 185, 129, 0.85)';   // green – above avg
-      if (g === avgGoals) return 'rgba(245, 158, 11, 0.85)'; // amber – at avg
-      return 'rgba(239, 68, 68, 0.7)';                        // red   – below avg
+      if (g > avgGoals) return 'rgba(29, 78, 216, 0.85)';   // dark blue – above avg
+      if (g === avgGoals) return 'rgba(59, 130, 246, 0.85)'; // blue – at avg
+      return 'rgba(147, 197, 253, 0.7)';                      // light blue   – below avg
     });
     const goalBorderColors = goals.map(g => {
-      if (g > avgGoals) return '#10b981';
-      if (g === avgGoals) return '#f59e0b';
-      return '#ef4444';
+      if (g > avgGoals) return '#1d4ed8';
+      if (g === avgGoals) return '#3b82f6';
+      return '#93c5fd';
     });
 
     const trendLine = rollingAvg(goals, 3);

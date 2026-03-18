@@ -170,7 +170,8 @@
 
     {% if chart_data %}
     <div class="panel card">
-      <h2 style="margin-bottom: 20px;">📈 Statistical Comparison</h2>
+      <h2 style="margin-bottom: 10px;">📈 Statistical Comparison</h2>
+      <p class="muted-text" style="margin-bottom: 20px;">This chart compares the total cumulative events (Goals, Assists, and Tackles) each player has recorded over all tracked matches in the season.</p>
       <div class="chart-box">
         <canvas id="multiChart"></canvas>
       </div>
@@ -231,8 +232,18 @@
           tooltip: { backgroundColor: '#0f172a', padding: 12, cornerRadius: 8 }
         },
         scales: {
-          y: { beginAtZero: true, grid: { color: themeColors.grid }, ticks: { color: themeColors.muted, font: { size: 14 } } },
-          x: { grid: { display: false }, ticks: { color: themeColors.text, font: { size: 14, weight: '600' } } }
+          y: { 
+            beginAtZero: true, 
+            grid: { color: themeColors.grid }, 
+            ticks: { color: themeColors.muted, font: { size: 14 } },
+            title: {
+              display: true,
+              text: 'Total Actions Per Season',
+              color: themeColors.muted,
+              font: { size: 14, weight: '600' }
+            }
+          },
+          x: { grid: { display: false }, ticks: { color: themeColors.text, font: { size: 14, weight: '600' }, maxRotation: 0, minRotation: 0 } }
         }
       }
     });
