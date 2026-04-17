@@ -25,6 +25,10 @@ SportSight is a comprehensive sports performance tracking and squad management w
 - **Global Theme Support**: Seamlessly switch between **Dark Mode** and **Light Mode**.
 - **Responsive Design**: Fully optimized for both desktop and tablet views.
 
+### 5. **Documentation & Reporting**
+- **Automated Report Generation**: Scripts to generate comprehensive, detailed Word documents (`.docx`) for project reporting and documentation.
+- **Includes Requirements & Tables**: Auto-generates system requirements, testing outlines, and project table structures for academic or professional submission.
+
 ## 🛠️ Technology Stack
 - **Backend**: Django (Python)
 - **Frontend**: HTML5, Vanilla CSS3 (Custom Design System), JavaScript (ES6+)
@@ -78,6 +82,14 @@ To generate realistic full-season (38 matches) data for FC Barcelona, Liverpool,
 python generate_csvs.py
 ```
 This will create four CSV files ready for uploading via the Admin Dashboard.
+
+## 📝 Generating Documentation
+To generate project reports and documentation for submission, run the following scripts:
+```bash
+python generate_report_docx.py
+python generate_tables_docx.py
+```
+This will create multiple `.docx` files (`SportSight_Complete_Report.docx`, `SportSight_Tables.docx`, etc.) containing the comprehensive project report and database table structures.
 
 ---
 Developed with ❤️ by the SportSight Team.
